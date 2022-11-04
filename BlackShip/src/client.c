@@ -1,5 +1,6 @@
 //Préprocessus principaux
 #include <stdio.h>
+#include <stdbool.h>
 
 //Préprocessus pour socket
 #include <string.h>
@@ -9,7 +10,7 @@
 
 
 
-void entete() {
+void entete(void) {
   puts("");
   puts("╦══════════════════════════════════════════════════════════════╦");
   puts("╬                          " VERT "BlackShip" RESET "                           ╬");
@@ -22,25 +23,113 @@ void entete() {
   puts("╩══════════════════════════════════════════════════════════════╩");
 }
 
-int modeDeJeux(){
-  puts("");
-  puts("Veuillez choisir votre mode de jeux :");
-  puts(NNOIR "[" VERT "1" NNOIR "] Lancer une partie en solo");
-  puts("[" VERT "2" NNOIR "] Lancer une partie en multi-joueurs" RESET);
+int modeDeJeux(void){
+  int x, y;
+
+  do{
+    puts("");
+    puts("Choisissez votre mode de jeux :");
+    puts(NNOIR "[" VERT "1" NNOIR "] Lancer une partie en solo");
+    puts("[" VERT "2" NNOIR "] Lancer une partie en multi-joueurs" RESET);
+
+    puts("");
+    printf("=> " JAUNE);
+    scanf("%d", &x);
+    puts("" RESET);
+
+    if (x == 1){
+      y = true;
+    }else if (x == 2){
+      y = true;
+    }else{
+      puts(ROUGE "Erreur => Saisie incorrecte, veuillez répondre par 1 ou 2" RESET);
+      y = false;
+    }
+  }while(y != true);
+
+
+  return x;
 }
 
-int modeDeSelection(){
-  puts(""RESET);
-  puts("Veuillez choisir votre une option :");
-  puts(NNOIR"[" VERT "1" NNOIR "] Héberger la partie");
-  puts("[" VERT "2" NNOIR "] Rejoindre une partie" RESET);
+int modeDeSelectionReseau(void){
+  int x, y;
+
+  do{
+    puts("");
+    puts("Sélectionnez une option :");
+    puts(NNOIR "[" VERT "1" NNOIR "] Rejoindre un serveur");
+    puts("[" VERT "2" NNOIR "] Héberger un serveur" RESET);
+
+    puts("");
+    printf("=> " JAUNE);
+    scanf("%d", &x);
+    puts("" RESET);
+
+    if (x == 1){
+      y = true;
+    }else if (x == 2){
+      y = true;
+    }else{
+      puts(ROUGE "Erreur => Saisie incorrecte, veuillez répondre par 1 ou 2" RESET);
+      y = false;
+    }
+  }while(y != true);
+
+
+  return x;
+}
+
+
+int modeDeSelectionMap(void){
+  int x, y;
+
+  do{
+    puts("");
+    puts("Indiquez la taille de la map (min 5, max 20) :");
+
+    puts("");
+    printf("=> " JAUNE);
+    scanf("%d", &x);
+    puts("" RESET);
+
+    if (x >= 5 && x <=20){
+      y = true;
+    }else{
+      puts(ROUGE "Erreur => Saisie incorrecte, veuillez une valeur entre 5 et 20" RESET);
+      y = false;
+    }
+  }while(y != true);
+
+
+  return x;
+}
+
+int initialisation(int taille){
+  int x[0][0], y[0][0];
+
+  x[0][0] = x[0][taille];
+  y[0][0] = y[0][taille];
+  
 }
 
 
 int main(void){
-  
+  int x, y;
 
-  menu();
+  entete();
+  x = modeDeJeux();
+
+  if(x == true){
+    y = modeDeSelectionMap();
+    initialisation(y);
+
+    do{
+      /* code */
+    } while (/* condition */);
+  }else{
+    modeDeSelectionReseau();
+  }
+  
 
   return 0;
 }
