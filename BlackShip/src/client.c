@@ -13,7 +13,7 @@
 void entete(void) {
   puts("");
   puts("╦══════════════════════════════════════════════════════════════╦");
-  puts("╬                          " VERT "BlackShip" RESET "                           ╬");
+  puts("╬ V1.1                     " VERT "BlackShip" RESET "                           ╬");
   puts("╬══════════════════════════════════════════════════════════════╬");
   puts("╬ " NNOIR "Description :" RESET "                                                ╬");
   puts("╬                                                              ╬");
@@ -37,9 +37,9 @@ int modeDeJeux(void){
     scanf("%d", &x);
     puts("" RESET);
 
-    if (x == 1){
+    if(x == 1){
       y = true;
-    }else if (x == 2){
+    }else if(x == 2){
       y = true;
     }else{
       puts(ROUGE "Erreur => Saisie incorrecte, veuillez répondre par 1 ou 2" RESET);
@@ -65,9 +65,9 @@ int modeDeSelectionReseau(void){
     scanf("%d", &x);
     puts("" RESET);
 
-    if (x == 1){
+    if(x == 1){
       y = true;
-    }else if (x == 2){
+    }else if(x == 2){
       y = true;
     }else{
       puts(ROUGE "Erreur => Saisie incorrecte, veuillez répondre par 1 ou 2" RESET);
