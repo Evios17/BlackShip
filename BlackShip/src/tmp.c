@@ -47,7 +47,7 @@ else
     printf("ca chie gethost\n");
     exit(0);
   }
-  bcopy(serverHostEnt->h_addr,&serverSockAddr.sin_addr,serverHostEnt->h_length);
+  bcopy(serverHostEnt->h_addr_list,&serverSockAddr.sin_addr,serverHostEnt->h_length);
 }
 serverSockAddr.sin_port = htons(PORT);
 serverSockAddr.sin_family = AF_INET;

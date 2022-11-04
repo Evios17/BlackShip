@@ -145,20 +145,6 @@ server/fast:
 .PHONY : server/fast
 
 # Convenience name for target.
-src/CMakeFiles/test.dir/rule:
-	cd /home/kali/Documents/SAE1.05/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/test.dir/rule
-.PHONY : src/CMakeFiles/test.dir/rule
-
-# Convenience name for target.
-test: src/CMakeFiles/test.dir/rule
-.PHONY : test
-
-# fast build rule for target.
-test/fast:
-	cd /home/kali/Documents/SAE1.05/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/test.dir/build.make src/CMakeFiles/test.dir/build
-.PHONY : test/fast
-
-# Convenience name for target.
 src/CMakeFiles/tmp.dir/rule:
 	cd /home/kali/Documents/SAE1.05/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/tmp.dir/rule
 .PHONY : src/CMakeFiles/tmp.dir/rule
@@ -220,30 +206,6 @@ server.c.s:
 	cd /home/kali/Documents/SAE1.05/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/server.dir/build.make src/CMakeFiles/server.dir/server.c.s
 .PHONY : server.c.s
 
-test.o: test.c.o
-.PHONY : test.o
-
-# target to build an object file
-test.c.o:
-	cd /home/kali/Documents/SAE1.05/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/test.dir/build.make src/CMakeFiles/test.dir/test.c.o
-.PHONY : test.c.o
-
-test.i: test.c.i
-.PHONY : test.i
-
-# target to preprocess a source file
-test.c.i:
-	cd /home/kali/Documents/SAE1.05/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/test.dir/build.make src/CMakeFiles/test.dir/test.c.i
-.PHONY : test.c.i
-
-test.s: test.c.s
-.PHONY : test.s
-
-# target to generate assembly for a file
-test.c.s:
-	cd /home/kali/Documents/SAE1.05/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/test.dir/build.make src/CMakeFiles/test.dir/test.c.s
-.PHONY : test.c.s
-
 tmp.o: tmp.c.o
 .PHONY : tmp.o
 
@@ -278,7 +240,6 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... client"
 	@echo "... server"
-	@echo "... test"
 	@echo "... tmp"
 	@echo "... client.o"
 	@echo "... client.i"
@@ -286,9 +247,6 @@ help:
 	@echo "... server.o"
 	@echo "... server.i"
 	@echo "... server.s"
-	@echo "... test.o"
-	@echo "... test.i"
-	@echo "... test.s"
 	@echo "... tmp.o"
 	@echo "... tmp.i"
 	@echo "... tmp.s"

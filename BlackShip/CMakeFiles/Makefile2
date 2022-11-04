@@ -80,7 +80,6 @@ clean: src/clean
 # Recursive "all" directory target.
 src/all: src/CMakeFiles/client.dir/all
 src/all: src/CMakeFiles/server.dir/all
-src/all: src/CMakeFiles/test.dir/all
 src/all: src/CMakeFiles/tmp.dir/all
 .PHONY : src/all
 
@@ -91,7 +90,6 @@ src/preinstall:
 # Recursive "clean" directory target.
 src/clean: src/CMakeFiles/client.dir/clean
 src/clean: src/CMakeFiles/server.dir/clean
-src/clean: src/CMakeFiles/test.dir/clean
 src/clean: src/CMakeFiles/tmp.dir/clean
 .PHONY : src/clean
 
@@ -148,39 +146,13 @@ src/CMakeFiles/server.dir/clean:
 .PHONY : src/CMakeFiles/server.dir/clean
 
 #=============================================================================
-# Target rules for target src/CMakeFiles/test.dir
-
-# All Build rule for target.
-src/CMakeFiles/test.dir/all:
-	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/test.dir/build.make src/CMakeFiles/test.dir/depend
-	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/test.dir/build.make src/CMakeFiles/test.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/kali/Documents/SAE1.05/SAE105/BlackShip/CMakeFiles --progress-num=5,6 "Built target test"
-.PHONY : src/CMakeFiles/test.dir/all
-
-# Build rule for subdir invocation for target.
-src/CMakeFiles/test.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/kali/Documents/SAE1.05/SAE105/BlackShip/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/test.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/kali/Documents/SAE1.05/SAE105/BlackShip/CMakeFiles 0
-.PHONY : src/CMakeFiles/test.dir/rule
-
-# Convenience name for target.
-test: src/CMakeFiles/test.dir/rule
-.PHONY : test
-
-# clean rule for target.
-src/CMakeFiles/test.dir/clean:
-	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/test.dir/build.make src/CMakeFiles/test.dir/clean
-.PHONY : src/CMakeFiles/test.dir/clean
-
-#=============================================================================
 # Target rules for target src/CMakeFiles/tmp.dir
 
 # All Build rule for target.
 src/CMakeFiles/tmp.dir/all:
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/tmp.dir/build.make src/CMakeFiles/tmp.dir/depend
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/tmp.dir/build.make src/CMakeFiles/tmp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/kali/Documents/SAE1.05/SAE105/BlackShip/CMakeFiles --progress-num=7,8 "Built target tmp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/kali/Documents/SAE1.05/SAE105/BlackShip/CMakeFiles --progress-num=5,6 "Built target tmp"
 .PHONY : src/CMakeFiles/tmp.dir/all
 
 # Build rule for subdir invocation for target.
