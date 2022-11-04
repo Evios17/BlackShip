@@ -17,7 +17,7 @@ void menu() {
   puts("Logs :");
 
   puts("");
-  puts("Description :"):
+  puts("Description :");
   puts("Bienvenu dans BlackShip, un bataille navale solo ou multi joueurs directement jouable dans un terminal.");
   puts("Ce jeux a été totalement réalisé en C dans le cadre d'un projet d'apprentissage universitaire.");
 
