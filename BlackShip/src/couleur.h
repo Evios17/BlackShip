@@ -18,10 +18,10 @@
 #define NBLANC              "\x1b[1;37m"
 
 //Palette d'arrière plan
-#define ROUGE               "\x1b[41m"
-#define VERT                "\x1b[42m"
-#define JAUNE               "\x1b[43m"
-#define BLEU                "\x1b[44m"
-#define MAGENTA             "\x1b[45m"
-#define CYAN                "\x1b[46m"
-#define BLANC               "\x1b[47m"
+#define SROUGE               "\x1b[41m"
+#define SVERT                "\x1b[42m"
+#define SJAUNE               "\x1b[43m"
+#define SBLEU                "\x1b[44m"
+#define SMAGENTA             "\x1b[45m"
+#define SCYAN                "\x1b[46m"
+#define SBLANC               "\x1b[47m"

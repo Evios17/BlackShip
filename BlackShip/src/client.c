@@ -9,31 +9,38 @@
 
 
 
-void menu() {
-  puts(BLEU "╦═══════════════════════════════╦");
-  puts("‖           BlackShip           ‖");
-  puts("╩═══════════════════════════════╩" RESET);
-
-  puts("Logs :");
-
+void entete() {
   puts("");
-  puts("Description :");
-  puts("Bienvenu dans BlackShip, un bataille navale solo ou multi joueurs directement jouable dans un terminal.");
-  puts("Ce jeux a été totalement réalisé en C dans le cadre d'un projet d'apprentissage universitaire.");
+  puts("╦══════════════════════════════════════════════════════════════╦");
+  puts("╬                          " VERT "BlackShip" RESET "                           ╬");
+  puts("╬══════════════════════════════════════════════════════════════╬");
+  puts("╬ " NNOIR "Description :" RESET "                                                ╬");
+  puts("╬                                                              ╬");
+  puts("╬ " NNOIR " - Bienvenu dans BlackShip, un bataille navale solo ou " RESET "      ╬\n╬ " NNOIR "   multi joueurs jouable dans un terminal en ligne" RESET "           ╬");
+  puts("╬ " NNOIR "   de commande." RESET "                                              ╬");
+  puts("╬ " NNOIR " - Ce jeu a été réalisé en C dans le cadre d'un projet" RESET "       ╬\n╬ " NNOIR "   d'apprentissage universitaire." RESET "                            ╬");
+  puts("╩══════════════════════════════════════════════════════════════╩");
+}
 
+int modeDeJeux(){
   puts("");
   puts("Veuillez choisir votre mode de jeux :");
-  puts("Lancer une partie en solo");
-  puts("Lancer une partie en multi-joueurs");
+  puts(NNOIR "[" VERT "1" NNOIR "] Lancer une partie en solo");
+  puts("[" VERT "2" NNOIR "] Lancer une partie en multi-joueurs" RESET);
+}
 
-  puts("");
-  puts("Héberger la partie");
-  puts("Rejoindre une partie");
+int modeDeSelection(){
+  puts(""RESET);
+  puts("Veuillez choisir votre une option :");
+  puts(NNOIR"[" VERT "1" NNOIR "] Héberger la partie");
+  puts("[" VERT "2" NNOIR "] Rejoindre une partie" RESET);
 }
 
 
 int main(void){
-  printf("Hello World !");
+  
+
+  menu();
 
   return 0;
 }
