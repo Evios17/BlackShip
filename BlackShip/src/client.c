@@ -5,16 +5,16 @@
 #include <string.h>
 
 //Préprocessus annexe
-#include <couleur.h>
+#include "couleur.h"
 
 
 
-int menu(){
+void menu() {
   puts(BLUE "╦═══════════════════════════════╦");
   puts("‖           BlackShip           ‖");
   puts("╩═══════════════════════════════╩" RESET);
 
-  puts("Menu principal"):
+  puts("Menu principal");
   puts("Lancer une partie local");
   puts("Rejoindre une partie en ligne");
   puts("Lancer une partie en ligne");
