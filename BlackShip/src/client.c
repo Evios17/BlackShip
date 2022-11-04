@@ -14,10 +14,21 @@ void menu() {
   puts("‖           BlackShip           ‖");
   puts("╩═══════════════════════════════╩" RESET);
 
-  puts("Menu principal");
-  puts("Lancer une partie local");
-  puts("Rejoindre une partie en ligne");
-  puts("Lancer une partie en ligne");
+  puts("Logs :");
+
+  puts("");
+  puts("Description :"):
+  puts("Bienvenu dans BlackShip, un bataille navale solo ou multi joueurs directement jouable dans un terminal.");
+  puts("Ce jeux a été totalement réalisé en C dans le cadre d'un projet d'apprentissage universitaire.");
+
+  puts("");
+  puts("Veuillez choisir votre mode de jeux :");
+  puts("Lancer une partie en solo");
+  puts("Lancer une partie en multi-joueurs");
+
+  puts("");
+  puts("Héberger la partie");
+  puts("Rejoindre une partie");
 }
 
 
