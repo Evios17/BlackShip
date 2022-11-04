@@ -127,7 +127,7 @@ void deroute(int sig)
         exit(EXIT_SUCCESS); 
      }
      else if (sig==SIGINT) {
-        printf (GREEN "\tLe signal %s=%d a été reçu !\n",sys_siglist[sig],sig);
+        printf (GREEN "\tLe signal %s=%d a été reçu !\n",strsignal(sig),sig);
         printf(RED "\tOUUPPPSS, vous avez tapé Ctrl-C?\n"
                 "\tVoulez-vous réellement quitter ? [y/n]" RESET "\n");
         c = getchar();     
