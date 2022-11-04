@@ -19,7 +19,9 @@
 
 
 int menu(){
-  printf("");
+  printf(BLUE "╦═══════════════════════════════╦");
+  printf("‖           BlackShip           ‖");
+  printf("╩═══════════════════════════════╩" RESET);
 }
 
 
