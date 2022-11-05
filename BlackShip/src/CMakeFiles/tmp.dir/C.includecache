@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/user/Documents/SAE105/BlackShip/src/tmp.c
+stdio.h
+-
+errno.h
+-
+signal.h
+-
+stdio.h
+-
+stdlib.h
+-
+strings.h
+-
+netdb.h
+-
+sys/types.h
+-
+unistd.h
+-
+netinet/in.h
+-
+arpa/inet.h
+-
+sys/socket.h
+-
+

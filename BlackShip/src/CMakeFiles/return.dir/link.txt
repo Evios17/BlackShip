@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/return.dir/return.c.o -o ../build/return  -lm 
