@@ -1,4 +1,4 @@
-# Install script for directory: /home/kali/Documents/SAE1.05/SAE105/BlackShip/src
+# Install script for directory: /home/user/Documents/SAE105/BlackShip/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

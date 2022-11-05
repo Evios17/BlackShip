@@ -11,7 +11,7 @@ stdio.h
 -
 stdbool.h
 -
-ncurse.h
+ncurses.h
 -
 string.h
 -

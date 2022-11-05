@@ -17,6 +17,8 @@
 #define BLANC               "\x1b[37m"
 #define NBLANC              "\x1b[1;37m"
 
+#define CUSTOM1             "\x1b[38;2;0;0;140m"
+
 //Palette d'arrière plan
 #define SROUGE               "\x1b[41m"
 #define SVERT                "\x1b[42m"

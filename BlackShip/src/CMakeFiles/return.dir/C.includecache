@@ -6,9 +6,15 @@
 
 #IncludeRegexTransform: 
 
+/home/user/Documents/SAE105/BlackShip/src/couleur.h
+
 /home/user/Documents/SAE105/BlackShip/src/return.c
 stdio.h
 -
 stdbool.h
 -
+string.h
+-
+couleur.h
+/home/user/Documents/SAE105/BlackShip/src/couleur.h
 
