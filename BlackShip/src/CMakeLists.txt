@@ -16,7 +16,7 @@ foreach( testsourcefile ${APP_SOURCES} )
     # target_compile_options(${testname} PUBLIC -Wall -pedantic -Werror -Wextra)
 
     # Si vous voulez rajouter une bibliothèque
-    target_link_libraries( ${testname} -lm )    
+    target_link_libraries( ${testname} -lncurses )    
 
     # cible install ... pour copier le programme dans /usr/local/bin
     # install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/${testname}
