@@ -81,21 +81,21 @@ int modeDeSelectionReseau(void){
 
 
 int modeDeSelectionMap(void){
-  int x, y;
+  int x=1, y=1;
 
   do{
     puts("");
-    puts("Indiquez la taille de la map (min 5, max 20) :");
+    puts("Indiquez la taille de la map (min 5, max 10) :");
 
     puts("");
     printf("=> " JAUNE);
     scanf("%d", &x);
     puts("" RESET);
 
-    if (x >= 5 && x <=20){
+    if (x >= 5 && x <= 10){
       y = true;
     }else{
-      puts(ROUGE "Erreur => Saisie incorrecte, veuillez une valeur entre 5 et 20" RESET);
+      puts(ROUGE "Erreur => Saisie incorrecte, veuillez saisir une valeur entre 5 et 10" RESET);
       y = false;
     }
   }while(y != true);
