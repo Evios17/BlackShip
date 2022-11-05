@@ -1,1 +1,1 @@
-/usr/bin/cc CMakeFiles/server.dir/server.c.o -o ../build/server  -lm 
+/usr/bin/cc CMakeFiles/server.dir/server.c.o -o ../build/server  -lncurses 

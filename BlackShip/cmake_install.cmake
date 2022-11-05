@@ -1,4 +1,4 @@
-# Install script for directory: /home/user/Documents/SAE105/BlackShip
+# Install script for directory: /home/kali/Documents/SAE1.05/SAE105/BlackShip
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,7 +44,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/user/Documents/SAE105/BlackShip/src/cmake_install.cmake")
+  include("/home/kali/Documents/SAE1.05/SAE105/BlackShip/src/cmake_install.cmake")
 
 endif()
 
@@ -56,5 +56,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/user/Documents/SAE105/BlackShip/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/kali/Documents/SAE1.05/SAE105/BlackShip/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

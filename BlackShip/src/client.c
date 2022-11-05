@@ -1,7 +1,7 @@
 //Préprocessus principaux
 #include <stdio.h>
 #include <stdbool.h>
-#include <ncurse.h>
+#include <ncurses.h>
 
 //Préprocessus pour socket
 #include <string.h>
