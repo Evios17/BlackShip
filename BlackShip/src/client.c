@@ -168,24 +168,27 @@ int afficheur(){
 
 
 int main(void){
-  int x/*, y*/;
+  int x, y, z;
 
   entete();
   x = modeDeJeux();
 
-  afficheur();
-
-  /*if(x == true){
+  if(x == 1){
     y = modeDeSelectionMap();
     initialisation(y);
+      afficheur();
 
-    do{
-      
-    }while();
-  }else{
-    modeDeSelectionReseau();
-  }*/
+  } else {
+    z = modeDeSelectionReseau();
+      if (z == 1) {
+        printf("Entrez une adresse IP valide sur laquelle vous connecter : ");
+        //scanf l'adresse IP
+      } else {
+            puts("Votre adresse privée à partager :");  
+            system("hostname -I | awk '{print $1}'");
+      }
   
+  }  
 
-  return 0;
+    return 0;
 }
