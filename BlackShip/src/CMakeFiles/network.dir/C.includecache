@@ -6,21 +6,3 @@
 
 #IncludeRegexTransform: 
 
-/home/user/Documents/SAE105/BlackShip/src/client.c
-stdio.h
--
-stdbool.h
--
-ncurses.h
--
-string.h
--
-color.h
--
-network.h
--
-
-header/color.h
-
-header/network.h
-

@@ -90,10 +90,8 @@ clean: src/clean
 # Directory level rules for directory src
 
 # Recursive "all" directory target.
-src/all: src/CMakeFiles/tmp.dir/all
-src/all: src/CMakeFiles/server.dir/all
-src/all: src/CMakeFiles/return.dir/all
 src/all: src/CMakeFiles/client.dir/all
+src/all: src/CMakeFiles/network.dir/all
 
 .PHONY : src/all
 
@@ -103,99 +101,16 @@ src/preinstall:
 .PHONY : src/preinstall
 
 # Recursive "clean" directory target.
-src/clean: src/CMakeFiles/tmp.dir/clean
-src/clean: src/CMakeFiles/server.dir/clean
-src/clean: src/CMakeFiles/return.dir/clean
 src/clean: src/CMakeFiles/client.dir/clean
+src/clean: src/CMakeFiles/network.dir/clean
 
 .PHONY : src/clean
-
-#=============================================================================
-# Target rules for target src/CMakeFiles/tmp.dir
-
-# All Build rule for target.
-src/CMakeFiles/tmp.dir/all:
-	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/tmp.dir/build.make src/CMakeFiles/tmp.dir/depend
-	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/tmp.dir/build.make src/CMakeFiles/tmp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/user/Documents/SAE105/BlackShip/CMakeFiles --progress-num=7,8 "Built target tmp"
-.PHONY : src/CMakeFiles/tmp.dir/all
-
-# Build rule for subdir invocation for target.
-src/CMakeFiles/tmp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/Documents/SAE105/BlackShip/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/tmp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/Documents/SAE105/BlackShip/CMakeFiles 0
-.PHONY : src/CMakeFiles/tmp.dir/rule
-
-# Convenience name for target.
-tmp: src/CMakeFiles/tmp.dir/rule
-
-.PHONY : tmp
-
-# clean rule for target.
-src/CMakeFiles/tmp.dir/clean:
-	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/tmp.dir/build.make src/CMakeFiles/tmp.dir/clean
-.PHONY : src/CMakeFiles/tmp.dir/clean
-
-#=============================================================================
-# Target rules for target src/CMakeFiles/server.dir
-
-# All Build rule for target.
-src/CMakeFiles/server.dir/all:
-	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/server.dir/build.make src/CMakeFiles/server.dir/depend
-	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/server.dir/build.make src/CMakeFiles/server.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/user/Documents/SAE105/BlackShip/CMakeFiles --progress-num=5,6 "Built target server"
-.PHONY : src/CMakeFiles/server.dir/all
-
-# Build rule for subdir invocation for target.
-src/CMakeFiles/server.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/Documents/SAE105/BlackShip/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/server.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/Documents/SAE105/BlackShip/CMakeFiles 0
-.PHONY : src/CMakeFiles/server.dir/rule
-
-# Convenience name for target.
-server: src/CMakeFiles/server.dir/rule
-
-.PHONY : server
-
-# clean rule for target.
-src/CMakeFiles/server.dir/clean:
-	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/server.dir/build.make src/CMakeFiles/server.dir/clean
-.PHONY : src/CMakeFiles/server.dir/clean
-
-#=============================================================================
-# Target rules for target src/CMakeFiles/return.dir
-
-# All Build rule for target.
-src/CMakeFiles/return.dir/all:
-	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/return.dir/build.make src/CMakeFiles/return.dir/depend
-	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/return.dir/build.make src/CMakeFiles/return.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/user/Documents/SAE105/BlackShip/CMakeFiles --progress-num=3,4 "Built target return"
-.PHONY : src/CMakeFiles/return.dir/all
-
-# Build rule for subdir invocation for target.
-src/CMakeFiles/return.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/Documents/SAE105/BlackShip/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/return.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/Documents/SAE105/BlackShip/CMakeFiles 0
-.PHONY : src/CMakeFiles/return.dir/rule
-
-# Convenience name for target.
-return: src/CMakeFiles/return.dir/rule
-
-.PHONY : return
-
-# clean rule for target.
-src/CMakeFiles/return.dir/clean:
-	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/return.dir/build.make src/CMakeFiles/return.dir/clean
-.PHONY : src/CMakeFiles/return.dir/clean
 
 #=============================================================================
 # Target rules for target src/CMakeFiles/client.dir
 
 # All Build rule for target.
-src/CMakeFiles/client.dir/all:
+src/CMakeFiles/client.dir/all: src/CMakeFiles/network.dir/all
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/client.dir/build.make src/CMakeFiles/client.dir/depend
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/client.dir/build.make src/CMakeFiles/client.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/user/Documents/SAE105/BlackShip/CMakeFiles --progress-num=1,2 "Built target client"
@@ -203,7 +118,7 @@ src/CMakeFiles/client.dir/all:
 
 # Build rule for subdir invocation for target.
 src/CMakeFiles/client.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/Documents/SAE105/BlackShip/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/Documents/SAE105/BlackShip/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/client.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/Documents/SAE105/BlackShip/CMakeFiles 0
 .PHONY : src/CMakeFiles/client.dir/rule
@@ -217,6 +132,33 @@ client: src/CMakeFiles/client.dir/rule
 src/CMakeFiles/client.dir/clean:
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/client.dir/build.make src/CMakeFiles/client.dir/clean
 .PHONY : src/CMakeFiles/client.dir/clean
+
+#=============================================================================
+# Target rules for target src/CMakeFiles/network.dir
+
+# All Build rule for target.
+src/CMakeFiles/network.dir/all:
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/network.dir/build.make src/CMakeFiles/network.dir/depend
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/network.dir/build.make src/CMakeFiles/network.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/user/Documents/SAE105/BlackShip/CMakeFiles --progress-num=3,4 "Built target network"
+.PHONY : src/CMakeFiles/network.dir/all
+
+# Build rule for subdir invocation for target.
+src/CMakeFiles/network.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/Documents/SAE105/BlackShip/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/network.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/Documents/SAE105/BlackShip/CMakeFiles 0
+.PHONY : src/CMakeFiles/network.dir/rule
+
+# Convenience name for target.
+network: src/CMakeFiles/network.dir/rule
+
+.PHONY : network
+
+# clean rule for target.
+src/CMakeFiles/network.dir/clean:
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/network.dir/build.make src/CMakeFiles/network.dir/clean
+.PHONY : src/CMakeFiles/network.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

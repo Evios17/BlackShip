@@ -1,1 +1,1 @@
-/usr/bin/cc CMakeFiles/client.dir/client.c.o -o ../build/client  -lncurses 
+/usr/bin/cc CMakeFiles/client.dir/client.c.o -o ../build/client  libnetwork.a 

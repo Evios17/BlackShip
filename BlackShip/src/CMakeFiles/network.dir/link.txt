@@ -1,0 +1,2 @@
+/usr/bin/ar qc libnetwork.a CMakeFiles/network.dir/network.c.o
+/usr/bin/ranlib libnetwork.a

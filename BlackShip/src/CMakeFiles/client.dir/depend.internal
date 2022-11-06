@@ -3,4 +3,5 @@
 
 src/CMakeFiles/client.dir/client.c.o
  /home/user/Documents/SAE105/BlackShip/src/client.c
- /home/user/Documents/SAE105/BlackShip/src/couleur.h
+ header/color.h
+ header/network.h

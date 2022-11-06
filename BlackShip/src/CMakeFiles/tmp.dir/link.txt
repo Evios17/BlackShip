@@ -1,1 +1,0 @@
-/usr/bin/cc CMakeFiles/tmp.dir/tmp.c.o -o ../build/tmp  -lncurses 

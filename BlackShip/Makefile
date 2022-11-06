@@ -130,45 +130,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named tmp
-
-# Build rule for target.
-tmp: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tmp
-.PHONY : tmp
-
-# fast build rule for target.
-tmp/fast:
-	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/tmp.dir/build.make src/CMakeFiles/tmp.dir/build
-.PHONY : tmp/fast
-
-#=============================================================================
-# Target rules for targets named server
-
-# Build rule for target.
-server: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 server
-.PHONY : server
-
-# fast build rule for target.
-server/fast:
-	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/server.dir/build.make src/CMakeFiles/server.dir/build
-.PHONY : server/fast
-
-#=============================================================================
-# Target rules for targets named return
-
-# Build rule for target.
-return: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 return
-.PHONY : return
-
-# fast build rule for target.
-return/fast:
-	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/return.dir/build.make src/CMakeFiles/return.dir/build
-.PHONY : return/fast
-
-#=============================================================================
 # Target rules for targets named client
 
 # Build rule for target.
@@ -181,6 +142,19 @@ client/fast:
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/client.dir/build.make src/CMakeFiles/client.dir/build
 .PHONY : client/fast
 
+#=============================================================================
+# Target rules for targets named network
+
+# Build rule for target.
+network: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 network
+.PHONY : network
+
+# fast build rule for target.
+network/fast:
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/network.dir/build.make src/CMakeFiles/network.dir/build
+.PHONY : network/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -190,9 +164,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... client"
-	@echo "... return"
-	@echo "... server"
-	@echo "... tmp"
+	@echo "... network"
 .PHONY : help
 
 

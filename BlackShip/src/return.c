@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-#include "couleur.h"
+#include <couleur.h>
 
 int main() {
     int x, y, z = false, e = false, k;

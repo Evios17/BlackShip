@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_DEFINES = 
 
-C_INCLUDES = 
+C_INCLUDES = -I/home/user/Documents/SAE105/BlackShip/header
 
 C_FLAGS = 
 

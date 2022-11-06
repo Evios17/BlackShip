@@ -75,17 +75,6 @@ CMAKE_BINARY_DIR = /home/user/Documents/SAE105/BlackShip
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -96,6 +85,17 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -130,51 +130,6 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-src/CMakeFiles/tmp.dir/rule:
-	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/tmp.dir/rule
-.PHONY : src/CMakeFiles/tmp.dir/rule
-
-# Convenience name for target.
-tmp: src/CMakeFiles/tmp.dir/rule
-
-.PHONY : tmp
-
-# fast build rule for target.
-tmp/fast:
-	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/tmp.dir/build.make src/CMakeFiles/tmp.dir/build
-.PHONY : tmp/fast
-
-# Convenience name for target.
-src/CMakeFiles/server.dir/rule:
-	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/server.dir/rule
-.PHONY : src/CMakeFiles/server.dir/rule
-
-# Convenience name for target.
-server: src/CMakeFiles/server.dir/rule
-
-.PHONY : server
-
-# fast build rule for target.
-server/fast:
-	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/server.dir/build.make src/CMakeFiles/server.dir/build
-.PHONY : server/fast
-
-# Convenience name for target.
-src/CMakeFiles/return.dir/rule:
-	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/return.dir/rule
-.PHONY : src/CMakeFiles/return.dir/rule
-
-# Convenience name for target.
-return: src/CMakeFiles/return.dir/rule
-
-.PHONY : return
-
-# fast build rule for target.
-return/fast:
-	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/return.dir/build.make src/CMakeFiles/return.dir/build
-.PHONY : return/fast
-
-# Convenience name for target.
 src/CMakeFiles/client.dir/rule:
 	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/client.dir/rule
 .PHONY : src/CMakeFiles/client.dir/rule
@@ -188,6 +143,21 @@ client: src/CMakeFiles/client.dir/rule
 client/fast:
 	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/client.dir/build.make src/CMakeFiles/client.dir/build
 .PHONY : client/fast
+
+# Convenience name for target.
+src/CMakeFiles/network.dir/rule:
+	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/network.dir/rule
+.PHONY : src/CMakeFiles/network.dir/rule
+
+# Convenience name for target.
+network: src/CMakeFiles/network.dir/rule
+
+.PHONY : network
+
+# fast build rule for target.
+network/fast:
+	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/network.dir/build.make src/CMakeFiles/network.dir/build
+.PHONY : network/fast
 
 client.o: client.c.o
 
@@ -216,86 +186,32 @@ client.c.s:
 	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/client.dir/build.make src/CMakeFiles/client.dir/client.c.s
 .PHONY : client.c.s
 
-return.o: return.c.o
+network.o: network.c.o
 
-.PHONY : return.o
-
-# target to build an object file
-return.c.o:
-	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/return.dir/build.make src/CMakeFiles/return.dir/return.c.o
-.PHONY : return.c.o
-
-return.i: return.c.i
-
-.PHONY : return.i
-
-# target to preprocess a source file
-return.c.i:
-	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/return.dir/build.make src/CMakeFiles/return.dir/return.c.i
-.PHONY : return.c.i
-
-return.s: return.c.s
-
-.PHONY : return.s
-
-# target to generate assembly for a file
-return.c.s:
-	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/return.dir/build.make src/CMakeFiles/return.dir/return.c.s
-.PHONY : return.c.s
-
-server.o: server.c.o
-
-.PHONY : server.o
+.PHONY : network.o
 
 # target to build an object file
-server.c.o:
-	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/server.dir/build.make src/CMakeFiles/server.dir/server.c.o
-.PHONY : server.c.o
+network.c.o:
+	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/network.dir/build.make src/CMakeFiles/network.dir/network.c.o
+.PHONY : network.c.o
 
-server.i: server.c.i
+network.i: network.c.i
 
-.PHONY : server.i
-
-# target to preprocess a source file
-server.c.i:
-	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/server.dir/build.make src/CMakeFiles/server.dir/server.c.i
-.PHONY : server.c.i
-
-server.s: server.c.s
-
-.PHONY : server.s
-
-# target to generate assembly for a file
-server.c.s:
-	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/server.dir/build.make src/CMakeFiles/server.dir/server.c.s
-.PHONY : server.c.s
-
-tmp.o: tmp.c.o
-
-.PHONY : tmp.o
-
-# target to build an object file
-tmp.c.o:
-	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/tmp.dir/build.make src/CMakeFiles/tmp.dir/tmp.c.o
-.PHONY : tmp.c.o
-
-tmp.i: tmp.c.i
-
-.PHONY : tmp.i
+.PHONY : network.i
 
 # target to preprocess a source file
-tmp.c.i:
-	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/tmp.dir/build.make src/CMakeFiles/tmp.dir/tmp.c.i
-.PHONY : tmp.c.i
+network.c.i:
+	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/network.dir/build.make src/CMakeFiles/network.dir/network.c.i
+.PHONY : network.c.i
 
-tmp.s: tmp.c.s
+network.s: network.c.s
 
-.PHONY : tmp.s
+.PHONY : network.s
 
 # target to generate assembly for a file
-tmp.c.s:
-	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/tmp.dir/build.make src/CMakeFiles/tmp.dir/tmp.c.s
-.PHONY : tmp.c.s
+network.c.s:
+	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/network.dir/build.make src/CMakeFiles/network.dir/network.c.s
+.PHONY : network.c.s
 
 # Help Target
 help:
@@ -306,21 +222,13 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... client"
-	@echo "... return"
-	@echo "... server"
-	@echo "... tmp"
+	@echo "... network"
 	@echo "... client.o"
 	@echo "... client.i"
 	@echo "... client.s"
-	@echo "... return.o"
-	@echo "... return.i"
-	@echo "... return.s"
-	@echo "... server.o"
-	@echo "... server.i"
-	@echo "... server.s"
-	@echo "... tmp.o"
-	@echo "... tmp.i"
-	@echo "... tmp.s"
+	@echo "... network.o"
+	@echo "... network.i"
+	@echo "... network.s"
 .PHONY : help
 
 
