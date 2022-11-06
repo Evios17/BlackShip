@@ -7,7 +7,8 @@
 #include <string.h>
 
 //Préprocessus annexe
-#include "couleur.h"
+#include <couleur.h>
+#include <reseau.h>
 
 
 
@@ -85,10 +86,11 @@ int modeDeSelectionReseau(void){
 
       z = true;
     }else if(x == 2){
-      printf("Votre adresse privée à partager : " VERT);  
-      system("hostname -I | awk '{print $1}'");
-      puts("" RESET);
-      puts("");
+        if (chk_w() == false) {
+          puts("Impossible d'afficher votre IP");
+        } else {
+          printf("Voici l'adresse IP à partager avec le client : "); ip();
+        }
 
       z = true;
     }else{
