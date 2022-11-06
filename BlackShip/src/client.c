@@ -53,7 +53,7 @@ int modeDeJeux(void){
 }
 
 int modeDeSelectionReseau(void){
-  int x, y;
+  int x, y, z;
 
   do{
     puts("Sélectionnez une option :");
@@ -66,14 +66,38 @@ int modeDeSelectionReseau(void){
     puts("" RESET);
 
     if(x == 1){
-      y = true;
+      do{
+        puts("Saisissez l'adresse IP du serveur (true / false) : ");
+
+        puts("");
+        printf("=> " JAUNE);
+        scanf("%d", &y);
+        puts("" RESET);
+
+        if(y == true){
+          z = true;
+        }else{
+          puts(ROUGE "Erreur => L'adresse erroné, veuillez recommencer" RESET);
+          puts("");
+          z = false;
+        }
+      }while(z != true);
+
+      z = true;
     }else if(x == 2){
-      y = true;
+      printf("Votre adresse privée à partager : " VERT);  
+      system("hostname -I | awk '{print $1}'");
+      puts("" RESET);
+      puts("");
+
+      z = true;
     }else{
       puts(ROUGE "Erreur => Saisie incorrecte, veuillez répondre par 1 ou 2" RESET);
-      y = false;
+      puts("");
+      z = false;
     }
-  }while(y != true);
+  }while(z != true);
+  
 
 
   return x;
@@ -81,7 +105,7 @@ int modeDeSelectionReseau(void){
 
 
 int modeDeSelectionMap(void){
-  int x, y = false;
+  int x, y;
 
   do{
     puts("Indiquez la taille de la map (min 5, max 9) :");
@@ -98,7 +122,7 @@ int modeDeSelectionMap(void){
       puts("");
       y = false;
     }
-  }while(y != true);
+  }while(y == false);
 
 
   return x++;
@@ -112,10 +136,8 @@ int initialisation(int taille){
   
 }
 
-int afficheur(){
-  int x, y, z = false, e = false, k;
-    
-  k = modeDeSelectionMap();
+int afficheur(int k){
+  int x, y, z = false, e = false;
 
   int t[k][k];
   
@@ -141,19 +163,26 @@ int afficheur(){
         z = true;
     }else{
         for (x = 1; x <= k; x++){
-            if(t[x][y] == 0){
+          switch(t[x][y]){
+            case 0 :
                 printf("~  ");
-            }else if(t[x][y] == 1){
+                break;
+            case 1 :
                 printf( "   " );
-            }else if(t[x][y] == 2){
+                break;
+            case 2 :
                 printf(NVERT "×  " RESET);
-            }else if(t[x][y] == 3){
+                break;
+            case 3 :
                 printf(NROUGE "×  " RESET);
-            }else if(t[x][y] == 4){
+                break;
+            case 4 :
                 printf(NCYAN "•  " RESET);
-            }else{
-                e = true;
-            }
+                break;
+            default:
+                printf("~  ");
+                break;
+          }
         }
         puts("");
     }
@@ -168,26 +197,18 @@ int afficheur(){
 
 
 int main(void){
-  int x, y, z;
+  int x, y;
 
   entete();
   x = modeDeJeux();
 
-  if(x == 1){
+  if(x == true){
     y = modeDeSelectionMap();
-    initialisation(y);
-      afficheur();
+    //initialisation();
+    afficheur(y);
 
-  } else {
-    z = modeDeSelectionReseau();
-      if (z == 1) {
-        printf("Entrez une adresse IP valide sur laquelle vous connecter : ");
-        //scanf l'adresse IP
-      } else {
-            puts("Votre adresse privée à partager :");  
-            system("hostname -I | awk '{print $1}'");
-      }
-  
+  }else{
+    modeDeSelectionReseau();
   }  
 
     return 0;

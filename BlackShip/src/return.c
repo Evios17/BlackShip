@@ -21,29 +21,36 @@ int main() {
 
     for (y = 0; y <= k; y++){
         printf(NBLEU  "%d  " RESET, y);
-        if(z == false){
+        if(z == true){
+            for (x = 1; x <= k; x++){
+                switch(t[x][y]){
+                    case 0 :
+                        printf("~  ");
+                        break;
+                    case 1 :
+                        printf( "   " );
+                        break;
+                    case 2 :
+                        printf(NVERT "×  " RESET);
+                        break;
+                    case 3 :
+                        printf(NROUGE "×  " RESET);
+                        break;
+                    case 4 :
+                        printf(NCYAN "•  " RESET);
+                        break;
+                    default:
+                        printf("~  ");
+                        break;
+                }
+            }
+            puts("");
+        }else{
             for (x = 1; x <= k; x++){
                 printf(NBLEU "%d  " RESET, x);
             }
             puts("");
             z = true;
-        }else{
-            for (x = 1; x <= k; x++){
-                if(t[x][y] == 0){
-                    printf("~  ");
-                }else if(t[x][y] == 1){
-                    printf( "   " );
-                }else if(t[x][y] == 2){
-                    printf(NVERT "×  " RESET);
-                }else if(t[x][y] == 3){
-                    printf(NROUGE "×  " RESET);
-                }else if(t[x][y] == 4){
-                    printf(NCYAN "•  " RESET);
-                }else{
-                    e = true;
-                }
-            }
-            puts("");
         }
     }
 
