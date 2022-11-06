@@ -89,8 +89,9 @@ int modeDeSelectionReseau(void){
         if (chk_w() == false) {
           puts("Impossible d'afficher votre IP");
         } else {
-          printf("Voici l'adresse IP à partager avec le client : ");
+          printf("Voici l'adresse IP à partager avec le client : " VERT);
           ip();
+          puts("" RESET);
         }
 
       z = true;
