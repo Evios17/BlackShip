@@ -9,7 +9,11 @@
 /home/user/Documents/SAE105/BlackShip/src/client.c
 stdio.h
 -
+stdlib.h
+-
 stdbool.h
+-
+ncurses.h
 -
 string.h
 -
@@ -19,6 +23,4 @@ network.h
 -
 
 header/color.h
-
-header/network.h
 

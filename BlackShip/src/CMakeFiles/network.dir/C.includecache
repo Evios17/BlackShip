@@ -7,14 +7,18 @@
 #IncludeRegexTransform: 
 
 /home/user/Documents/SAE105/BlackShip/src/network.c
-network.h
--
 stdio.h
 -
-stdlib.h
+string.h
 -
-stdbool.h
+errno.h
 -
-
-header/network.h
+sys/socket.h
+-
+netinet/in.h
+-
+arpa/inet.h
+-
+unistd.h
+-
 
