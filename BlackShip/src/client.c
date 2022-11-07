@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <ncurses.h>
+//#include <ncurses.h>
 
 //Préprocessus pour socket
 #include <string.h>
