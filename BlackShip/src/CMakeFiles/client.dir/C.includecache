@@ -11,8 +11,6 @@ stdio.h
 -
 stdbool.h
 -
-ncurses.h
--
 string.h
 -
 color.h

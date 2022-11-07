@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-//#include <ncurses.h>
+#include <ncurses.h>
 
 //Préprocessus pour socket
 #include <string.h>
@@ -54,8 +54,9 @@ int modeDeJeux(void){
   return x;
 }
 
+
 int modeDeSelectionReseau(void){
-  int x, y, z;
+  int x, y;
 
   do{
     puts("Sélectionnez une option :");
@@ -68,14 +69,36 @@ int modeDeSelectionReseau(void){
     puts("" RESET);
 
     if(x == 1){
+      y = true;
+    }else if(x == 2){
+      y = true;
+    }else{
+      puts(ROUGE "Erreur => Saisie incorrecte, veuillez répondre par 1 ou 2" RESET);
+      y = false;
+    }
+  }while(y != true);
+
+
+  return x;
+}
+
+/*int modeDeSelectionReseau(void){
+  int x, y, z;
+  do{
+    puts("Sélectionnez une option :");
+    puts(NNOIR "[" VERT "1" NNOIR "] Rejoindre un serveur");
+    puts("[" VERT "2" NNOIR "] Héberger un serveur" RESET);
+    puts("");
+    printf("=> " JAUNE);
+    scanf("%d", &x);
+    puts("" RESET);
+    if(x == 1){
       do{
         puts("Saisissez l'adresse IP du serveur (true / false) : ");
-
         puts("");
         printf("=> " JAUNE);
         scanf("%d", &y);
         puts("" RESET);
-
         if(y == true){
           z = true;
         }else{
@@ -84,16 +107,15 @@ int modeDeSelectionReseau(void){
           z = false;
         }
       }while(z != true);
-
       z = true;
     }else if(x == 2){
         if (chk_w() == false) {
           puts("Impossible d'afficher votre IP");
         } else {
-          printf("Voici l'adresse IP à partager avec le client : ");
+          printf("Voici l'adresse IP à partager avec le client : " VERT);
           ip();
+          puts("" RESET);
         }
-
       z = true;
     }else{
       puts(ROUGE "Erreur => Saisie incorrecte, veuillez répondre par 1 ou 2" RESET);
@@ -102,11 +124,9 @@ int modeDeSelectionReseau(void){
     }
   }while(z != true);
   
-
-
   return x;
 }
-
+*/
 
 int modeDeSelectionMap(void){
   int x, y;
@@ -208,7 +228,6 @@ int main(void) {
 
   if(x == 1){
     y = modeDeSelectionMap();
-    initialisation(y);
       afficheur(y);
 
   } else {
