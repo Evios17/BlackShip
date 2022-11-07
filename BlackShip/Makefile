@@ -143,6 +143,19 @@ client/fast:
 .PHONY : client/fast
 
 #=============================================================================
+# Target rules for targets named game
+
+# Build rule for target.
+game: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 game
+.PHONY : game
+
+# fast build rule for target.
+game/fast:
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/game.dir/build.make src/CMakeFiles/game.dir/build
+.PHONY : game/fast
+
+#=============================================================================
 # Target rules for targets named network
 
 # Build rule for target.
@@ -164,6 +177,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... client"
+	@echo "... game"
 	@echo "... network"
 .PHONY : help
 

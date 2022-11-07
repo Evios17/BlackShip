@@ -99,6 +99,7 @@ client_EXTERNAL_OBJECTS =
 build/client: src/CMakeFiles/client.dir/client.c.o
 build/client: src/CMakeFiles/client.dir/build.make
 build/client: src/libnetwork.a
+build/client: src/libgame.a
 build/client: src/CMakeFiles/client.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/user/Documents/SAE105/BlackShip/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable ../build/client"
 	cd /home/user/Documents/SAE105/BlackShip/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/client.dir/link.txt --verbose=$(VERBOSE)

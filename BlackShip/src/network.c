@@ -11,6 +11,8 @@
 #include<arpa/inet.h>	//getsockname
 #include<unistd.h>	//close
 
+#include <network.h>
+
 int ipaddress ()
 {
     char command[50];

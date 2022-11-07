@@ -6,23 +6,25 @@
 
 #IncludeRegexTransform: 
 
-/home/user/Documents/SAE105/BlackShip/src/network.c
+/home/user/Documents/SAE105/BlackShip/src/game.c
 stdio.h
+-
+stdlib.h
+-
+stdbool.h
 -
 string.h
 -
-errno.h
+color.h
 -
-sys/socket.h
--
-netinet/in.h
--
-arpa/inet.h
--
-unistd.h
+game.h
 -
 network.h
 -
+
+header/color.h
+
+header/game.h
 
 header/network.h
 

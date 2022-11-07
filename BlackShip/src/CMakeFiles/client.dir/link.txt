@@ -1,1 +1,1 @@
-/usr/bin/cc CMakeFiles/client.dir/client.c.o -o ../build/client  libnetwork.a 
+/usr/bin/cc CMakeFiles/client.dir/client.c.o -o ../build/client  libnetwork.a libgame.a 

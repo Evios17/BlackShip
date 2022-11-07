@@ -145,6 +145,21 @@ client/fast:
 .PHONY : client/fast
 
 # Convenience name for target.
+src/CMakeFiles/game.dir/rule:
+	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/game.dir/rule
+.PHONY : src/CMakeFiles/game.dir/rule
+
+# Convenience name for target.
+game: src/CMakeFiles/game.dir/rule
+
+.PHONY : game
+
+# fast build rule for target.
+game/fast:
+	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/game.dir/build.make src/CMakeFiles/game.dir/build
+.PHONY : game/fast
+
+# Convenience name for target.
 src/CMakeFiles/network.dir/rule:
 	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/network.dir/rule
 .PHONY : src/CMakeFiles/network.dir/rule
@@ -186,6 +201,33 @@ client.c.s:
 	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/client.dir/build.make src/CMakeFiles/client.dir/client.c.s
 .PHONY : client.c.s
 
+game.o: game.c.o
+
+.PHONY : game.o
+
+# target to build an object file
+game.c.o:
+	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/game.dir/build.make src/CMakeFiles/game.dir/game.c.o
+.PHONY : game.c.o
+
+game.i: game.c.i
+
+.PHONY : game.i
+
+# target to preprocess a source file
+game.c.i:
+	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/game.dir/build.make src/CMakeFiles/game.dir/game.c.i
+.PHONY : game.c.i
+
+game.s: game.c.s
+
+.PHONY : game.s
+
+# target to generate assembly for a file
+game.c.s:
+	cd /home/user/Documents/SAE105/BlackShip && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/game.dir/build.make src/CMakeFiles/game.dir/game.c.s
+.PHONY : game.c.s
+
 network.o: network.c.o
 
 .PHONY : network.o
@@ -222,10 +264,14 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... client"
+	@echo "... game"
 	@echo "... network"
 	@echo "... client.o"
 	@echo "... client.i"
 	@echo "... client.s"
+	@echo "... game.o"
+	@echo "... game.i"
+	@echo "... game.s"
 	@echo "... network.o"
 	@echo "... network.i"
 	@echo "... network.s"

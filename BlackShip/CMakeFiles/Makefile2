@@ -91,6 +91,7 @@ clean: src/clean
 
 # Recursive "all" directory target.
 src/all: src/CMakeFiles/client.dir/all
+src/all: src/CMakeFiles/game.dir/all
 src/all: src/CMakeFiles/network.dir/all
 
 .PHONY : src/all
@@ -102,6 +103,7 @@ src/preinstall:
 
 # Recursive "clean" directory target.
 src/clean: src/CMakeFiles/client.dir/clean
+src/clean: src/CMakeFiles/game.dir/clean
 src/clean: src/CMakeFiles/network.dir/clean
 
 .PHONY : src/clean
@@ -110,6 +112,7 @@ src/clean: src/CMakeFiles/network.dir/clean
 # Target rules for target src/CMakeFiles/client.dir
 
 # All Build rule for target.
+src/CMakeFiles/client.dir/all: src/CMakeFiles/game.dir/all
 src/CMakeFiles/client.dir/all: src/CMakeFiles/network.dir/all
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/client.dir/build.make src/CMakeFiles/client.dir/depend
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/client.dir/build.make src/CMakeFiles/client.dir/build
@@ -118,7 +121,7 @@ src/CMakeFiles/client.dir/all: src/CMakeFiles/network.dir/all
 
 # Build rule for subdir invocation for target.
 src/CMakeFiles/client.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/Documents/SAE105/BlackShip/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/Documents/SAE105/BlackShip/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/client.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/Documents/SAE105/BlackShip/CMakeFiles 0
 .PHONY : src/CMakeFiles/client.dir/rule
@@ -134,13 +137,40 @@ src/CMakeFiles/client.dir/clean:
 .PHONY : src/CMakeFiles/client.dir/clean
 
 #=============================================================================
+# Target rules for target src/CMakeFiles/game.dir
+
+# All Build rule for target.
+src/CMakeFiles/game.dir/all:
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/game.dir/build.make src/CMakeFiles/game.dir/depend
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/game.dir/build.make src/CMakeFiles/game.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/user/Documents/SAE105/BlackShip/CMakeFiles --progress-num=3,4 "Built target game"
+.PHONY : src/CMakeFiles/game.dir/all
+
+# Build rule for subdir invocation for target.
+src/CMakeFiles/game.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/Documents/SAE105/BlackShip/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/game.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/Documents/SAE105/BlackShip/CMakeFiles 0
+.PHONY : src/CMakeFiles/game.dir/rule
+
+# Convenience name for target.
+game: src/CMakeFiles/game.dir/rule
+
+.PHONY : game
+
+# clean rule for target.
+src/CMakeFiles/game.dir/clean:
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/game.dir/build.make src/CMakeFiles/game.dir/clean
+.PHONY : src/CMakeFiles/game.dir/clean
+
+#=============================================================================
 # Target rules for target src/CMakeFiles/network.dir
 
 # All Build rule for target.
 src/CMakeFiles/network.dir/all:
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/network.dir/build.make src/CMakeFiles/network.dir/depend
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/network.dir/build.make src/CMakeFiles/network.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/user/Documents/SAE105/BlackShip/CMakeFiles --progress-num=3,4 "Built target network"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/user/Documents/SAE105/BlackShip/CMakeFiles --progress-num=5,6 "Built target network"
 .PHONY : src/CMakeFiles/network.dir/all
 
 # Build rule for subdir invocation for target.

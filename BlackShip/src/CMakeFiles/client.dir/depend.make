@@ -3,4 +3,5 @@
 
 src/CMakeFiles/client.dir/client.c.o: src/client.c
 src/CMakeFiles/client.dir/client.c.o: header/color.h
+src/CMakeFiles/client.dir/client.c.o: header/game.h
 
