@@ -1,5 +1,6 @@
 //Préprocessus principaux
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include <ncurses.h>
 
@@ -200,20 +201,27 @@ int afficheur(int k){
 }
 
 
-int main(void){
-  int x, y;
+int main(void) {
+  int x, y, z;
 
   entete();
   x = modeDeJeux();
 
-  if(x == true){
+  if(x == 1){
     y = modeDeSelectionMap();
-    //initialisation();
-    afficheur(y);
+    initialisation(y);
+      afficheur(y);
 
-  }else{
-    modeDeSelectionReseau();
-  }  
+  } else {
+    z = modeDeSelectionReseau();
+      if (z == 1) {
+        printf("Entrez une adresse IP valide sur laquelle vous connecter : ");
+        // scanf pour l'adresse IP
+      } else {
+            printf(ipaddress());
+          }
+      }
+  
 
-    return 0;
+    return EXIT_SUCCESS;
 }
