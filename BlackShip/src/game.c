@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <time.h>
 //#include <ncurses.h>
 
 //Préprocessus pour socket
@@ -13,73 +14,179 @@
 #include <network.h>
 
 
-void entete(void) {
+
+
+//Partie affichage
+
+void entete(void){
   puts("");
-  puts("╦══════════════════════════════════════════════════════════════╦");
-  puts("╬ V1.1                     " VERT "BlackShip" RESET "                           ╬");
-  puts("╬══════════════════════════════════════════════════════════════╬");
-  puts("╬ " NNOIR "Description :" RESET "                                                ╬");
-  puts("╬                                                              ╬");
-  puts("╬ " NNOIR " - Bienvenu dans BlackShip, un bataille navale solo ou " RESET "      ╬\n╬ " NNOIR "   multi joueurs jouable dans un terminal en ligne" RESET "           ╬");
-  puts("╬ " NNOIR "   de commande." RESET "                                              ╬");
-  puts("╬ " NNOIR " - Ce jeu a été réalisé en C dans le cadre d'un projet" RESET "       ╬\n╬ " NNOIR "   d'apprentissage universitaire." RESET "                            ╬");
-  puts("╩══════════════════════════════════════════════════════════════╩");
+  puts("╔══════════════════════════════════════════════════════════════╗");
+  puts("║ V1.1                     " NVERT "BlackShip" RESET "                           ║");
+  puts("╠══════════════════════════════════════════════════════════════╣");
+  puts("║ " GRIS "Description :" RESET "                                                ║");
+  puts("║                                                              ║");
+  puts("║ " GRIS " - Bienvenu dans BlackShip, un bataille navale solo ou " RESET "      ║\n║ " GRIS "   multi joueurs jouable dans un terminal en ligne" RESET "           ║");
+  puts("║ " GRIS "   de commande." RESET "                                              ║");
+  puts("║ " GRIS " - Ce jeu a été réalisé en C dans le cadre d'un projet" RESET "       ║\n║ " GRIS "   d'apprentissage universitaire." RESET "                            ║");
+  puts("╚══════════════════════════════════════════════════════════════╝");
   puts("");
 }
 
+void afficheur(int dimension){
+  int axeX, axeY, bascule = false;
+  int tableau[dimension][dimension];
+  int bateau[dimension][dimension];
+
+  memset(&tableau,0,sizeof(tableau));
+
+  tableau[8][8] = 2;
+  tableau[4][2] = 1;
+  tableau[2][7] = 3;
+  tableau[4][5] = 4;
+  tableau[4][6] = 4;
+
+  puts("╔══════════════════════════════════════════════════════════════╗");
+  puts("║ Score [" NJAUNE "Player 1" RESET " : " NVERT "1" RESET "/" NVERT "3" RESET " | " NBLEU "Player 2" RESET " : " NVERT "0" RESET "/" NVERT "3" RESET "]                      ║");
+  puts("╚══════════════════════════════════════════════════════════════╝");
+  puts("");
+
+  for (axeY = 0; axeY <= dimension; axeY++){
+    printf(NJAUNE  "%d  " RESET, axeY);
+    if(bascule == false){
+        for (axeX = 1; axeX <= dimension; axeX++){
+            printf(NJAUNE "%d  " RESET, axeX);
+        }
+        puts("");
+        bascule = true;
+    }else{
+        for (axeX = 1; axeX <= dimension; axeX++){
+          switch(bateau[axeX][axeY]){
+            case 0 :
+                printf("~  ");
+                break;
+            case 1 :
+                printf( "   " );
+                break;
+            case 2 :
+                printf(NVERT "×  " RESET);
+                break;
+            case 3 :
+                printf(NROUGE "×  " RESET);
+                break;
+            case 4 :
+                printf(NCYAN "•  " RESET);
+                break;
+            default:
+                printf("~  ");
+                break;
+          }
+        }
+        puts("");
+    }
+  }
+  puts("");
+
+  bascule = false;
+  
+  for (axeY = 0; axeY <= dimension; axeY++){
+    printf(NBLEU  "%d  " RESET, axeY);
+    if(bascule == false){
+        for (axeX = 1; axeX <= dimension; axeX++){
+            printf(NBLEU "%d  " RESET, axeX);
+        }
+        puts("");
+        bascule = true;
+    }else{
+        for (axeX = 1; axeX <= dimension; axeX++){
+          switch(tableau[axeX][axeY]){
+            case 0 :
+                printf("~  ");
+                break;
+            case 1 :
+                printf( "   " );
+                break;
+            case 2 :
+                printf(NVERT "×  " RESET);
+                break;
+            case 3 :
+                printf(NROUGE "×  " RESET);
+                break;
+            case 4 :
+                printf(NCYAN "•  " RESET);
+                break;
+            default:
+                printf("~  ");
+                break;
+          }
+        }
+        puts("");
+    }
+  }
+  puts("");
+
+  puts("╔══════════════════════════════════════════════════════════════╗");
+  puts("║ Manche [" NVERT "1" RESET "/" NVERT "3" RESET "]                               Tire effectué [" NVERT "6" RESET "] ║");
+  puts("╚══════════════════════════════════════════════════════════════╝");
+  puts("");
+}
+
+
+
+//Partie entré et sortie
+
 int modeDeJeux(void){
-  int x, y;
+  int condition, bascule;
 
   do{
     puts("Choisissez votre mode de jeux :");
-    puts(NNOIR "[" VERT "1" NNOIR "] Lancer une partie en solo");
-    puts("[" VERT "2" NNOIR "] Lancer une partie en multi-joueurs" RESET);
+    puts(GRIS "[" NVERT "1" RESET GRIS "] Lancer une partie en solo" RESET);
+    puts(GRIS "[" NVERT "2" RESET GRIS "] Lancer une partie en multi-joueurs" RESET);
 
     puts("");
-    printf("=> " JAUNE);
-    scanf("%d", &x);
+    printf("➤  " JAUNE);
+    scanf("%d", &condition);
     puts("" RESET);
 
-    if(x == 1){
-      y = true;
-    }else if(x == 2){
-      y = true;
+    if(condition == 1){
+      bascule = true;
+    }else if(condition == 2){
+      bascule = true;
     }else{
-      puts(ROUGE "Erreur => Saisie incorrecte, veuillez répondre par 1 ou 2" RESET);
-      y = false;
+      puts(NROUGE "[Erreur] Saisie incorrecte, veuillez répondre par 1 ou 2" RESET);
+      bascule = false;
     }
-  }while(y != true);
+  }while(bascule != true);
 
 
-  return x;
+  return condition;
 }
 
 
 int modeDeSelectionReseau(void){
-  int x, y;
+  int condition, bascule;
 
   do{
     puts("Sélectionnez une option :");
-    puts(NNOIR "[" VERT "1" NNOIR "] Rejoindre un serveur");
-    puts("[" VERT "2" NNOIR "] Héberger un serveur" RESET);
+    puts(GRIS "[" NVERT "1" RESET GRIS "] Rejoindre un serveur" RESET);
+    puts(GRIS "[" NVERT "2" RESET GRIS "] Héberger un serveur" RESET);
 
     puts("");
-    printf("=> " JAUNE);
-    scanf("%d", &x);
+    printf("➤  " JAUNE);
+    scanf("%d", &condition);
     puts("" RESET);
 
-    if(x == 1){
-      y = true;
-    }else if(x == 2){
-      y = true;
+    if(condition == 1){
+      bascule = true;
+    }else if(condition == 2){
+      bascule = true;
     }else{
-      puts(ROUGE "Erreur => Saisie incorrecte, veuillez répondre par 1 ou 2" RESET);
-      y = false;
+      puts(ROUGE "[Erreur] Saisie incorrecte, veuillez répondre par 1 ou 2" RESET);
+      bascule = false;
     }
-  }while(y != true);
+  }while(bascule != true);
 
 
-  return x;
+  return condition;
 }
 
 /*int modeDeSelectionReseau(void){
@@ -129,92 +236,98 @@ int modeDeSelectionReseau(void){
 */
 
 int modeDeSelectionMap(void){
-  int x, y;
+  int condition, bascule;
 
   do{
     puts("Indiquez la taille de la map (min 5, max 9) :");
 
     puts("");
-    printf("=> " JAUNE);
-    scanf("%d", &x);
+    printf("➤  " JAUNE);
+    scanf("%d", &condition);
     puts("" RESET);
 
-    if (x >= 5 && x <= 9){
-      y = true;
+    if (condition >= 5 && condition <= 9){
+      bascule = true;
     }else{
-      puts(ROUGE "Erreur => Saisie incorrecte, veuillez saisir une valeur entre 5 et 9" RESET);
+      puts(ROUGE "[Erreur] Saisie incorrecte, veuillez saisir une valeur entre 5 et 9" RESET);
       puts("");
-      y = false;
+      bascule = false;
     }
-  }while(y == false);
+  }while(bascule == false);
 
 
-  return x++;
+  return condition++;
 }
 
-int initialisation(int taille){
-  int x[0][0], y[0][0];
-
-  x[0][0] = x[0][taille];
-  y[0][0] = y[0][taille];
-  
-}
-
-int afficheur(int k){
-  int x, y, z = false, e = false;
-
-  int t[k][k];
-  
-  memset(&t,0,sizeof(t));
-  t[8][8] = 2;
-  t[4][2] = 1;
-  t[2][7] = 3;
-  t[4][5] = 4;
-  t[4][6] = 4;
-
-  puts("╦══════════════════════════════════════════════════════════════╦");
-  puts("╬ Partie => " VERT "3" RESET "/4                           Nombre d'essais => " VERT "5" RESET " ╬");
-  puts("╩══════════════════════════════════════════════════════════════╩");
+void commande(int *axeX, int *axeY){
+  puts("Saisissez la ligne du tir : ");
   puts("");
+  printf("➤  " JAUNE);
+  scanf("%d", axeX);
+  puts("" RESET);
 
-  for (y = 0; y <= k; y++){
-    printf(NBLEU  "%d  " RESET, y);
-    if(z == false){
-        for (x = 1; x <= k; x++){
-            printf(NBLEU "%d  " RESET, x);
-        }
-        puts("");
-        z = true;
-    }else{
-        for (x = 1; x <= k; x++){
-          switch(t[x][y]){
-            case 0 :
-                printf("~  ");
-                break;
-            case 1 :
-                printf( "   " );
-                break;
-            case 2 :
-                printf(NVERT "×  " RESET);
-                break;
-            case 3 :
-                printf(NROUGE "×  " RESET);
-                break;
-            case 4 :
-                printf(NCYAN "•  " RESET);
-                break;
-            default:
-                printf("~  ");
-                break;
-          }
-        }
-        puts("");
-    }
+  puts("Saisissez la colonne du tir : ");
+  puts("");
+  printf("➤  " JAUNE);
+  scanf("%d", axeY);
+  puts("" RESET);
+}
+
+
+
+//Partie logique
+
+void initialisationTableau1(int dimension){
+  int tableau[dimension][dimension];
+
+  memset(&tableau,0,sizeof(tableau));
+
+  tableau[8][8] = 2;
+  tableau[4][2] = 1;
+  tableau[2][7] = 3;
+  tableau[4][5] = 4;
+  tableau[4][6] = 4;
+}
+
+/*void initialisationTableau2(int dimension){
+  int tableau[dimension][dimension];
+
+  memset(&tableau,0,sizeof(tableau));
+
+  tableau[8][8] = 2;
+  tableau[4][2] = 1;
+  tableau[2][7] = 3;
+  tableau[4][5] = 4;
+  tableau[4][6] = 4;
+}*/
+
+void initialisationBateau(int dimension){
+  int axeX, axeY;
+  int bateau[axeX][axeY];
+
+  memset(&bateau,0,sizeof(bateau));
+
+  srand(time(NULL));
+
+  for(int i = 1; i <= dimension; i++){
+    bateau[i][rand() % dimension + 1] =  rand() % 2;
   }
-  puts("");
-
-  puts("╦══════════════════════════════════════════════════════════════╦");
-  puts("╬ Score => Player 1 : " VERT "3" RESET "/4 | Player 2 : " VERT "2" RESET "/4                     ╬");
-  puts("╩══════════════════════════════════════════════════════════════╩");
-  puts("");
 }
+
+
+
+/*int calcul(){
+  int x, y, t;
+
+  int bateau = 0;
+
+  if(bateau == true){
+    t[x][y] = 2;
+  }else{
+    t[x][y] = 1;
+  }
+}
+
+int information(){
+  printf("coco");
+}*/

@@ -13,6 +13,8 @@ stdlib.h
 -
 stdbool.h
 -
+time.h
+-
 string.h
 -
 color.h

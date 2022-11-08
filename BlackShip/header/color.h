@@ -2,6 +2,7 @@
 #define RESET               "\x1b[0m"
 #define NOIR                "\x1b[30m"
 #define NNOIR               "\x1b[1;30m"
+#define GRIS                "\x1b[38;2;85;85;85m"
 #define ROUGE               "\x1b[31m"
 #define NROUGE              "\x1b[1;31m"
 #define VERT                "\x1b[32m"

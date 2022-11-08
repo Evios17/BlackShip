@@ -1,6 +1,8 @@
 void entete(void);
+void afficheur(int dimention);
 int modeDeJeux(void);
 int modeDeSelectionReseau(void);
 int modeDeSelectionMap(void);
-int initialisation(int taille);
-int afficheur(int k);
+void commande(int *axeX, int *axeY);
+void initialisationTableau1(int dimention);
+void initialisationBateau(int dimention);
