@@ -33,7 +33,7 @@ void entete(void){
 }
 
 void afficheur(int dimension){
-  int axeX, axeY, bascule = false;
+  int axeX, axeY, bascule = false, pourcentage;
   int tableau[dimension][dimension];
   int bateau[dimension][dimension];
 
@@ -44,6 +44,21 @@ void afficheur(int dimension){
   tableau[2][7] = 3;
   tableau[4][5] = 4;
   tableau[4][6] = 4;
+
+  memset(&bateau,0,sizeof(bateau));
+
+  srand(time(NULL));
+
+  pourcentage = (dimension * dimension) * 0.17;
+
+  for(int i = 1; i <= dimension; i++){
+    axeX = rand() % dimension + 1;
+    axeY = rand() % dimension + 1;
+    
+    bateau[axeX][axeY] =  4;
+  }
+
+  system("clear");
 
   puts("╔══════════════════════════════════════════════════════════════╗");
   puts("║ Score [" NJAUNE "Player 1" RESET " : " NVERT "1" RESET "/" NVERT "3" RESET " | " NBLEU "Player 2" RESET " : " NVERT "0" RESET "/" NVERT "3" RESET "]                      ║");
@@ -302,15 +317,20 @@ void initialisationTableau1(int dimension){
 }*/
 
 void initialisationBateau(int dimension){
-  int axeX, axeY;
+  int axeX, axeY, pourcentage;
   int bateau[axeX][axeY];
 
   memset(&bateau,0,sizeof(bateau));
 
   srand(time(NULL));
 
+  pourcentage = (dimension * dimension) * 0.17;
+
   for(int i = 1; i <= dimension; i++){
-    bateau[i][rand() % dimension + 1] =  rand() % 2;
+    axeX = rand() % dimension + 1;
+    axeY = rand() % dimension + 1;
+    
+    bateau[axeX][axeY] =  4;
   }
 }
 

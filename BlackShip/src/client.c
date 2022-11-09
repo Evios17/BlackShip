@@ -16,6 +16,10 @@
 int main(void) {
   int condition1, condition2, dimension, axeX, axeY;
 
+  afficheur(9);
+
+  /*system("clear");
+
   entete();
   condition1 = modeDeJeux();
 
@@ -34,7 +38,7 @@ int main(void) {
     } else {
           ipaddress();
         }
-    }
+    }*/
   
 
     return 0;
