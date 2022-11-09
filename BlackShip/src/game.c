@@ -138,9 +138,9 @@ int modeDeJeux(void){
   int condition, bascule;
 
   do{
-    puts("Choisissez votre mode de jeux :");
-    puts(GRIS "[" NVERT "1" RESET GRIS "] Lancer une partie en solo" RESET);
-    puts(GRIS "[" NVERT "2" RESET GRIS "] Lancer une partie en multi-joueurs" RESET);
+    puts("Select your gamemode :");
+    puts(GRIS "[" NVERT "1" RESET GRIS "] Launch a singleplayer game" RESET);
+    puts(GRIS "[" NVERT "2" RESET GRIS "] Launch a multiplayer game" RESET);
 
     puts("");
     printf("➤  " JAUNE);
@@ -152,7 +152,7 @@ int modeDeJeux(void){
     }else if(condition == 2){
       bascule = true;
     }else{
-      puts(NROUGE "[Erreur] Saisie incorrecte, veuillez répondre par 1 ou 2" RESET);
+      puts(NROUGE "[Error] Wrong Input, please respond by 1 or 2" RESET);
       bascule = false;
     }
   }while(bascule != true);
@@ -166,9 +166,9 @@ int modeDeSelectionReseau(void){
   int condition, bascule;
 
   do{
-    puts("Sélectionnez une option :");
-    puts(GRIS "[" NVERT "1" RESET GRIS "] Rejoindre un serveur" RESET);
-    puts(GRIS "[" NVERT "2" RESET GRIS "] Héberger un serveur" RESET);
+    puts("Select a option :");
+    puts(GRIS "[" NVERT "1" RESET GRIS "] Join a server" RESET);
+    puts(GRIS "[" NVERT "2" RESET GRIS "] Host a server" RESET);
 
     puts("");
     printf("➤  " JAUNE);
@@ -180,7 +180,7 @@ int modeDeSelectionReseau(void){
     }else if(condition == 2){
       bascule = true;
     }else{
-      puts(ROUGE "[Erreur] Saisie incorrecte, veuillez répondre par 1 ou 2" RESET);
+      puts(ROUGE "[Error] Wrong Input, please respond by 1 or 2" RESET);
       bascule = false;
     }
   }while(bascule != true);
@@ -239,7 +239,7 @@ int modeDeSelectionMap(void){
   int condition, bascule;
 
   do{
-    puts("Indiquez la taille de la map (min 5, max 9) :");
+    puts("Choose the map size (min 5, max 9) :");
 
     puts("");
     printf("➤  " JAUNE);
@@ -249,7 +249,7 @@ int modeDeSelectionMap(void){
     if (condition >= 5 && condition <= 9){
       bascule = true;
     }else{
-      puts(ROUGE "[Erreur] Saisie incorrecte, veuillez saisir une valeur entre 5 et 9" RESET);
+      puts(ROUGE "[Error] Wront Input, please choose a number between 5 and 9" RESET);
       puts("");
       bascule = false;
     }
@@ -260,13 +260,13 @@ int modeDeSelectionMap(void){
 }
 
 void commande(int *axeX, int *axeY){
-  puts("Saisissez la ligne du tir : ");
+  puts("Enter the line of fire : ");
   puts("");
   printf("➤  " JAUNE);
   scanf("%d", axeX);
   puts("" RESET);
 
-  puts("Saisissez la colonne du tir : ");
+  puts("Enter the column of fire : ");
   puts("");
   printf("➤  " JAUNE);
   scanf("%d", axeY);

@@ -29,7 +29,7 @@ int main(void) {
   }else{
     condition2 = modeDeSelectionReseau();
     if (condition2 == 1) {
-      printf("Entrez une adresse IP valide sur laquelle vous connecter : ");
+      printf("Enter a valid IP to connect to : ");
       // scanf pour l'adresse IP
     } else {
           ipaddress();

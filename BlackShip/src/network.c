@@ -45,7 +45,7 @@ int ipaddress ()
     	
 	if(p != NULL)
 	{
-		printf("Votre adresse IP à partager est : %s \n" , buffer);
+		printf("Your IP to share is : %s \n" , buffer);
 	}
 	else
 	{
