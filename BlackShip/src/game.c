@@ -181,7 +181,7 @@ int modeDeSelectionReseau(void){
   int condition, bascule;
 
   do{
-    puts("Select a option :");
+    puts("Select an option :");
     puts(GRIS "[" NVERT "1" RESET GRIS "] Join a server" RESET);
     puts(GRIS "[" NVERT "2" RESET GRIS "] Host a server" RESET);
 
@@ -234,8 +234,7 @@ int modeDeSelectionReseau(void){
         if (chk_w() == false) {
           puts("Impossible d'afficher votre IP");
         } else {
-          printf("Voici l'adresse IP à partager avec le client : " VERT);
-          ip();
+          printf("Voici l'adresse IP à partager avec le client : " VERT); ip();
           puts("" RESET);
         }
       z = true;
@@ -264,7 +263,7 @@ int modeDeSelectionMap(void){
     if (condition >= 5 && condition <= 9){
       bascule = true;
     }else{
-      puts(ROUGE "[Error] Wront Input, please choose a number between 5 and 9" RESET);
+      puts(ROUGE "[Error] Wrong Input, please choose a number between 5 and 9" RESET);
       puts("");
       bascule = false;
     }
@@ -275,13 +274,13 @@ int modeDeSelectionMap(void){
 }
 
 void commande(int *axeX, int *axeY){
-  puts("Enter the line of fire : ");
+  puts("Enter the line of the fire : ");
   puts("");
   printf("➤  " JAUNE);
   scanf("%d", axeX);
   puts("" RESET);
 
-  puts("Enter the column of fire : ");
+  puts("Enter the column of the fire : ");
   puts("");
   printf("➤  " JAUNE);
   scanf("%d", axeY);
