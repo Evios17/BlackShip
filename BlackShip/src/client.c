@@ -17,37 +17,43 @@
 
 
 int main(void){
-  int tableau1[9][9], tableau2[9][9], bateau[9][9], axeX, axeY;
-  int dimension, manche, partie, win, tir = 0;  
-  int condition1, condition2;
+  int dimension, manche;                                                                                        // Initialisation des variables de paramètre
+  int tableau1[9][9], tableau2[9][9], bateau[9][9], tir[9][9], axeX, axeY;                                      // Initialisation des variables de tableau
+  int partie = 0, win, essai = 0, touche, toucheMsg, bateauNombre;                                                                                   // Initialisation des variables d'information statistique
+  int condition1, condition2;                                                                                   // Initialisation des variables tampons
   
   
-  system("clear");
+  system("clear");                                                                                              // Nettoyage du terminal
 
-  entete();
-  condition1 = modeDeJeux();
+  entete();                                                                                                     // Affichage de l'entete
+  condition1 = modeDeJeux();                                                                                    // Selection du mode de jeux (solo/multi)
 
-  if(condition1 == 1){
-    dimension = modeDeSelectionMap();
-    manche =  modeDeSelectionManche();
+  if(condition1 == 1){                                                                                          // Condition en fonction du mode de jeux
+    dimension = modeDeSelectionMap();                                                                           // Selection de la dimention de la map
+    manche =  modeDeSelectionManche();                                                                          // Selection du nombre de manche
 
-    for(partie = 0; partie < manche; partie++){
-      initialisationTableau1(dimension, tableau1);
-      initialisationBateau(dimension, bateau);
-      afficheur(dimension, manche, partie, tir, tableau1, bateau);
-      commande(&axeX, &axeY);
-      tir++;
-    }
+    do{                                                                                                         // Début du jeux
+      initialisationTableau1(dimension, tableau1);                                                              // Iniialisation du plateau de jeux
+      bateauNombre = initialisationBateau(dimension, bateau, bateauNombre);                                                                  // Initilisation du placement des bateaux
+      do{
+        toucheMs(toucheMsg);
+        afficheur(dimension, tableau1, bateau, essai, manche, partie, bateauNombre);                                            // Affichage du jeux
+        commande(&axeX, &axeY);                                                                                   // Saisie des coordonnées
+        toucheMsg = calculateur(axeX, axeY, tableau1, bateau, bateauNombre, manche, partie, win, essai, touche, toucheMsg);
+        afficheur(dimension, tableau1, bateau, essai, manche, partie, bateauNombre);
+        essai++;
+      }while(win != true);
 
-    afficheur(dimension, manche, partie, tir, tableau1, bateau);
+      afficheur(dimension, tableau1, bateau, essai, manche, partie, bateauNombre);
+    }while(partie != manche);
   }else{
     condition2 = modeDeSelectionReseau();
 
     if(condition2 == 1){
-      printf("Enter a valid IP to connect to : ");
+      printf("Enter a valid IP to connect to : \n");
       // scanf pour l'adresse IP
     } else {
-      ipaddress();
+      ip();
     }
   }
   

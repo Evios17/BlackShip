@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <unistd.h>
 #include <time.h>
 //#include <ncurses.h>
 
@@ -33,22 +34,9 @@ void entete(void){
   puts("");
 }
 
-void afficheur(int dimension, int manche, int partie, int tir, int tableau[9][9], int bateau[9][9]){
+void afficheur(int dimension, int tableau[9][9], int bateau[9][9], int essai, int manche, int partie, int nombreBateau){
   
   int axeX, axeY, bascule = false;
-
-  /*memset(&bateau,0,sizeof(bateau));
-
-  srand(time(NULL));
-
-  pourcentage = (dimension * dimension) * 0.17;
-
-  for(int i = 1; i <= dimension; i++){
-    axeX = rand() % dimension + 1;
-    axeY = rand() % dimension + 1;
-    
-    bateau[axeX][axeY] =  4;
-  }*/
 
   system("clear");
 
@@ -136,13 +124,43 @@ void afficheur(int dimension, int manche, int partie, int tir, int tableau[9][9]
   }
   puts("");
 
-  puts("╔══════════════╦════════════════════════════════════╦══════════╗");
-printf("║ Sleeve [" VERT "%d" RESET "/" VERT "%d" RESET "] ║                                    ║ Shot [" VERT "%d" RESET "] ║\n", partie, manche, tir);
-  puts("╚══════════════╩════════════════════════════════════╩══════════╝");
+  puts("╔══════════════╦════════════╦═══════════════════════╦══════════╗");
+printf("║ Sleeve [" VERT "%d" RESET "/" VERT "%d" RESET "] ║ Ship [" VERT "0" RESET "/" VERT "%d" RESET "] ║                       ║ Shot [" VERT "%d" RESET "] ║\n", partie, manche, nombreBateau, essai);
+  puts("╚══════════════╩════════════╩═══════════════════════╩══════════╝");
   puts("");
 }
 
 
+void toucheMs(int toucheMsg){
+  switch(toucheMsg){
+    case 1:
+      puts(VERT "╔══════════════════════════════════════════════════════════════╗");
+      puts("║ " BLANC "Touché ! Vous avez atteind votre cible. " VERT "                     ║");
+      puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+      puts("");
+
+      sleep(1);
+
+      system("clear");
+
+      toucheMsg = 0;
+      break;
+    case 2:
+      puts(ROUGE "╔══════════════════════════════════════════════════════════════╗");
+      puts("║ " BLANC "Raté ! Vous n'avez pas atteind votre cible. " ROUGE "                 ║");
+      puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+      puts("");
+
+      sleep(1);
+
+      system("clear");
+
+      toucheMsg = 0;
+      break;
+    default:
+      break;
+  }
+}
 
 //Partie entré et sortie
 
@@ -204,51 +222,6 @@ int modeDeSelectionReseau(void){
 
   return condition;
 }
-
-/*int modeDeSelectionReseau(void){
-  int x, y, z;
-  do{
-    puts("Sélectionnez une option :");
-    puts(NNOIR "[" VERT "1" NNOIR "] Rejoindre un serveur");
-    puts("[" VERT "2" NNOIR "] Héberger un serveur" RESET);
-    puts("");
-    printf("=> " JAUNE);
-    scanf("%d", &x);
-    puts("" RESET);
-    if(x == 1){
-      do{
-        puts("Saisissez l'adresse IP du serveur (true / false) : ");
-        puts("");
-        printf("=> " JAUNE);
-        scanf("%d", &y);
-        puts("" RESET);
-        if(y == true){
-          z = true;
-        }else{
-          puts(ROUGE "Erreur => L'adresse erroné, veuillez recommencer" RESET);
-          puts("");
-          z = false;
-        }
-      }while(z != true);
-      z = true;
-    }else if(x == 2){
-        if (chk_w() == false) {
-          puts("Impossible d'afficher votre IP");
-        } else {
-          printf("Voici l'adresse IP à partager avec le client : " VERT); ip();
-          puts("" RESET);
-        }
-      z = true;
-    }else{
-      puts(ROUGE "Erreur => Saisie incorrecte, veuillez répondre par 1 ou 2" RESET);
-      puts("");
-      z = false;
-    }
-  }while(z != true);
-  
-  return x;
-}
-*/
 
 int modeDeSelectionMap(void){
 
@@ -328,11 +301,11 @@ void initialisationTableau1(int dimension, int tableau[9][9]){
   memset(tableau, 0, sizeof(int) * dimension * dimension);
   
 
-  tableau[8 - 1][8 - 1] = 2;
+  /*tableau[8 - 1][8 - 1] = 2;
   tableau[4 - 1][2 - 1] = 1;
   tableau[2 - 1][7 - 1] = 3;
   tableau[4 - 1][5 - 1] = 4;
-  tableau[4 - 1][6 - 1] = 4;
+  tableau[4 - 1][6 - 1] = 4;*/
 }
 
 /*void initialisationTableau2(int dimension){
@@ -347,10 +320,11 @@ void initialisationTableau1(int dimension, int tableau[9][9]){
   tableau[4][6] = 4;
 }*/
 
-void initialisationBateau(int dimension, int bateau[9][9]){
+int initialisationBateau(int dimension, int bateau[9][9], int bateauNombre){
  
   int axeX, axeY;
   int pourcentage = (dimension * dimension) * 0.17;
+  bateauNombre = 0;
 
   memset(bateau, 0, sizeof(int) * dimension * dimension);
 
@@ -363,21 +337,44 @@ void initialisationBateau(int dimension, int bateau[9][9]){
     }while(bateau[axeX][axeY] ==  4);
 
     bateau[axeX][axeY] =  4;
+
+    bateauNombre++;
   }
+
+  return bateauNombre;
 }
 
 
 
-int calcul(int axeX, int axeY, int tir){
+int calculateur(int axeX, int axeY, int tableau[9][9], int bateau[9][9], int bateauNombre, int manche, int partie, int win, int essai, int touche, int toucheMsg){
 
-  int tableau1[axeX][axeY], bateau[axeX][axeY];
+  if(win != true){
+    // Valisation du nombre de manche
 
-  if(tableau1[axeX][axeY] == bateau[axeX][axeY]){
-    tableau1[axeX][axeY] = 2;
+    essai++;
     
+    // Actualisation des valeurs du tableau d'affichage
+
+    if(tableau[axeX][axeY] == bateau[axeX][axeY]){
+      tableau[axeX][axeY] = 1;
+      
+      toucheMsg = 2;
+    }else{
+      tableau[axeX][axeY] = 2;
+
+      toucheMsg = 1;
+    }
+
+    if(touche == bateauNombre){
+      win = true;
+    }
+
   }else{
-    tableau1[axeX][axeY] = 1;
+    partie++;
+    
+    win = false;
   }
+
   
-  tir++;
+  return toucheMsg;
 }

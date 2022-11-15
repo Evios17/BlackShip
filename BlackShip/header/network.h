@@ -1,1 +1,1 @@
-int ipaddress();
+void ip();
