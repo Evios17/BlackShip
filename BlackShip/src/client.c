@@ -53,7 +53,7 @@ int main(void){
       printf("Enter a valid IP to connect to : \n");
       // scanf pour l'adresse IP
     } else {
-      ip();
+      printf("Votre ip :"); ip(); printf("\n");
     }
   }
   
