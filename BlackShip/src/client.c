@@ -19,7 +19,7 @@
 int main(void){
   int dimension, manche;                                                                                        // Initialisation des variables de paramètre
   int tableau1[9][9], tableau2[9][9], bateau[9][9], tir[9][9], axeX, axeY;                                      // Initialisation des variables de tableau
-  int partie = 0, win, essai = 0, touche, toucheMsg, bateauNombre;                                                                                   // Initialisation des variables d'information statistique
+  int partie, win, essai, touche, toucheMsg, bateauNombre;                                                                                   // Initialisation des variables d'information statistique
   int condition1, condition2;                                                                                   // Initialisation des variables tampons
   
   
@@ -33,18 +33,18 @@ int main(void){
     manche =  modeDeSelectionManche();                                                                          // Selection du nombre de manche
 
     do{                                                                                                         // Début du jeux
+      initialisationCompteur(&touche, &essai);
       initialisationTableau1(dimension, tableau1);                                                              // Iniialisation du plateau de jeux
       bateauNombre = initialisationBateau(dimension, bateau, bateauNombre);                                                                  // Initilisation du placement des bateaux
       do{
         toucheMs(toucheMsg);
-        afficheur(dimension, tableau1, bateau, essai, manche, partie, bateauNombre);                                            // Affichage du jeux
+        afficheur(dimension, tableau1, bateau, essai, manche, partie, bateauNombre, win, touche);                                            // Affichage du jeux
         commande(&axeX, &axeY);                                                                                   // Saisie des coordonnées
-        toucheMsg = calculateur(axeX, axeY, tableau1, bateau, bateauNombre, manche, partie, win, essai, touche, toucheMsg);
-        afficheur(dimension, tableau1, bateau, essai, manche, partie, bateauNombre);
-        essai++;
+        calculateur(axeX, axeY, tableau1, bateau, bateauNombre, manche, &partie, &win, &touche, &toucheMsg, &essai);
+        afficheur(dimension, tableau1, bateau, essai, manche, partie, bateauNombre, win, touche);
       }while(win != true);
 
-      afficheur(dimension, tableau1, bateau, essai, manche, partie, bateauNombre);
+      afficheur(dimension, tableau1, bateau, essai, manche, partie, bateauNombre, win, touche);
     }while(partie != manche);
   }else{
     condition2 = modeDeSelectionReseau();

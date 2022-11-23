@@ -34,7 +34,7 @@ void entete(void){
   puts("");
 }
 
-void afficheur(int dimension, int tableau[9][9], int bateau[9][9], int essai, int manche, int partie, int nombreBateau){
+void afficheur(int dimension, int tableau[9][9], int bateau[9][9], int essai, int manche, int partie, int nombreBateau, int win, int touche){
   
   int axeX, axeY, bascule = false;
 
@@ -44,6 +44,15 @@ void afficheur(int dimension, int tableau[9][9], int bateau[9][9], int essai, in
     puts(MAGENTA "╔══════════════════════════════════════════════════════════════╗");
     puts("║                                                              ║");
     printf("║ " BLANC "The playerX win the game ! Score = x/x | Time = Xmn          " MAGENTA "║\n", manche, manche);
+    puts("║                                                              ║");
+    puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+    puts("");
+  }
+
+  if(win == true){
+    puts(MAGENTA "╔══════════════════════════════════════════════════════════════╗");
+    puts("║                                                              ║");
+    printf("║ " BLANC "The playerX win the round ! Score = x/x | Time = Xmn          " MAGENTA "║\n", manche, manche);
     puts("║                                                              ║");
     puts("╚══════════════════════════════════════════════════════════════╝" RESET);
     puts("");
@@ -125,7 +134,7 @@ void afficheur(int dimension, int tableau[9][9], int bateau[9][9], int essai, in
   puts("");
 
   puts("╔══════════════╦════════════╦═══════════════════════╦══════════╗");
-printf("║ Sleeve [" VERT "%d" RESET "/" VERT "%d" RESET "] ║ Ship [" VERT "0" RESET "/" VERT "%d" RESET "] ║                       ║ Shot [" VERT "%d" RESET "] ║\n", partie, manche, nombreBateau, essai);
+printf("║ Sleeve [" VERT "%d" RESET "/" VERT "%d" RESET "] ║ Ship [" VERT "%d" RESET "/" VERT "%d" RESET "] ║                       ║ Shot [" VERT "%d" RESET "] ║\n", partie, manche, touche, nombreBateau, essai);
   puts("╚══════════════╩════════════╩═══════════════════════╩══════════╝");
   puts("");
 }
@@ -135,7 +144,7 @@ void toucheMs(int toucheMsg){
   switch(toucheMsg){
     case 1:
       puts(VERT "╔══════════════════════════════════════════════════════════════╗");
-      puts("║ " BLANC "Touché ! Vous avez atteind votre cible. " VERT "                     ║");
+      puts("║ " BLANC "Touché ! Vous avez atteint votre cible. " VERT "                     ║");
       puts("╚══════════════════════════════════════════════════════════════╝" RESET);
       puts("");
 
@@ -147,7 +156,7 @@ void toucheMs(int toucheMsg){
       break;
     case 2:
       puts(ROUGE "╔══════════════════════════════════════════════════════════════╗");
-      puts("║ " BLANC "Raté ! Vous n'avez pas atteind votre cible. " ROUGE "                 ║");
+      puts("║ " BLANC "Raté ! Vous n'avez pas atteint votre cible. " ROUGE "                 ║");
       puts("╚══════════════════════════════════════════════════════════════╝" RESET);
       puts("");
 
@@ -157,6 +166,18 @@ void toucheMs(int toucheMsg){
 
       toucheMsg = 0;
       break;
+    case 3:
+        puts(ROUGE "╔══════════════════════════════════════════════════════════════╗");
+        puts("║ " BLANC "Error vous ne pouvez pas tire au meme coordonnées " ROUGE "                 ║");
+        puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+        puts("");
+
+        sleep(1);
+
+        system("clear");
+
+        toucheMsg = 0;
+        break;
     default:
       break;
   }
@@ -296,6 +317,11 @@ void commande(int *axeX, int *axeY){
 
 //Partie logique
 
+void initialisationCompteur(int *touche, int *essai){
+  (*touche) = 0;
+  (*essai) = 0;
+}
+
 void initialisationTableau1(int dimension, int tableau[9][9]){
 
   memset(tableau, 0, sizeof(int) * dimension * dimension);
@@ -346,35 +372,35 @@ int initialisationBateau(int dimension, int bateau[9][9], int bateauNombre){
 
 
 
-int calculateur(int axeX, int axeY, int tableau[9][9], int bateau[9][9], int bateauNombre, int manche, int partie, int win, int essai, int touche, int toucheMsg){
+void calculateur(int axeX, int axeY, int tableau[9][9], int bateau[9][9], int bateauNombre, int manche, int *partie, int *win, int *touche, int *toucheMsg, int *essai){
 
-  if(win != true){
-    // Valisation du nombre de manche
-
-    essai++;
-    
+  if((*win) != true){
     // Actualisation des valeurs du tableau d'affichage
-
-    if(tableau[axeX][axeY] == bateau[axeX][axeY]){
-      tableau[axeX][axeY] = 1;
-      
-      toucheMsg = 2;
-    }else{
-      tableau[axeX][axeY] = 2;
-
-      toucheMsg = 1;
+    if((*touche) == bateauNombre){
+      (*win) = true;
     }
 
-    if(touche == bateauNombre){
-      win = true;
+    if(tableau[axeX][axeY] == 0){
+        if(tableau[axeX][axeY] == bateau[axeX][axeY]){
+            tableau[axeX][axeY] = 1;
+
+            (*toucheMsg) = 2;
+        }else{
+            tableau[axeX][axeY] = 2;
+
+            (*toucheMsg) = 1;
+            (*touche)++;
+        }
+        (*essai)++;
+    }else if(tableau[axeX][axeY] == 1){
+        (*toucheMsg) = 3;
+    }else if(tableau[axeX][axeY] == 2){
+        (*toucheMsg) = 3;
     }
 
   }else{
-    partie++;
-    
-    win = false;
-  }
+    (*partie)++;
 
-  
-  return toucheMsg;
+    (*win) = false;
+  }
 }
