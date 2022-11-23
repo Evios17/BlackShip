@@ -3,28 +3,12 @@
 #include <stdbool.h>
 #include "network.h"
 
- void ip () {
-     FILE *file;
-     int c;
+void ip () {
+    char ip[20];
+    FILE *ipcmd = popen("echo $(hostname -I | awk '{print $1}')", "r");
+    
+    fscanf(ipcmd, "%s", ip);
+    pclose(ipcmd);
 
-     system("echo $(hostname -I | awk '{print $1}') > ip.tmp");
-     file = fopen("ip.tmp", "r");
-
-     while ((c = fgetc(file)) != EOF)
-     {
-         printf("%c", c);
-     }
-     fclose(file);
-     remove("ip.tmp");    
- }
-
- int chk_w () {
-     FILE *chk;
-     chk = fopen ("check", "w");
-     remove("check");
-     if (chk == NULL) {
-         return false;
-     } else {
-         return true;
-     }
+    printf("%s",ip);
  }
