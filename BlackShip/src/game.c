@@ -27,9 +27,9 @@ void entete(void){
   puts("╠══════════════════════════════════════════════════════════════╣");
   puts("║ " GRIS "Description :" RESET "                                                ║");
   puts("║                                                              ║");
-  puts("║ " GRIS " - Welcome to BlackShip, a solo naval battle where     " RESET "      ║\n║ " GRIS "   multiplayer playable in an online terminal" RESET "                ║");
-  puts("║ " GRIS "   de commande." RESET "                                              ║");
-  puts("║ " GRIS " - This game was made in C as part of a academic " RESET "            ║\n║ " GRIS "   learning project" RESET "                                          ║");
+  puts("║ " GRIS " - Welcome to BlackShip, a solo or multiplayer battleship" RESET "    ║\n║ " GRIS "   playable on a prompt command" RESET "                              ║");
+  puts("║ " GRIS "                " RESET "                                             ║");
+  puts("║ " GRIS " - This game was made in C as part of an academic " RESET "           ║\n║ " GRIS "   learning project" RESET "                                          ║");
   puts("╚══════════════════════════════════════════════════════════════╝");
   puts("");
 }
