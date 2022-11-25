@@ -4,7 +4,7 @@
 //#include <string.h>
 #include <stdbool.h>
 //#include <time.h>
-//#include <unistd.h>
+#include <unistd.h>
 
 //Préprocessus pour socket
 
@@ -20,8 +20,7 @@ int main(void){
   int dimension, manche;                                                                                        // Initialisation des variables de paramètre
   int tableau1[9][9], tableau2[9][9], bateau[9][9], tir[9][9], axeX, axeY;                                      // Initialisation des variables de tableau
   int partie, win, essai, touche, toucheMsg, bateauNombre;                                                                                   // Initialisation des variables d'information statistique
-  int condition1, condition2;                                                                                   // Initialisation des variables tampons
-  
+  int condition1, condition2;
   
   system("clear");                                                                                              // Nettoyage du terminal
 
@@ -33,7 +32,11 @@ int main(void){
     manche =  modeDeSelectionManche();                                                                          // Selection du nombre de manche
 
     do{                                                                                                         // Début du jeux
-      initialisationCompteur(&touche, &essai);
+      touche = 0;
+      essai = 0;
+      win = 0;
+      toucheMsg = 0;
+
       initialisationTableau1(dimension, tableau1);                                                              // Iniialisation du plateau de jeux
       bateauNombre = initialisationBateau(dimension, bateau, bateauNombre);                                                                  // Initilisation du placement des bateaux
       do{
@@ -45,6 +48,8 @@ int main(void){
       }while(win != true);
 
       afficheur(dimension, tableau1, bateau, essai, manche, partie, bateauNombre, win, touche);
+      partie++;
+      sleep(2);
     }while(partie != manche);
   }else{
     condition2 = modeDeSelectionReseau();

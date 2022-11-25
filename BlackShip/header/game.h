@@ -6,7 +6,6 @@ int modeDeSelectionReseau(void);
 int modeDeSelectionMap(void);
 int modeDeSelectionManche(void);
 void commande(int *axeX, int *axeY);
-void initialisationCompteur(int *touche, int *essai);
 void initialisationTableau1(int dimension, int tableau[9][9]);
 int initialisationBateau(int dimension, int bateau[9][9], int bateauNombre);
 void calculateur(int axeX, int axeY, int tableau[9][9], int bateau[9][9], int bateauNombre, int manche, int *partie, int *win, int *touche, int *toucheMsg, int *essai);

@@ -317,11 +317,6 @@ void commande(int *axeX, int *axeY){
 
 //Partie logique
 
-void initialisationCompteur(int *touche, int *essai){
-  (*touche) = 0;
-  (*essai) = 0;
-}
-
 void initialisationTableau1(int dimension, int tableau[9][9]){
 
   memset(tableau, 0, sizeof(int) * dimension * dimension);
@@ -376,9 +371,6 @@ void calculateur(int axeX, int axeY, int tableau[9][9], int bateau[9][9], int ba
 
   if((*win) != true){
     // Actualisation des valeurs du tableau d'affichage
-    if((*touche) == bateauNombre){
-      (*win) = true;
-    }
 
     if(tableau[axeX][axeY] == 0){
         if(tableau[axeX][axeY] == bateau[axeX][axeY]){
@@ -398,8 +390,11 @@ void calculateur(int axeX, int axeY, int tableau[9][9], int bateau[9][9], int ba
         (*toucheMsg) = 3;
     }
 
+    if((*touche) == bateauNombre){
+      (*win) = true;
+    }
+
   }else{
-    (*partie)++;
 
     (*win) = false;
   }
