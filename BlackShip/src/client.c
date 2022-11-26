@@ -31,6 +31,8 @@ int main(void){
     dimension = modeDeSelectionMap();                                                                           // Selection de la dimention de la map
     manche =  modeDeSelectionManche();                                                                          // Selection du nombre de manche
 
+    partie = 0;
+
     do{                                                                                                         // Début du jeux
       touche = 0;
       essai = 0;
@@ -51,6 +53,8 @@ int main(void){
       partie++;
       sleep(2);
     }while(partie != manche);
+    
+    afficheur(dimension, tableau1, bateau, essai, manche, partie, bateauNombre, win, touche);
   }else{
     condition2 = modeDeSelectionReseau();
 
