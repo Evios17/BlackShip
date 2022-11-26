@@ -1,0 +1,11 @@
+void entete(void);
+void afficheur(int dimension, int tableau[9][9], int bateau[9][9], int essai, int manche, int partie, int bateauNombre, int win, int touche);
+void toucheMs(int toucheMsg);
+int modeDeJeux(void);
+int modeDeSelectionReseau(void);
+int modeDeSelectionMap(void);
+int modeDeSelectionManche(void);
+void commande(int *axeX, int *axeY);
+void initialisationTableau1(int dimension, int tableau[9][9]);
+int initialisationBateau(int dimension, int bateau[9][9], int bateauNombre);
+void calculateur(int axeX, int axeY, int tableau[9][9], int bateau[9][9], int bateauNombre, int manche, int *partie, int *win, int *touche, int *toucheMsg, int *essai);

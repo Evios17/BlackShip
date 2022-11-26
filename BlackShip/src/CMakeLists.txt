@@ -1,25 +1,24 @@
 
 # Nous voulons un cmake "récent" pour utiliser les dernières fonctionnalités
-cmake_minimum_required(VERSION 3.7.2)
+
+cmake_minimum_required(VERSION 3.18.4)
 
 # Ici on définit le répertoire qui contiendra l'exécutable
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/build/)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/lib)
 
+# Création librairie
 
-file( GLOB APP_SOURCES ${CMAKE_HOME_DIRECTORY}/src/*.c )
-foreach( testsourcefile ${APP_SOURCES} )
-    # get_filename_component, to cut off .c
-  	get_filename_component(testname ${testsourcefile} NAME_WE) 
-    add_executable(${testname}  ${testsourcefile})
-        
-    # Pour compiler avec des options spécifiques
-    # target_compile_options(${testname} PUBLIC -Wall -pedantic -Werror -Wextra)
+add_library(network network.c)
+target_include_directories(network PUBLIC ${CMAKE_SOURCE_DIR}/header)
 
-    # Si vous voulez rajouter une bibliothèque
-    target_link_libraries( ${testname} -lncurses )    
+add_library(game game.c)
+target_include_directories(game PUBLIC ${CMAKE_SOURCE_DIR}/header)
 
-    # cible install ... pour copier le programme dans /usr/local/bin
-    # install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/${testname}
-    # DESTINATION bin
-    # RENAME ${CMAKE_PROJECT_NAME}-${testname})
-endforeach ()
+# Création exécutable
+
+add_executable(client client.c)
+target_include_directories(client PUBLIC ${CMAKE_SOURCE_DIR}/header)
+target_link_libraries(client PRIVATE network)
+target_link_libraries(client PRIVATE game)

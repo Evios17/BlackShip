@@ -1,0 +1,12 @@
+./BlackShip/build
+./BlackShip/CMakeFiles
+./BlackShip/lib
+
+
+./BlackShip/src/CMakeFiles
+./BlackShip/src/cmake_install.cmake
+./BlackShip/src/Makefile
+
+./BlackShip/cmake_install.cmake
+./BlackShip/CMakeCache.txt
+./BlackShip/Makefile

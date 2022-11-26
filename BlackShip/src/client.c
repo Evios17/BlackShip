@@ -1,134 +1,69 @@
 //Préprocessus principaux
 #include <stdio.h>
+#include <stdlib.h>
+//#include <string.h>
 #include <stdbool.h>
-#include <ncurses.h>
+//#include <time.h>
+#include <unistd.h>
 
 //Préprocessus pour socket
-#include <string.h>
+
 
 //Préprocessus annexe
-#include "couleur.h"
-
-
-
-void entete(void) {
-  puts("");
-  puts("╦══════════════════════════════════════════════════════════════╦");
-  puts("╬ V1.1                     " VERT "BlackShip" RESET "                           ╬");
-  puts("╬══════════════════════════════════════════════════════════════╬");
-  puts("╬ " NNOIR "Description :" RESET "                                                ╬");
-  puts("╬                                                              ╬");
-  puts("╬ " NNOIR " - Bienvenu dans BlackShip, un bataille navale solo ou " RESET "      ╬\n╬ " NNOIR "   multi joueurs jouable dans un terminal en ligne" RESET "           ╬");
-  puts("╬ " NNOIR "   de commande." RESET "                                              ╬");
-  puts("╬ " NNOIR " - Ce jeu a été réalisé en C dans le cadre d'un projet" RESET "       ╬\n╬ " NNOIR "   d'apprentissage universitaire." RESET "                            ╬");
-  puts("╩══════════════════════════════════════════════════════════════╩");
-}
-
-int modeDeJeux(void){
-  int x, y;
-
-  do{
-    puts("");
-    puts("Choisissez votre mode de jeux :");
-    puts(NNOIR "[" VERT "1" NNOIR "] Lancer une partie en solo");
-    puts("[" VERT "2" NNOIR "] Lancer une partie en multi-joueurs" RESET);
-
-    puts("");
-    printf("=> " JAUNE);
-    scanf("%d", &x);
-    puts("" RESET);
-
-    if(x == 1){
-      y = true;
-    }else if(x == 2){
-      y = true;
-    }else{
-      puts(ROUGE "Erreur => Saisie incorrecte, veuillez répondre par 1 ou 2" RESET);
-      y = false;
-    }
-  }while(y != true);
-
-
-  return x;
-}
-
-int modeDeSelectionReseau(void){
-  int x, y;
-
-  do{
-    puts("");
-    puts("Sélectionnez une option :");
-    puts(NNOIR "[" VERT "1" NNOIR "] Rejoindre un serveur");
-    puts("[" VERT "2" NNOIR "] Héberger un serveur" RESET);
-
-    puts("");
-    printf("=> " JAUNE);
-    scanf("%d", &x);
-    puts("" RESET);
-
-    if(x == 1){
-      y = true;
-    }else if(x == 2){
-      y = true;
-    }else{
-      puts(ROUGE "Erreur => Saisie incorrecte, veuillez répondre par 1 ou 2" RESET);
-      y = false;
-    }
-  }while(y != true);
-
-
-  return x;
-}
-
-
-int modeDeSelectionMap(void){
-  int x=1, y=1;
-
-  do{
-    puts("");
-    puts("Indiquez la taille de la map (min 5, max 10) :");
-
-    puts("");
-    printf("=> " JAUNE);
-    scanf("%d", &x);
-    puts("" RESET);
-
-    if (x >= 5 && x <= 10){
-      y = true;
-    }else{
-      puts(ROUGE "Erreur => Saisie incorrecte, veuillez saisir une valeur entre 5 et 10" RESET);
-      y = false;
-    }
-  }while(y != true);
-
-
-  return x;
-}
-
-int initialisation(int taille){
-  int x[0][0], y[0][0];
-
-  x[0][0] = x[0][taille];
-  y[0][0] = y[0][taille];
-  
-}
+//#include "color.h"
+#include "game.h"
+#include "network.h"
+//#include <ncurses.h>
 
 
 int main(void){
-  int x, y;
+  int dimension, manche;                                                                                        // Initialisation des variables de paramètre
+  int tableau1[9][9], tableau2[9][9], bateau[9][9], tir[9][9], axeX, axeY;                                      // Initialisation des variables de tableau
+  int partie, win, essai, touche, toucheMsg, bateauNombre;                                                                                   // Initialisation des variables d'information statistique
+  int condition1, condition2;
+  
+  system("clear");                                                                                              // Nettoyage du terminal
 
-  entete();
-  x = modeDeJeux();
+  entete();                                                                                                     // Affichage de l'entete
+  condition1 = modeDeJeux();                                                                                    // Selection du mode de jeux (solo/multi)
 
-  if(x == true){
-    y = modeDeSelectionMap();
-    initialisation(y);
+  if(condition1 == 1){                                                                                          // Condition en fonction du mode de jeux
+    dimension = modeDeSelectionMap();                                                                           // Selection de la dimention de la map
+    manche =  modeDeSelectionManche();                                                                          // Selection du nombre de manche
 
-    do{
-      /* code */
-    } while (/* condition */);
+    partie = 0;
+
+    do{                                                                                                         // Début du jeux
+      touche = 0;
+      essai = 0;
+      win = 0;
+      toucheMsg = 0;
+
+      initialisationTableau1(dimension, tableau1);                                                              // Iniialisation du plateau de jeux
+      bateauNombre = initialisationBateau(dimension, bateau, bateauNombre);                                                                  // Initilisation du placement des bateaux
+      do{
+        toucheMs(toucheMsg);
+        afficheur(dimension, tableau1, bateau, essai, manche, partie, bateauNombre, win, touche);                                            // Affichage du jeux
+        commande(&axeX, &axeY);                                                                                   // Saisie des coordonnées
+        calculateur(axeX, axeY, tableau1, bateau, bateauNombre, manche, &partie, &win, &touche, &toucheMsg, &essai);
+        afficheur(dimension, tableau1, bateau, essai, manche, partie, bateauNombre, win, touche);
+      }while(win != true);
+
+      afficheur(dimension, tableau1, bateau, essai, manche, partie, bateauNombre, win, touche);
+      partie++;
+      sleep(2);
+    }while(partie != manche);
+    
+    afficheur(dimension, tableau1, bateau, essai, manche, partie, bateauNombre, win, touche);
   }else{
-    modeDeSelectionReseau();
+    condition2 = modeDeSelectionReseau();
+
+    if(condition2 == 1){
+      printf("Enter a valid IP to connect to : \n");
+      // scanf pour l'adresse IP
+    } else {
+      printf("Votre ip :"); ip(); printf("\n");
+    }
   }
   
 
