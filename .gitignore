@@ -23,9 +23,14 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 .vscode
+<<<<<<< HEAD
 
 Blackship/executables
 Blackship/librairies
 
 executables
 librairies
+=======
+build
+lib
+>>>>>>> 2f61bd0 (added .vscode to gitignore)
