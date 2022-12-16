@@ -18,7 +18,7 @@ target_include_directories(game PUBLIC ${CMAKE_SOURCE_DIR}/header)
 
 # Création exécutable
 
-add_executable(client client.c)
-target_include_directories(client PUBLIC ${CMAKE_SOURCE_DIR}/header)
-target_link_libraries(client PRIVATE network)
-target_link_libraries(client PRIVATE game)
+add_executable(blackship principal.c)
+target_include_directories(blackship PUBLIC ${CMAKE_SOURCE_DIR}/header)
+target_link_libraries(blackship PRIVATE network)
+target_link_libraries(blackship PRIVATE game)
