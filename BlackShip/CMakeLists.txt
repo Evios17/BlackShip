@@ -8,4 +8,4 @@ project(Blackship)
 
 # tous les fichiers sources sont dans src/
 
-add_subdirectory(src)
+add_subdirectory(source)

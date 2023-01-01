@@ -12,12 +12,15 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/librairies/)
 
 add_library(client client.c)
 target_include_directories(client PUBLIC ${CMAKE_SOURCE_DIR}/entete)
+target_link_libraries(client PRIVATE jeu)
 
 add_library(serveur serveur.c)
 target_include_directories(serveur PUBLIC ${CMAKE_SOURCE_DIR}/entete)
+target_link_libraries(serveur PRIVATE jeu)
 
 add_library(solo solo.c)
 target_include_directories(solo PUBLIC ${CMAKE_SOURCE_DIR}/entete)
+target_link_libraries(solo PRIVATE jeu)
 
 add_library(jeu jeu/jeu-affichage.c jeu/jeu-controleur.c jeu/jeu-E-S.c)
 target_include_directories(jeu PUBLIC ${CMAKE_SOURCE_DIR}/entete)

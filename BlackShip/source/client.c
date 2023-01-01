@@ -13,29 +13,25 @@
 #include <signal.h>
 #include <stdbool.h>
 
-
-//Préprocessus pour socket
-
-
 //Préprocessus annexe
 #include "jeu.h"
 #include "couleur.h"
 
 
 void client () {
-  /*int dimension, manche;                                                                                        // Initialisation des variables de paramètre
-  int tableau1[9][9], tableau2[9][9], bateau[9][9], tir[9][9], axeX, axeY;                                      // Initialisation des variables de tableau
-  int partie, win, essai, touche, toucheMsg, bateauNombre;*/                                                                                   // Initialisation des variables d'information statistique
-  int condition1, condition2, chk, chk1, chkno, no;
-  char r;
-  
-  system("clear");                                                                                              // Nettoyage du terminal
+    /*int dimension, manche;                                                                                // Initialisation des variables de paramètre
+    int tableau1[9][9], tableau2[9][9], bateau[9][9], tir[9][9], axeX, axeY;                                // Initialisation des variables de tableau
+    int partie, win, essai, touche, toucheMsg, bateauNombre;*/                                              // Initialisation des variables d'information statistique
+    int condition1, condition2, check, check1, checkno, no;
+    char SERVERIP[16], r;
+    int socketClient;
+    system("clear");                                                                                        // Nettoyage du terminal
 
 
   /* DEMANDE D'ADRESSE IP DU SERVEUR */
 
-    while (chk == 0) {                                                                                      // Demande de saisie de l'IP du serveur
-        if (chkno == 1) {chk1 = 0;}
+    while (check == 0) {                                                                                      // Demande de saisie de l'IP du serveur
+        if (checkno == 1) {check1 = 0;}
         printf("Entrez l'adresse du serveur : \n"JAUNE);
         scanf("%16s",SERVERIP);
         printf(RESET);
@@ -44,7 +40,7 @@ void client () {
         while ((no = getchar()) != '\n');
         }
 
-            while (chk1 == 0) {                                                                             // Switch case de confirmation de syntaxe
+            while (check1 == 0) {                                                                             // Switch case de confirmation de syntaxe
                 printf("Vous avez bien tapé l'adresse ? (Y/n) ");
                 scanf("%c",&r);
                 
@@ -58,13 +54,13 @@ void client () {
                         case '\n' :
                         case 'Y' :
                         case 'y' :
-                            chk = 1;
-                            chk1 = 1;
+                            check = 1;
+                            check1 = 1;
                         break;
                         case 'N' :
                         case 'n' :
-                            chk1 = 1;
-                            chkno = 1;
+                            check1 = 1;
+                            checkno = 1;
                         break;
                         default :
                             puts("Merci de rentrer une réponse valide (y ou n)");
@@ -82,7 +78,7 @@ void client () {
     addrClient.sin_family = AF_INET;                                                                        // IPV4
     addrClient.sin_port = htons(30000);                                                                     // Port du serveur
     if (connect(socketClient, (const struct sockaddr *)&addrClient, sizeof(addrClient)) == -1 ) {           // Connexion au socket du serveur
-        puts(ROUGE"Impossible de se connecter au socket distant."RESET);                                      // "If" pour savoir si la connexion s'est effectué
+        puts(ROUGE"Impossible de se connecter au socket distant."RESET);                                    // "If" pour savoir si la connexion s'est effectué
         exit(EXIT_FAILURE);
     }
     printf(VERT"Connexion avec le serveur effectuée.\n"RESET);

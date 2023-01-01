@@ -33,7 +33,7 @@ void solo () {
     do{
       toucheMs(jeu);
       afficheur(parametre, jeu);
-      commande(jeu);
+      commande(&jeu);
       calculateur(&parametre, &jeu);
       afficheur(parametre, jeu);
 

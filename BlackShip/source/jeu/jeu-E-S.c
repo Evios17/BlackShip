@@ -8,9 +8,8 @@
 
 
 //Préprocessus annexe
-#include "couleur.h"
 #include "jeu.h"
-
+#include "couleur.h"
 
 
 
@@ -26,7 +25,7 @@ int modeDeJeux(void) {
     puts("");
     printf("➤  " JAUNE);
     scanf("%d", &condition);
-    puts("" RESET);
+    puts(RESET);
 
     if(condition == 1){
       bascule = true;
@@ -56,7 +55,7 @@ int modeDeSelectionReseau(void) {
     puts("");
     printf("➤  " JAUNE);
     scanf("%d", &condition);
-    puts("" RESET);
+    puts(RESET);
 
     if(condition == 1){
       condition = true;
@@ -87,7 +86,7 @@ int modeDeSelectionMap(void) {
     puts("");
     printf("➤  " JAUNE);
     scanf("%d", &condition);
-    puts("" RESET);
+    puts(RESET);
 
     if (condition >= 5 && condition <= 9){
       bascule = true;
@@ -114,7 +113,7 @@ int modeDeSelectionManche(void) {
     puts("");
     printf("➤  " JAUNE);
     scanf("%d", &condition);
-    puts("" RESET);
+    puts(RESET);
 
     if (condition >= 1 && condition <= 6){
       bascule = true;
@@ -131,19 +130,19 @@ int modeDeSelectionManche(void) {
   return condition;
 }
 
-void commande(int *axeX, int *axeY) {
+void commande(struct jeu *jeu) {
 
   puts("Entrez la ligne de tir : ");
   puts("");
-  printf("➤  " JAUNE);
-  scanf("%d", axeX);
-  (*axeX)--;
-  puts("" RESET);
+  printf("➤  "JAUNE);
+  scanf("%d", jeu->axeX);
+  (jeu->axeX)--;
+  puts(RESET);
 
   puts("Entrez la colonne de tir : ");
   puts("");
-  printf("➤  " JAUNE);
-  scanf("%d", axeY);
-  (*axeY)--;
-  puts("" RESET);
+  printf("➤  "JAUNE);
+  scanf("%d", jeu->axeY);
+  (jeu->axeY)--;
+  puts(RESET);
 }

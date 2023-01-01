@@ -4,17 +4,15 @@
 #include <stdbool.h>
 //#include <unistd.h>
 
-// Préprocessus secondaire
-
 // Préprocessus annexe
 #include "jeu.h"
-//#include "couleur.h"
+#include "couleur.h"
 
 
 int main (int argc, char const *argv[]) {
     
     #ifdef _WIN32
-        printf(ROUGE"Ce programme n'est pas compatible avec les système Windows\n");
+        printf(ROUGE"Ce programme n'est pas compatible avec les systèmes Windows\n");
         return EXIT_FAILURE;
     #endif
 

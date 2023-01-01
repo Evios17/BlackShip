@@ -27,25 +27,25 @@ void entete (void) {
   puts("");
 }
 
-void afficheur(int dimension, int tableau[9][9], int bateau[9][9], int essai, int manche, int partie, int nombreBateau, int win, int touche){
+void afficheur(struct parametre parametre, struct jeu jeu){
   
   int axeX, axeY, bascule = false;
 
   system("clear");
 
-  if (partie == manche) {
+  if (jeu.mancheCpt == parametre.manche) {
     puts(MAGENTA "╔══════════════════════════════════════════════════════════════╗");
     puts("║                                                              ║");
-    printf("║ " BLANC "The playerX win the game ! Score = x/x | Time = Xmn          " MAGENTA "║\n", manche, manche);
+    printf("║ " BLANC "The playerX win the game ! Score = x/x | Time = Xmn          " MAGENTA "║\n");
     puts("║                                                              ║");
     puts("╚══════════════════════════════════════════════════════════════╝" RESET);
     puts("");
   }
 
-  if (win == true) {
+  if (jeu.gagner == true) {
     puts(MAGENTA "╔══════════════════════════════════════════════════════════════╗");
     puts("║                                                              ║");
-    printf("║ " BLANC "The playerX win the round ! Score = x/x | Time = Xmn          " MAGENTA "║\n", manche, manche);
+    printf("║ " BLANC "The playerX win the round ! Score = x/x | Time = Xmn          " MAGENTA "║\n");
     puts("║                                                              ║");
     puts("╚══════════════════════════════════════════════════════════════╝" RESET);
     puts("");
@@ -53,20 +53,20 @@ void afficheur(int dimension, int tableau[9][9], int bateau[9][9], int essai, in
   
 
   puts("╔═════════╦════════════════╦════════════════╦══════════════════╗");
-  printf("║  Score  ║ " JAUNE "Joueur 1" RESET " [" VERT "1" RESET "/" VERT "%d" RESET "] ║ " BLEU "Joueur 2" RESET " [" VERT "0" RESET "/" VERT "%d" RESET "] ║                  ║\n", manche, manche);
+  printf("║  Score  ║ " JAUNE "Joueur 1" RESET " [" VERT "1" RESET "/" VERT "%d" RESET "] ║ " BLEU "Joueur 2" RESET " [" VERT "0" RESET "/" VERT "%d" RESET "] ║                  ║\n", parametre.manche, parametre.manche);
   puts("╚═════════╩════════════════╩════════════════╩══════════════════╝");
   puts("");
 
-  for (axeX = 0; axeX <= dimension; axeX++){
+  for (axeX = 0; axeX <= parametre.dimension; axeX++){
       printf(NJAUNE "%d  " RESET, axeX);
   }
   puts("");
 
-  for (axeY = 0; axeY < dimension; axeY++){
+  for (axeY = 0; axeY < parametre.dimension; axeY++){
     printf(NJAUNE  "%d  " RESET, axeY + 1);
     
-    for (axeX = 0; axeX < dimension; axeX++){
-      switch(bateau[axeX][axeY]){
+    for (axeX = 0; axeX < parametre.dimension; axeX++){
+      switch(jeu.tableau[axeX][axeY]){
         case 0 :
             printf("~  ");
             break;
@@ -74,12 +74,9 @@ void afficheur(int dimension, int tableau[9][9], int bateau[9][9], int essai, in
             printf( "   " );
             break;
         case 2 :
-            printf(NVERT "×  " RESET);
-            break;
-        case 3 :
             printf(NROUGE "×  " RESET);
             break;
-        case 4 :
+        case 3 :
             printf(NCYAN "•  " RESET);
             break;
         default:
@@ -92,16 +89,16 @@ void afficheur(int dimension, int tableau[9][9], int bateau[9][9], int essai, in
   puts("");
 
 
-  for (axeX = 0; axeX <= dimension; axeX++){
+  for (axeX = 0; axeX <= parametre.dimension; axeX++){
       printf(NBLEU "%d  " RESET, axeX);
   }
   puts("");
 
-  for (axeY = 0; axeY < dimension; axeY++){
+  for (axeY = 0; axeY < parametre.dimension; axeY++){
     printf(NBLEU  "%d  " RESET, axeY + 1);
     
-    for (axeX = 0; axeX < dimension; axeX++){
-      switch(tableau[axeX][axeY]){
+    for (axeX = 0; axeX < parametre.dimension; axeX++){
+      switch(jeu.tableau[axeX][axeY]){
         case 0 :
             printf("~  ");
             break;
@@ -112,10 +109,7 @@ void afficheur(int dimension, int tableau[9][9], int bateau[9][9], int essai, in
             printf(NVERT "×  " RESET);
             break;
         case 3 :
-            printf(NROUGE "×  " RESET);
-            break;
-        case 4 :
-            printf(NCYAN "•  " RESET);
+            printf("~  ");
             break;
         default:
             printf("~  ");
@@ -127,15 +121,15 @@ void afficheur(int dimension, int tableau[9][9], int bateau[9][9], int essai, in
   puts("");
 
   puts("╔══════════════╦════════════╦═══════════════════════╦══════════╗");
-printf("║ Manche [" VERT "%d" RESET "/" VERT "%d" RESET "] ║ Bateau [" VERT "%d" RESET "/" VERT "%d" RESET "] ║                       ║ Tir [" VERT "%d" RESET "] ║\n", partie, manche, touche, nombreBateau, essai);
+printf("║ Manche [" VERT "%d" RESET "/" VERT "%d" RESET "] ║ Bateau [" VERT "%d" RESET "/" VERT "%d" RESET "] ║                       ║ Tir [" VERT "%d" RESET "] ║\n", jeu.mancheCpt, parametre.manche, jeu.toucheCpt, jeu.bateauCpt, jeu.essaiCpt);
   puts("╚══════════════╩════════════╩═══════════════════════╩══════════╝");
   puts("");
 }
 
 
 
-void toucheMs(int toucheMsg){
-  switch(toucheMsg){
+void toucheMs(struct jeu jeu){
+  switch(jeu.toucheMsg){
     case 1:
       puts(VERT "╔══════════════════════════════════════════════════════════════╗");
       puts("║ " BLANC "Touché ! Vous avez atteint votre cible. " VERT "                     ║");
@@ -146,7 +140,7 @@ void toucheMs(int toucheMsg){
 
       system("clear");
 
-      toucheMsg = 0;
+      jeu.toucheMsg = 0;
       break;
     case 2:
       puts(ROUGE "╔══════════════════════════════════════════════════════════════╗");
@@ -158,7 +152,7 @@ void toucheMs(int toucheMsg){
 
       system("clear");
 
-      toucheMsg = 0;
+      jeu.toucheMsg = 0;
       break;
     case 3:
         puts(ROUGE "╔══════════════════════════════════════════════════════════════╗");
@@ -170,7 +164,7 @@ void toucheMs(int toucheMsg){
 
         system("clear");
 
-        toucheMsg = 0;
+        jeu.toucheMsg = 0;
         break;
     default:
       break;

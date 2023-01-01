@@ -44,14 +44,21 @@ int initialisationBateau(struct parametre parametre, struct jeu jeu) {
 
 
 
-void calculateur (struct parametre *parametre, struct jeu *jeu) {
+void calculateur(struct parametre *parametre, struct jeu *jeu) {
 
   // pointés : mancheCpt, gagné, toucheCpt, toucheMessage, essai
   // pas pointés : axe x, axe y, tableau, bateauCpt, manche
 
   int manche = parametre->manche;
 
-  int tableau[9][9] = jeu->tableau;
+  int tableau[9][9];
+
+  for (int i = 0; i < 9 ; i++) {
+    for (int j = 0; j < 9 ; j++) {
+      tableau[i][j] = jeu->tableau[i][j];
+    }
+  }
+  
   int axeX = jeu->axeX;
   int axeY = jeu->axeY;
   int bateauCpt = jeu->bateauCpt;

@@ -4,7 +4,6 @@
 #include <string.h>
 #include <stdbool.h>
 #include <unistd.h>
-
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -17,6 +16,7 @@
 #include "couleur.h"
 
 void serveur () {
+    int socketClient, socketServer;
     memset(&socketServer,0,sizeof(socketServer));                                                           // Mise à zéro du socket Server
     memset(&socketClient,0,sizeof(socketClient));                                                           // Mise à zéro du socket Client
 
