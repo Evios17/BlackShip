@@ -1,71 +1,91 @@
 //Préprocessus principaux
 #include <stdio.h>
 #include <stdlib.h>
-//#include <string.h>
-#include <stdbool.h>
-//#include <time.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <arpa/inet.h>
 #include <unistd.h>
+#include <pthread.h>
+#include <signal.h>
+#include <stdbool.h>
+
 
 //Préprocessus pour socket
 
 
 //Préprocessus annexe
-//#include "color.h"
-#include "game.h"
-#include "network.h"
-//#include <ncurses.h>
+#include "jeu.h"
+#include "couleur.h"
 
 
-int main(void){
-  int dimension, manche;                                                                                        // Initialisation des variables de paramètre
+void client () {
+  /*int dimension, manche;                                                                                        // Initialisation des variables de paramètre
   int tableau1[9][9], tableau2[9][9], bateau[9][9], tir[9][9], axeX, axeY;                                      // Initialisation des variables de tableau
-  int partie, win, essai, touche, toucheMsg, bateauNombre;                                                                                   // Initialisation des variables d'information statistique
-  int condition1, condition2;
+  int partie, win, essai, touche, toucheMsg, bateauNombre;*/                                                                                   // Initialisation des variables d'information statistique
+  int condition1, condition2, chk, chk1, chkno, no;
+  char r;
   
   system("clear");                                                                                              // Nettoyage du terminal
 
-  entete();                                                                                                     // Affichage de l'entete
-  condition1 = modeDeJeux();                                                                                    // Selection du mode de jeux (solo/multi)
 
-  if(condition1 == 1){                                                                                          // Condition en fonction du mode de jeux
-    dimension = modeDeSelectionMap();                                                                           // Selection de la dimention de la map
-    manche =  modeDeSelectionManche();                                                                          // Selection du nombre de manche
+  /* DEMANDE D'ADRESSE IP DU SERVEUR */
 
-    partie = 0;
+    while (chk == 0) {                                                                                      // Demande de saisie de l'IP du serveur
+        if (chkno == 1) {chk1 = 0;}
+        printf("Entrez l'adresse du serveur : \n"JAUNE);
+        scanf("%16s",SERVERIP);
+        printf(RESET);
 
-    do{                                                                                                         // Début du jeux
-      touche = 0;
-      essai = 0;
-      win = 0;
-      toucheMsg = 0;
+        if (r != '\n') {                                                                                    // Permet de "manger" les caractères en trop pour éviter la répétion du switch case
+        while ((no = getchar()) != '\n');
+        }
 
-      initialisationTableau1(dimension, tableau1);                                                              // Iniialisation du plateau de jeux
-      bateauNombre = initialisationBateau(dimension, bateau, bateauNombre);                                                                  // Initilisation du placement des bateaux
-      do{
-        toucheMs(toucheMsg);
-        afficheur(dimension, tableau1, bateau, essai, manche, partie, bateauNombre, win, touche);                                            // Affichage du jeux
-        commande(&axeX, &axeY);                                                                                   // Saisie des coordonnées
-        calculateur(axeX, axeY, tableau1, bateau, bateauNombre, manche, &partie, &win, &touche, &toucheMsg, &essai);
-        afficheur(dimension, tableau1, bateau, essai, manche, partie, bateauNombre, win, touche);
-      }while(win != true);
+            while (chk1 == 0) {                                                                             // Switch case de confirmation de syntaxe
+                printf("Vous avez bien tapé l'adresse ? (Y/n) ");
+                scanf("%c",&r);
+                
+                if (r != '\n') {
+                while ((no = getchar()) != '\n');
+                }
+                
+                    printf("\n");
 
-      afficheur(dimension, tableau1, bateau, essai, manche, partie, bateauNombre, win, touche);
-      partie++;
-      sleep(2);
-    }while(partie != manche);
-    
-    afficheur(dimension, tableau1, bateau, essai, manche, partie, bateauNombre, win, touche);
-  }else{
-    condition2 = modeDeSelectionReseau();
+                    switch (r) {
+                        case '\n' :
+                        case 'Y' :
+                        case 'y' :
+                            chk = 1;
+                            chk1 = 1;
+                        break;
+                        case 'N' :
+                        case 'n' :
+                            chk1 = 1;
+                            chkno = 1;
+                        break;
+                        default :
+                            puts("Merci de rentrer une réponse valide (y ou n)");
+                        break;
+                    }
+            }
+        }
 
-    if(condition2 == 1){
-      printf("Enter a valid IP to connect to : \n");
-      // scanf pour l'adresse IP
-    } else {
-      printf("Votre ip :"); ip(); printf("\n");
+    puts("Tentative de connexion au serveur en cours...");
+
+    memset(&socketClient,0,sizeof(socketClient));                                                           // Mise à zéro du socket du client
+    socketClient = socket(AF_INET, SOCK_STREAM, 0);                                                         // Création du socket IPV4, TCP, ?
+    struct sockaddr_in addrClient;                                                                          // Structure de l'ip du serveur pour le socket
+    addrClient.sin_addr.s_addr = inet_addr(SERVERIP);                                                       // IP du serveur
+    addrClient.sin_family = AF_INET;                                                                        // IPV4
+    addrClient.sin_port = htons(30000);                                                                     // Port du serveur
+    if (connect(socketClient, (const struct sockaddr *)&addrClient, sizeof(addrClient)) == -1 ) {           // Connexion au socket du serveur
+        puts(ROUGE"Impossible de se connecter au socket distant."RESET);                                      // "If" pour savoir si la connexion s'est effectué
+        exit(EXIT_FAILURE);
     }
-  }
-  
+    printf(VERT"Connexion avec le serveur effectuée.\n"RESET);
 
-  return 0;
+
 }

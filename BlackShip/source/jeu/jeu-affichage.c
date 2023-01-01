@@ -13,8 +13,7 @@
 
 
 
-
-void entete(void){
+void entete (void) {
   puts("");
   puts("╔══════════════════════════════════════════════════════════════╗");
   puts("║ V1.1                     " NVERT "BlackShip" RESET "                           ║");
@@ -34,7 +33,7 @@ void afficheur(int dimension, int tableau[9][9], int bateau[9][9], int essai, in
 
   system("clear");
 
-  if(partie == manche){
+  if (partie == manche) {
     puts(MAGENTA "╔══════════════════════════════════════════════════════════════╗");
     puts("║                                                              ║");
     printf("║ " BLANC "The playerX win the game ! Score = x/x | Time = Xmn          " MAGENTA "║\n", manche, manche);
@@ -43,7 +42,7 @@ void afficheur(int dimension, int tableau[9][9], int bateau[9][9], int essai, in
     puts("");
   }
 
-  if(win == true){
+  if (win == true) {
     puts(MAGENTA "╔══════════════════════════════════════════════════════════════╗");
     puts("║                                                              ║");
     printf("║ " BLANC "The playerX win the round ! Score = x/x | Time = Xmn          " MAGENTA "║\n", manche, manche);
@@ -54,7 +53,7 @@ void afficheur(int dimension, int tableau[9][9], int bateau[9][9], int essai, in
   
 
   puts("╔═════════╦════════════════╦════════════════╦══════════════════╗");
-  printf("║  Score  ║ " JAUNE "Player 1" RESET " [" VERT "1" RESET "/" VERT "%d" RESET "] ║ " BLEU "Player 2" RESET " [" VERT "0" RESET "/" VERT "%d" RESET "] ║                  ║\n", manche, manche);
+  printf("║  Score  ║ " JAUNE "Joueur 1" RESET " [" VERT "1" RESET "/" VERT "%d" RESET "] ║ " BLEU "Joueur 2" RESET " [" VERT "0" RESET "/" VERT "%d" RESET "] ║                  ║\n", manche, manche);
   puts("╚═════════╩════════════════╩════════════════╩══════════════════╝");
   puts("");
 
@@ -128,10 +127,11 @@ void afficheur(int dimension, int tableau[9][9], int bateau[9][9], int essai, in
   puts("");
 
   puts("╔══════════════╦════════════╦═══════════════════════╦══════════╗");
-printf("║ Sleeve [" VERT "%d" RESET "/" VERT "%d" RESET "] ║ Ship [" VERT "%d" RESET "/" VERT "%d" RESET "] ║                       ║ Shot [" VERT "%d" RESET "] ║\n", partie, manche, touche, nombreBateau, essai);
+printf("║ Manche [" VERT "%d" RESET "/" VERT "%d" RESET "] ║ Bateau [" VERT "%d" RESET "/" VERT "%d" RESET "] ║                       ║ Tir [" VERT "%d" RESET "] ║\n", partie, manche, touche, nombreBateau, essai);
   puts("╚══════════════╩════════════╩═══════════════════════╩══════════╝");
   puts("");
 }
+
 
 
 void toucheMs(int toucheMsg){
@@ -162,7 +162,7 @@ void toucheMs(int toucheMsg){
       break;
     case 3:
         puts(ROUGE "╔══════════════════════════════════════════════════════════════╗");
-        puts("║ " BLANC "Error vous ne pouvez pas tire au meme coordonnées " ROUGE "                 ║");
+        puts("║ " BLANC "Erreur, vous ne pouvez pas tirer au même coordonnées " ROUGE "                 ║");
         puts("╚══════════════════════════════════════════════════════════════╝" RESET);
         puts("");
 

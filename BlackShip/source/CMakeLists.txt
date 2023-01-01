@@ -5,20 +5,28 @@ cmake_minimum_required(VERSION 3.18.4)
 
 # Ici on définit le répertoire qui contiendra l'exécutable
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/build/)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/executables/)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/librairies/)
 
 # Création librairie
 
-add_library(network network.c)
-target_include_directories(network PUBLIC ${CMAKE_SOURCE_DIR}/header)
+add_library(client client.c)
+target_include_directories(client PUBLIC ${CMAKE_SOURCE_DIR}/entete)
 
-add_library(game game.c)
-target_include_directories(game PUBLIC ${CMAKE_SOURCE_DIR}/header)
+add_library(serveur serveur.c)
+target_include_directories(serveur PUBLIC ${CMAKE_SOURCE_DIR}/entete)
+
+add_library(solo solo.c)
+target_include_directories(solo PUBLIC ${CMAKE_SOURCE_DIR}/entete)
+
+add_library(jeu jeu/jeu-affichage.c jeu/jeu-controleur.c jeu/jeu-E-S.c)
+target_include_directories(jeu PUBLIC ${CMAKE_SOURCE_DIR}/entete)
 
 # Création exécutable
 
-add_executable(blackship principal.c)
-target_include_directories(blackship PUBLIC ${CMAKE_SOURCE_DIR}/header)
-target_link_libraries(blackship PRIVATE network)
-target_link_libraries(blackship PRIVATE game)
+add_executable(Blackship principal.c)
+target_include_directories(Blackship PUBLIC ${CMAKE_SOURCE_DIR}/entete)
+target_link_libraries(Blackship PRIVATE jeu)
+target_link_libraries(Blackship PRIVATE client)
+target_link_libraries(Blackship PRIVATE serveur)
+target_link_libraries(Blackship PRIVATE solo)
