@@ -13,16 +13,31 @@
 
 
 
-void initialisationTableau(struct parametre parametre, struct jeu jeu) {
+void initialisationTableau(struct jeu *jeu) {
+  //memset(&(jeu->tableau[0]), 0, sizeof(int) * parametre.dimension * parametre.dimension);
+  //printf("%x %x", &(jeu->tableau), &(jeu->tableau[0]));
 
-  memset(jeu.tableau, 0, sizeof(int) * parametre.dimension * parametre.dimension);
+  //printf("%d %d", sizeof(jeu->tableau), sizeof(int) * parametre.dimension * parametre.dimension);
+
+  memset(&(jeu->tableau), 0, sizeof(jeu->tableau));
+  //memset(jeu->tableau, 0, sizeof(*(jeu->tableau)) * parametre.dimension * parametre.dimension);
+  //memset(jeu->tableau, 0, sizeof(jeu->tableau));
+
+  /*for (int i = 0; i < 5 ; i++) {
+    for (int j = 0; j < 5 ; j++) {
+      jeu->tableau[i][j] = 0;
+    }
+  }*/
+
+  //for (int i = 0; i < 9*9; i++) { ((int*)&jeu->tableau[0])[i] = i; }
+  
 }
 
-int initialisationBateau(struct parametre parametre, struct jeu jeu) {
+int initialisationBateau(struct parametre parametre, struct jeu *jeu) {
  
   int axeX, axeY;
   int pourcentage = (parametre.dimension * parametre.dimension) * 0.17;
-  jeu.bateauCpt = 0;
+  int bateauCpt = 0;
 
   //memset(jeu.tableau, 0, sizeof(int) * parametre.dimension * parametre.dimension);
 
@@ -32,24 +47,22 @@ int initialisationBateau(struct parametre parametre, struct jeu jeu) {
     do {
       axeX = rand() % parametre.dimension;
       axeY = rand() % parametre.dimension;
-    } while (jeu.tableau[axeX][axeY] ==  3);
+    } while (jeu->tableau[axeX][axeY] == 3);
 
-    jeu.tableau[axeX][axeY] =  3;
+    jeu->tableau[axeX][axeY] =  3;
 
-    jeu.bateauCpt++;
+    bateauCpt++;
   }
 
-  return jeu.bateauCpt;
+  return bateauCpt;
 }
 
 
 
-void calculateur(struct parametre *parametre, struct jeu *jeu) {
+void calculateur(struct jeu *jeu) {
 
   // pointés : mancheCpt, gagné, toucheCpt, toucheMessage, essai
   // pas pointés : axe x, axe y, tableau, bateauCpt, manche
-
-  int manche = parametre->manche;
 
   int tableau[9][9];
 
@@ -65,17 +78,9 @@ void calculateur(struct parametre *parametre, struct jeu *jeu) {
 
   if (jeu->gagner != true) {
     if (tableau[axeX][axeY] == 0) {
-      if (tableau[axeX][axeY] == 3) {
-          tableau[axeX][axeY] = 1;
-
-          jeu->toucheMsg = 2;
-      } else {
-          tableau[axeX][axeY] = 2;
-
-          jeu->toucheMsg = 1;
-          jeu->toucheCpt++;
-      }
-      jeu->gagner++;
+      tableau[axeX][axeY] = 1;
+      jeu->toucheMsg = 2;
+      jeu->essaiCpt++;
 
     } else if (tableau[axeX][axeY] == 1) {
       jeu->toucheMsg = 3;
@@ -83,6 +88,11 @@ void calculateur(struct parametre *parametre, struct jeu *jeu) {
     } else if(tableau[axeX][axeY] == 2) {
       jeu->toucheMsg = 3;
 
+    } else if (tableau[axeX][axeY] == 3) {
+      tableau[axeX][axeY] = 2;
+      jeu->toucheMsg = 1;
+      jeu->toucheCpt++;
+      jeu->essaiCpt++;
     }
     
     if (jeu->toucheCpt == bateauCpt) {

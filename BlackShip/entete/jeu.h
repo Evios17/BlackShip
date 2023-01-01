@@ -2,6 +2,7 @@
 void solo();
 void serveur();
 void client();
+void debug();
 
 // Déclaration des structures
 
@@ -27,17 +28,17 @@ struct jeu{
 
 // Déclaration des protototypes
 
-void entete(void);
+void entete();
 
-int modeDeJeux(void);
-int modeDeSelectionReseau(void);
-int modeDeSelectionMap(void);
-int modeDeSelectionManche(void);
+int modeDeJeux();
+int modeDeSelectionReseau();
+int modeDeSelectionMap();
+int modeDeSelectionManche();
 void commande(struct jeu *jeu);
 
 void afficheur(struct parametre parametre, struct jeu jeu);
 void toucheMs(struct jeu jeu);
 
-void initialisationTableau(struct parametre parametre, struct jeu jeu);
-int initialisationBateau(struct parametre parametre, struct jeu jeu);
-void calculateur(struct parametre *parametre, struct jeu *jeu);
+void initialisationTableau(struct jeu *jeu);
+int initialisationBateau(struct parametre parametre, struct jeu *jeu);
+void calculateur(struct jeu *jeu);

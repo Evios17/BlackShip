@@ -13,7 +13,7 @@
 
 
 
-void entete (void) {
+void entete () {
   puts("");
   puts("╔══════════════════════════════════════════════════════════════╗");
   puts("║ V1.1                     " NVERT "BlackShip" RESET "                           ║");
@@ -29,7 +29,7 @@ void entete (void) {
 
 void afficheur(struct parametre parametre, struct jeu jeu){
   
-  int axeX, axeY, bascule = false;
+  int axeX, axeY;
 
   system("clear");
 

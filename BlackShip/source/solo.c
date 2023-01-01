@@ -5,7 +5,7 @@
 #include <unistd.h>
 
 //Préprocessus pour socket
-
+// kiss daddy
 
 //Préprocessus annexe
 #include "jeu.h"
@@ -27,14 +27,16 @@ void solo () {
     jeu.gagner = 0;
     jeu.toucheMsg = 0;
 
-    initialisationTableau(parametre, jeu);
-    jeu.bateauCpt = initialisationBateau(parametre, jeu);
+    initialisationTableau(&jeu);
+    jeu.bateauCpt = initialisationBateau(parametre, &jeu);
+
+    //printf("je suis passe par la");
 
     do{
       toucheMs(jeu);
       afficheur(parametre, jeu);
       commande(&jeu);
-      calculateur(&parametre, &jeu);
+      calculateur(&jeu);
       afficheur(parametre, jeu);
 
     }while(jeu.gagner != true);

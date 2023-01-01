@@ -26,10 +26,10 @@ int main (int argc, char const *argv[]) {
 
     condition1 = modeDeJeux(); 
 
-    if (condition1 == true) {                                                                   // Mode solo
+    if (condition1 == 1) {                                                                   // Mode solo
         solo();
 
-    } else {                                                                                    // Mode multi
+    } else if (condition1 == 2) {                                                                                    // Mode multi
        condition2 = modeDeSelectionReseau();
 
        if(condition2 == true){
@@ -37,7 +37,11 @@ int main (int argc, char const *argv[]) {
         } else {
             serveur();
         }
+    } else { /*DEBUG MENU*/
+        debug();
     }
+
+    printf("coucoumqsmdqsd");
 
 
     return EXIT_SUCCESS;

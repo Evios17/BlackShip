@@ -13,7 +13,7 @@
 
 
 
-int modeDeJeux(void) {
+int modeDeJeux() {
 
   int condition, bascule;
 
@@ -27,12 +27,25 @@ int modeDeJeux(void) {
     scanf("%d", &condition);
     puts(RESET);
 
+/*    REMETTRE QUAND IL Y A PLUS LE DEBUG
     if(condition == 1){
       bascule = true;
     }else if(condition == 2){
       bascule = true;
     }else{
       puts(NROUGE "[Erreur] Entrée invalide, veuillez répondre par 1 ou 2" RESET);
+
+      bascule = false;
+    }
+*/
+    if(condition == 1){
+      bascule = true;
+    }else if(condition == 2){
+      bascule = true;
+    }else if(condition == 3){
+      bascule = true;
+    }else{
+      puts(NROUGE "[Erreur] Entrée invalide, veuillez répondre par 1, 2 ou 3" RESET);
 
       bascule = false;
     }
@@ -43,7 +56,7 @@ int modeDeJeux(void) {
 }
 
 
-int modeDeSelectionReseau(void) {
+int modeDeSelectionReseau() {
 
   int condition, bascule;
 
@@ -76,7 +89,7 @@ int modeDeSelectionReseau(void) {
   return condition;
 }
 
-int modeDeSelectionMap(void) {
+int modeDeSelectionMap() {
 
   int condition, bascule;
 
@@ -103,7 +116,7 @@ int modeDeSelectionMap(void) {
   return condition++;
 }
 
-int modeDeSelectionManche(void) {
+int modeDeSelectionManche() {
 
   int condition, bascule;
 
@@ -136,13 +149,13 @@ void commande(struct jeu *jeu) {
   puts("");
   printf("➤  "JAUNE);
   scanf("%d", jeu->axeX);
-  (jeu->axeX)--;
+  jeu->axeX--;
   puts(RESET);
 
   puts("Entrez la colonne de tir : ");
   puts("");
   printf("➤  "JAUNE);
   scanf("%d", jeu->axeY);
-  (jeu->axeY)--;
+  jeu->axeY--;
   puts(RESET);
 }
