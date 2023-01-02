@@ -148,14 +148,15 @@ void commande(struct jeu *jeu) {
   puts("Entrez la ligne de tir : ");
   puts("");
   printf("➤  "JAUNE);
-  scanf("%d", jeu->axeX);
-  jeu->axeX--;
+  scanf("%d", &jeu->axeX);
   puts(RESET);
 
   puts("Entrez la colonne de tir : ");
   puts("");
   printf("➤  "JAUNE);
-  scanf("%d", jeu->axeY);
-  jeu->axeY--;
+  scanf("%d", &jeu->axeY);
   puts(RESET);
+
+  jeu->axeX--;
+  jeu->axeY--;
 }

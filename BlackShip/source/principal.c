@@ -41,8 +41,6 @@ int main (int argc, char const *argv[]) {
         debug();
     }
 
-    printf("coucoumqsmdqsd");
-
 
     return EXIT_SUCCESS;
 }

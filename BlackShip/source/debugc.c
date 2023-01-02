@@ -30,7 +30,7 @@ void debug () {
     //printf("je suis passe par la");
 
 
-    for (axeX = 0; axeX < parametre.dimension; axeX++){
+    for (axeX = 0; axeX <= parametre.dimension; axeX++){
       printf(NJAUNE "%d  " RESET, axeX);
     }
     puts("");
@@ -44,6 +44,8 @@ void debug () {
         puts("");
     }
     puts("");
+
+    commande(&jeu);
     
     //printf("Fin de la fonction debug()\n");
 }

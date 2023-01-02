@@ -36,7 +36,7 @@ int modeDeSelectionMap();
 int modeDeSelectionManche();
 void commande(struct jeu *jeu);
 
-void afficheur(struct parametre parametre, struct jeu jeu);
+void afficheur(int modeDeJeux, struct parametre parametre, struct jeu jeu);
 void toucheMs(struct jeu jeu);
 
 void initialisationTableau(struct jeu *jeu);

@@ -64,7 +64,7 @@ void calculateur(struct jeu *jeu) {
   // pointés : mancheCpt, gagné, toucheCpt, toucheMessage, essai
   // pas pointés : axe x, axe y, tableau, bateauCpt, manche
 
-  int tableau[9][9];
+  /*int tableau[9][9];
 
   for (int i = 0; i < 9 ; i++) {
     for (int j = 0; j < 9 ; j++) {
@@ -74,28 +74,28 @@ void calculateur(struct jeu *jeu) {
   
   int axeX = jeu->axeX;
   int axeY = jeu->axeY;
-  int bateauCpt = jeu->bateauCpt;
+  int bateauCpt = jeu->bateauCpt;*/
 
   if (jeu->gagner != true) {
-    if (tableau[axeX][axeY] == 0) {
-      tableau[axeX][axeY] = 1;
+    if (jeu->tableau[jeu->axeY][jeu->axeX] == 0) {
+      jeu->tableau[jeu->axeY][jeu->axeX] = 1;
       jeu->toucheMsg = 2;
       jeu->essaiCpt++;
 
-    } else if (tableau[axeX][axeY] == 1) {
+    } else if (jeu->tableau[jeu->axeY][jeu->axeX] == 1) {
       jeu->toucheMsg = 3;
 
-    } else if(tableau[axeX][axeY] == 2) {
+    } else if(jeu->tableau[jeu->axeY][jeu->axeX] == 2) {
       jeu->toucheMsg = 3;
 
-    } else if (tableau[axeX][axeY] == 3) {
-      tableau[axeX][axeY] = 2;
+    } else if (jeu->tableau[jeu->axeY][jeu->axeX] == 3) {
+      jeu->tableau[jeu->axeY][jeu->axeX] = 2;
       jeu->toucheMsg = 1;
       jeu->toucheCpt++;
       jeu->essaiCpt++;
     }
     
-    if (jeu->toucheCpt == bateauCpt) {
+    if (jeu->toucheCpt == jeu->bateauCpt) {
       jeu->gagner = true;
 
     }

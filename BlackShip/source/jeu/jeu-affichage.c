@@ -16,114 +16,196 @@
 void entete () {
   puts("");
   puts("╔══════════════════════════════════════════════════════════════╗");
-  puts("║ V1.1                     " NVERT "BlackShip" RESET "                           ║");
+  puts("║                          " NVERT "BlackShip" RESET "                           ║");
   puts("╠══════════════════════════════════════════════════════════════╣");
   puts("║ " GRIS "Description :" RESET "                                                ║");
   puts("║                                                              ║");
-  puts("║ " GRIS " - Welcome to BlackShip, a solo or multiplayer battleship" RESET "    ║\n║ " GRIS "   playable on a prompt command" RESET "                              ║");
+  puts("║ " GRIS " - Bienvenue dans Blackship, un bataille navale solo et" RESET "      ║\n║    " GRIS "multijoueur jouable en ligne de commande" RESET "                  ║");
   puts("║ " GRIS "                " RESET "                                             ║");
-  puts("║ " GRIS " - This game was made in C as part of an academic " RESET "           ║\n║ " GRIS "   learning project" RESET "                                          ║");
+  puts("║ " GRIS " - Ce jeu a été crée en C, dans le cadre d'un projet   " RESET "      ║\n║ " GRIS "   d'étude universitaire" RESET "                                     ║");
   puts("╚══════════════════════════════════════════════════════════════╝");
   puts("");
 }
 
-void afficheur(struct parametre parametre, struct jeu jeu){
+void afficheur(int modeDeJeux, struct parametre parametre, struct jeu jeu){
   
   int axeX, axeY;
 
   system("clear");
 
-  if (jeu.mancheCpt == parametre.manche) {
-    puts(MAGENTA "╔══════════════════════════════════════════════════════════════╗");
-    puts("║                                                              ║");
-    printf("║ " BLANC "The playerX win the game ! Score = x/x | Time = Xmn          " MAGENTA "║\n");
-    puts("║                                                              ║");
-    puts("╚══════════════════════════════════════════════════════════════╝" RESET);
-    puts("");
-  }
+  if (modeDeJeux == 1) {
+    if (jeu.mancheCpt == parametre.manche) {
+      puts(CYAN "╔══════════════════════════════════════════════════════════════╗");
+      puts("║                                                              ║");
+      puts("║" BLANC "                Vous avez remporté la partie !                " CYAN "║");
+      puts("║                                                              ║");
+      puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+      puts("");
+    }
 
-  if (jeu.gagner == true) {
-    puts(MAGENTA "╔══════════════════════════════════════════════════════════════╗");
-    puts("║                                                              ║");
-    printf("║ " BLANC "The playerX win the round ! Score = x/x | Time = Xmn          " MAGENTA "║\n");
-    puts("║                                                              ║");
-    puts("╚══════════════════════════════════════════════════════════════╝" RESET);
-    puts("");
-  }
-  
-
-  puts("╔═════════╦════════════════╦════════════════╦══════════════════╗");
-  printf("║  Score  ║ " JAUNE "Joueur 1" RESET " [" VERT "1" RESET "/" VERT "%d" RESET "] ║ " BLEU "Joueur 2" RESET " [" VERT "0" RESET "/" VERT "%d" RESET "] ║                  ║\n", parametre.manche, parametre.manche);
-  puts("╚═════════╩════════════════╩════════════════╩══════════════════╝");
-  puts("");
-
-  for (axeX = 0; axeX <= parametre.dimension; axeX++){
-      printf(NJAUNE "%d  " RESET, axeX);
-  }
-  puts("");
-
-  for (axeY = 0; axeY < parametre.dimension; axeY++){
-    printf(NJAUNE  "%d  " RESET, axeY + 1);
+    if (jeu.gagner == true) {
+      puts(MAGENTA "╔══════════════════════════════════════════════════════════════╗");
+      puts("║                                                              ║");
+      puts("║" BLANC "                Vous avez remporté la manche !                " MAGENTA "║");
+      puts("║                                                              ║");
+      puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+      puts("");
+    }
     
-    for (axeX = 0; axeX < parametre.dimension; axeX++){
-      switch(jeu.tableau[axeX][axeY]){
-        case 0 :
-            printf("~  ");
-            break;
-        case 1 :
-            printf( "   " );
-            break;
-        case 2 :
-            printf(NROUGE "×  " RESET);
-            break;
-        case 3 :
-            printf(NCYAN "•  " RESET);
-            break;
-        default:
-            printf("~  ");
-            break;
-      }
+
+    puts("╔══════════════════════════════════════════════════════════════╗");
+    puts("║                     " CYAN "Partie en mode solo" RESET "                      ║");
+    puts("╚══════════════════════════════════════════════════════════════╝");
+    puts("");
+
+
+    for (axeX = 0; axeX <= parametre.dimension; axeX++){
+        printf(NBLEU "%d  " RESET, axeX);
     }
     puts("");
-  }
-  puts("");
 
-
-  for (axeX = 0; axeX <= parametre.dimension; axeX++){
-      printf(NBLEU "%d  " RESET, axeX);
-  }
-  puts("");
-
-  for (axeY = 0; axeY < parametre.dimension; axeY++){
-    printf(NBLEU  "%d  " RESET, axeY + 1);
-    
-    for (axeX = 0; axeX < parametre.dimension; axeX++){
-      switch(jeu.tableau[axeX][axeY]){
-        case 0 :
-            printf("~  ");
-            break;
-        case 1 :
-            printf( "   " );
-            break;
-        case 2 :
-            printf(NVERT "×  " RESET);
-            break;
-        case 3 :
-            printf("~  ");
-            break;
-        default:
-            printf("~  ");
-            break;
+    for (axeY = 0; axeY < parametre.dimension; axeY++){
+      printf(NBLEU  "%d  " RESET, axeY + 1);
+      
+      for (axeX = 0; axeX < parametre.dimension; axeX++){
+        switch(jeu.tableau[axeX][axeY]){
+          case 0 :
+              printf("~  ");
+              break;
+          case 1 :
+              printf( "   " );
+              break;
+          case 2 :
+              printf(NVERT "×  " RESET);
+              break;
+          case 3 :
+              printf("~  ");
+              break;
+          default:
+              printf("~  ");
+              break;
+        }
       }
+      puts("");
     }
     puts("");
-  }
-  puts("");
 
-  puts("╔══════════════╦════════════╦═══════════════════════╦══════════╗");
-printf("║ Manche [" VERT "%d" RESET "/" VERT "%d" RESET "] ║ Bateau [" VERT "%d" RESET "/" VERT "%d" RESET "] ║                       ║ Tir [" VERT "%d" RESET "] ║\n", jeu.mancheCpt, parametre.manche, jeu.toucheCpt, jeu.bateauCpt, jeu.essaiCpt);
-  puts("╚══════════════╩════════════╩═══════════════════════╩══════════╝");
-  puts("");
+    puts("╔══════════════╦══════════════╦═════════════════════╦══════════╗");
+    printf("║ Manche [" VERT "%d" RESET "/" VERT "%d" RESET "] ║ Bateau [" VERT "%d" RESET "/" VERT "%d" RESET "] ║                     ║ Tir [" VERT "%d" RESET "]  ║\n", jeu.mancheCpt, parametre.manche, jeu.toucheCpt, jeu.bateauCpt, jeu.essaiCpt);
+    puts("╚══════════════╩══════════════╩═════════════════════╩══════════╝");
+    puts("");
+
+    if (jeu.mancheCpt == parametre.manche) {
+      puts(CYAN "╔══════════════════════════════════════════════════════════════╗");
+      puts("║                                                              ║");
+      puts("║"BLANC"                Merci d'avoir joué à BlackShip                " CYAN "║");
+      puts("║                                                              ║");
+      puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+      puts("");
+    }
+
+  } else {
+    if (jeu.mancheCpt == parametre.manche) {
+      puts(MAGENTA "╔══════════════════════════════════════════════════════════════╗");
+      puts("║                                                              ║");
+      printf("║ " BLANC "The playerX win the game ! Score = x/x | Time = Xmn          " MAGENTA "║\n");
+      puts("║                                                              ║");
+      puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+      puts("");
+    }
+
+    if (jeu.gagner == true) {
+      puts(MAGENTA "╔══════════════════════════════════════════════════════════════╗");
+      puts("║                                                              ║");
+      printf("║ " BLANC "The playerX win the round ! Score = x/x | Time = Xmn         " MAGENTA "║\n");
+      puts("║                                                              ║");
+      puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+      puts("");
+    }
+    
+
+    puts("╔═════════╦════════════════╦════════════════╦══════════════════╗");
+    printf("║  Score  ║ " JAUNE "Joueur 1" RESET " [" VERT "1" RESET "/" VERT "%d" RESET "] ║ " BLEU "Joueur 2" RESET " [" VERT "0" RESET "/" VERT "%d" RESET "] ║                  ║\n", parametre.manche, parametre.manche);
+    puts("╚═════════╩════════════════╩════════════════╩══════════════════╝");
+    puts("");
+
+    for (axeX = 0; axeX <= parametre.dimension; axeX++){
+        printf(NJAUNE "%d  " RESET, axeX);
+    }
+    puts("");
+
+    for (axeY = 0; axeY < parametre.dimension; axeY++){
+      printf(NJAUNE  "%d  " RESET, axeY + 1);
+      
+      for (axeX = 0; axeX < parametre.dimension; axeX++){
+        switch(jeu.tableau[axeX][axeY]){
+          case 0 :
+              printf("~  ");
+              break;
+          case 1 :
+              printf( "   " );
+              break;
+          case 2 :
+              printf(NROUGE "×  " RESET);
+              break;
+          case 3 :
+              printf(NCYAN "•  " RESET);
+              break;
+          default:
+              printf("~  ");
+              break;
+        }
+      }
+      puts("");
+    }
+    puts("");
+
+
+    for (axeX = 0; axeX <= parametre.dimension; axeX++){
+        printf(NBLEU "%d  " RESET, axeX);
+    }
+    puts("");
+
+    for (axeY = 0; axeY < parametre.dimension; axeY++){
+      printf(NBLEU  "%d  " RESET, axeY + 1);
+      
+      for (axeX = 0; axeX < parametre.dimension; axeX++){
+        switch(jeu.tableau[axeX][axeY]){
+          case 0 :
+              printf("~  ");
+              break;
+          case 1 :
+              printf( "   " );
+              break;
+          case 2 :
+              printf(NVERT "×  " RESET);
+              break;
+          case 3 :
+              printf("~  ");
+              break;
+          default:
+              printf("~  ");
+              break;
+        }
+      }
+      puts("");
+    }
+    puts("");
+
+    puts("╔══════════════╦════════════╦═══════════════════════╦══════════╗");
+    printf("║ Manche [" VERT "%d" RESET "/" VERT "%d" RESET "] ║ Bateau [" VERT "%d" RESET "/" VERT "%d" RESET "] ║                       ║ Tir [" VERT "%d" RESET "] ║\n", jeu.mancheCpt, parametre.manche, jeu.toucheCpt, jeu.bateauCpt, jeu.essaiCpt);
+    puts("╚══════════════╩════════════╩═══════════════════════╩══════════╝");
+    puts("");
+
+    if (jeu.mancheCpt == parametre.manche) {
+      puts(MAGENTA "╔══════════════════════════════════════════════════════════════╗");
+      puts("║                                                              ║");
+      printf("║"BLANC"                Merci d'avoir joué à BlackShip                " MAGENTA "║\n");
+      puts("║                                                              ║");
+      puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+      puts("");
+    }
+  }
 }
 
 
