@@ -16,6 +16,9 @@
 #include "couleur.h"
 
 void serveur () {
+
+    printf("Voici votre ip : "); ip(); printf("\n");
+
     int socketClient, socketServer;
     memset(&socketServer,0,sizeof(socketServer));                                                           // Mise à zéro du socket Server
     memset(&socketClient,0,sizeof(socketClient));                                                           // Mise à zéro du socket Client
@@ -34,6 +37,27 @@ void serveur () {
 
 
 
+
+
+
+
+
+    char msg[50] = "je suce Doro";
+
+    send(socketClient, msg, sizeof(msg), 0);
+
+    puts("Message envoyé.");
+
+    int number[5][5];
+
+    int a = 5, b = 2;
+    char BUFFER[50];
+
+    sprintf(BUFFER,"%d %d",a,b);
+    send(socketClient, BUFFER, sizeof(BUFFER), 0);
+
+
+/*
     struct parametre parametre;
     struct jeu jeu;
     
@@ -69,6 +93,7 @@ void serveur () {
     }while(jeu.mancheCpt != parametre.manche);
     jeu.gagner = false;
     afficheur(2, parametre, jeu);
+*/
 }
 
 void ip () {

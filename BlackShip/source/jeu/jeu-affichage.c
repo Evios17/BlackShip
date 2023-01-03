@@ -218,7 +218,9 @@ void toucheMs(struct jeu jeu){
       puts("╚══════════════════════════════════════════════════════════════╝" RESET);
       puts("");
 
-      sleep(1);
+      printf("Appuyez sur une touche pour continuer .. ");
+      getchar();
+      getchar();
 
       system("clear");
 
@@ -230,24 +232,28 @@ void toucheMs(struct jeu jeu){
       puts("╚══════════════════════════════════════════════════════════════╝" RESET);
       puts("");
 
-      sleep(1);
+      printf("Appuyez sur une touche pour continuer .. ");
+      getchar();
+      getchar();
 
       system("clear");
 
       jeu.toucheMsg = 0;
       break;
     case 3:
-        puts(ROUGE "╔══════════════════════════════════════════════════════════════╗");
-        puts("║ " BLANC "Erreur, vous ne pouvez pas tirer au même coordonnées " ROUGE "                 ║");
-        puts("╚══════════════════════════════════════════════════════════════╝" RESET);
-        puts("");
+      puts(ROUGE "╔══════════════════════════════════════════════════════════════╗");
+      puts("║ " BLANC "Erreur, vous ne pouvez pas tirer au même coordonnées " ROUGE "                 ║");
+      puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+      puts("");
 
-        sleep(1);
+      printf("Appuyez sur une touche pour continuer .. ");
+      getchar();
+      getchar();
 
-        system("clear");
+      system("clear");
 
-        jeu.toucheMsg = 0;
-        break;
+      jeu.toucheMsg = 0;
+      break;
     default:
       break;
   }

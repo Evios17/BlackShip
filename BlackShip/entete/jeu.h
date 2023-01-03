@@ -9,7 +9,7 @@ struct jeu{
   int tableau[9][9];
   int axeX;
   int axeY;
-  
+
   int gagner;
 
   int mancheCpt;
@@ -28,6 +28,7 @@ void client();
 void serveur();
 void debug();
 
+void ip();
 
 void entete();
 
