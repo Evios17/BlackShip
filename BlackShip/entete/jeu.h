@@ -1,9 +1,3 @@
-// Mode de jeux
-void solo();
-void serveur();
-void client();
-void debug();
-
 // Déclaration des structures
 
 struct parametre{
@@ -26,7 +20,14 @@ struct jeu{
   int toucheMsg;
 };
 
+
 // Déclaration des protototypes
+
+void solo();
+void client();
+void serveur();
+void debug();
+
 
 void entete();
 

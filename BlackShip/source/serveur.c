@@ -60,9 +60,10 @@ void serveur () {
         afficheur(2, parametre, jeu);
 
         }while(jeu.gagner != true);
+        
+        jeu.mancheCpt++;
 
         afficheur(2, parametre, jeu);
-        jeu.mancheCpt++;
         sleep(2);
 
     }while(jeu.mancheCpt != parametre.manche);

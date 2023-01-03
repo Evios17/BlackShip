@@ -38,9 +38,10 @@ void solo () {
       afficheur(1, parametre, jeu);
 
     }while(jeu.gagner != true);
+    
+    jeu.mancheCpt++;
 
     afficheur(1, parametre, jeu);
-    jeu.mancheCpt++;
     sleep(2);
 
   }while(jeu.mancheCpt != parametre.manche);
