@@ -17,7 +17,6 @@
 #include "jeu.h"
 #include "couleur.h"
 
-
 void client () {
     /*int dimension, manche;                                                                                // Initialisation des variables de paramètre
     int tableau1[9][9], tableau2[9][9], bateau[9][9], tir[9][9], axeX, axeY;                                // Initialisation des variables de tableau
@@ -25,9 +24,7 @@ void client () {
     int condition1, condition2, check = 0, check1 = 0, checkno = 0, no;
     char SERVERIP[16], r;
     int socketClient;
-    //system("clear");
-    
-    int mode = 2;                                                                                        // Nettoyage du terminal
+    //system("clear");                                                                                        // Nettoyage du terminal
 
 
   /* DEMANDE D'ADRESSE IP DU SERVEUR */
@@ -49,8 +46,6 @@ void client () {
         }
 
             while (check1 == 0) {                                                                             // Switch case de confirmation de syntaxe
-                system("clear");
-                entete();
 
                 puts("Vous avez bien tapé l'adresse ? (Y/n) ");
                 puts("");
@@ -101,17 +96,32 @@ void client () {
     addrClient.sin_family = AF_INET;                                                                        // IPV4
     addrClient.sin_port = htons(30000);                                                                     // Port du serveur
     if (connect(socketClient, (const struct sockaddr *)&addrClient, sizeof(addrClient)) == -1 ) {           // Connexion au socket du serveur
-        puts(ROUGE"Impossible de se connecter au socket distant."RESET);                                    // "If" pour savoir si la connexion s'est effectué
-        exit(EXIT_FAILURE);
+        puts(ROUGE"Impossible de se connecter au serveur distant."RESET);                                      // "If" pour savoir si la connexion s'est effectué
+        close(socketClient);
+
+        sleep(5);
+
+        for ( int recon = 1 ; recon <= 5 ; recon ++ ) {
+            socketClient = socket(AF_INET, SOCK_STREAM, 0);
+            if (connect(socketClient, (const struct sockaddr *)&addrClient, sizeof(addrClient)) == -1 ) {
+                printf(ROUGE"Tentative de connexion n°%d/5 échouée...\n", recon);
+                close(socketClient);
+
+                sleep(5);
+            } else {
+                recon = 6;
+            }
+        }
     }
-    printf(VERT"Connexion avec le serveur effectuée.\n"RESET);
+    printf(VERT"Connexion avec le serveur effectuée, génération des bateaux...\n"RESET);
 
-
+    int inutile; // pour les send et recv après les getchar
 
     struct parametre parametre;
     struct jeu jeu;
 
     char TAMPON[20];
+    int tmp;
 
     recv(socketClient, TAMPON, sizeof(TAMPON), 0);
     sscanf(TAMPON, "%d %d", &parametre.dimension, &parametre.manche);
@@ -123,12 +133,10 @@ void client () {
     int joueur1;
     int joueur2;
 
-    int toucheCpt1;
-    int essaiCpt1;
+    //int essaiCpt;
 
+    int toucheCpt1;
     int toucheCpt2;
-    //int essaiCpt2;
-    //int bateauCpt2;
 
     int tableau1[9][9];
     int tableau2[9][9];
@@ -145,26 +153,61 @@ void client () {
 
         do{
             
-            //recv(socketClient, tour, sizeof(tour), 0);
-
+            recv(socketClient, &jeu.tour, sizeof(jeu.tour), 0);
+            
             if (jeu.tour == true) {
-                memcpy(jeu.tableau1, tableau1, sizeof(jeu.tableau1));
-                memcpy(jeu.tableau2, tableau2, sizeof(jeu.tableau2));
-
-                toucheMs(jeu);
-                afficheur(mode, parametre, jeu);
-                commande(&jeu);
-                
-                afficheur(mode, parametre, jeu);
+                jeu.tour = false;
             } else {
+                jeu.tour = true;
+            }
+            
+            
+            if (jeu.tour == false) { 
+                /* TOUR DU SERVEUR */
+                memcpy(jeu.tableau1, tableau1, sizeof(jeu.tableau1));
+                memcpy(jeu.tableau2, tableau2, sizeof(jeu.tableau2));
+            
+
+                jeu.touchePrf = false;
+                //toucheMs(jeu);
+                afficheur(multi, parametre, jeu);
+
+                recv(socketClient, TAMPON, sizeof(TAMPON), 0);
+                sscanf(TAMPON, "%d %d %d %d", &jeu.axeX, &jeu.axeY, &tmp, &jeu.toucheMsg);
+                
+                tableau2[jeu.axeX][jeu.axeY] = tmp;
+
+                afficheur(multi, parametre, jeu);
+                toucheMs(jeu);
+                recv(socketClient, &inutile, sizeof(inutile), 0);
+                send(socketClient, &inutile, sizeof(inutile), 0);
+                
+            } else { 
+                /* TOUR DU CLIENT */
                 memcpy(jeu.tableau1, tableau1, sizeof(jeu.tableau1));
                 memcpy(jeu.tableau2, tableau2, sizeof(jeu.tableau2));
 
-                toucheMs(jeu);
-                afficheur(mode, parametre, jeu);
+
+                jeu.touchePrf = true;
+                //toucheMs(jeu);
+                afficheur(multi, parametre, jeu);
+
                 commande(&jeu);
-                
-                afficheur(mode, parametre, jeu);
+
+                sprintf(TAMPON, "%d %d %d %d", jeu.axeX, jeu.axeY, jeu.toucheCpt, jeu.essaiCpt);
+                send(socketClient, TAMPON, sizeof(TAMPON), 0);
+
+                recv(socketClient, TAMPON, sizeof(TAMPON), 0);
+                sscanf(TAMPON, "%d %d %d %d %d %d", &jeu.axeX, &jeu.axeY, &tmp, &jeu.toucheCpt, &jeu.toucheMsg, &jeu.essaiCpt);
+
+                tableau1[jeu.axeX][jeu.axeY] = tmp;
+
+                afficheur(multi, parametre, jeu);
+                toucheMs(jeu);
+                getchar();
+                getchar();
+                send(socketClient, &inutile, sizeof(&inutile), 0);
+                recv(socketClient, &inutile, sizeof(&inutile), 0);
             }
             
 
@@ -172,12 +215,12 @@ void client () {
         
         jeu.mancheCpt++;
 
-        afficheur(mode, parametre, jeu);
+        afficheur(multi, parametre, jeu);
         sleep(2);
 
     }while(jeu.mancheCpt != parametre.manche);
     jeu.gagner = false;
-    afficheur(mode, parametre, jeu);
+    afficheur(multi, parametre, jeu);
 
 
 
@@ -198,11 +241,4 @@ void client () {
     sscanf(BUFFER,"%d %d",&a,&b);
 
     printf("%d\n",number[a][b]);*/
-
-
-
-
-
-
-    puts("Fin de la communication.");
 }
