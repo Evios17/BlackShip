@@ -1,5 +1,3 @@
-#add_compile_options(-Wall -Wextra -pedantic -Werror)
-
 # Nous voulons un cmake "récent" pour utiliser les dernières fonctionnalités
 
 cmake_minimum_required(VERSION 3.18.4)
@@ -10,4 +8,4 @@ project(Blackship)
 
 # tous les fichiers sources sont dans src/
 
-add_subdirectory(source)
+add_subdirectory(src)
