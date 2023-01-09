@@ -1,3 +1,8 @@
+// Déclaration des defines
+#define serv true
+#define multi false
+#define seul true
+
 // Déclaration des structures
 
 struct parametre{
@@ -14,7 +19,9 @@ struct jeu{
   int gagner;
 
   int tour;
+  int tourTog;
   int toucheMsg;
+  int touchePrf;
   int mancheCpt;
 
   int essaiCpt;
