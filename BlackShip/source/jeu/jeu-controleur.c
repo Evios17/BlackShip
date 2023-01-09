@@ -54,7 +54,7 @@ void calculateur(int modeDeJeux, struct jeu *jeu) {
   int axeX = jeu->axeX;
   int axeY = jeu->axeY;
   int bateauCpt = jeu->bateauCpt;*/
-  if (modeDeJeux == 1) {
+  if (modeDeJeux == true) {
     if (jeu->gagner != true) {
       if (jeu->tableau1[jeu->axeY][jeu->axeX] == 0) {
         jeu->tableau1[jeu->axeY][jeu->axeX] = 1;
@@ -90,33 +90,19 @@ void calculateur(int modeDeJeux, struct jeu *jeu) {
 
         jeu->send = true;
 
-        if (jeu->tour == true) {
-          jeu->tour == false;
-        } else {
-          jeu->tour == true;
-        }
+        jeu->tourTog = true;
 
       } else if (jeu->tableau1[jeu->axeY][jeu->axeX] == 1) {
         jeu->toucheMsg = 3;
 
         jeu->send = false;
-
-        if (jeu->tour == true) {
-          jeu->tour == true;
-        } else {
-          jeu->tour == false;
-        }
+        jeu->tourTog = false;
 
       } else if(jeu->tableau1[jeu->axeY][jeu->axeX] == 2) {
         jeu->toucheMsg = 3;
 
         jeu->send = false;
-
-        if (jeu->tour == true) {
-          jeu->tour == true;
-        } else {
-          jeu->tour == false;
-        }
+        jeu->tourTog = false;
 
       } else if (jeu->tableau1[jeu->axeY][jeu->axeX] == 3) {
         jeu->tableau1[jeu->axeY][jeu->axeX] = 2;
@@ -125,12 +111,7 @@ void calculateur(int modeDeJeux, struct jeu *jeu) {
         jeu->essaiCpt++;
 
         jeu->send = true;
-
-        if (jeu->tour == true) {
-          jeu->tour == false;
-        } else {
-          jeu->tour == true;
-        }
+        jeu->tourTog = false;
       }
       
       

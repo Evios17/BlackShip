@@ -33,7 +33,7 @@ void afficheur(int modeDeJeux, struct parametre parametre, struct jeu jeu){
 
   system("clear");
 
-  if (modeDeJeux == 1) {
+  if (modeDeJeux == true) {
     if (jeu.mancheCpt == parametre.manche) {
       puts(CYAN "╔══════════════════════════════════════════════════════════════╗");
       puts("║                                                              ║");
@@ -91,7 +91,7 @@ void afficheur(int modeDeJeux, struct parametre parametre, struct jeu jeu){
     puts("");
 
     puts("╔══════════════╦══════════════╦═════════════════════╦══════════╗");
-    printf("║ Manche [" VERT "%d" RESET "/" VERT "%d" RESET "] ║ Bateau [" VERT "%d" RESET "/" VERT "%d" RESET "] ║                     ║ Tir [" VERT "%d" RESET "]  ║\n", jeu.mancheCpt, parametre.manche, jeu.toucheCpt, jeu.bateauCpt, jeu.essaiCpt);
+    printf("║ Manches [" VERT "%d" RESET "/" VERT "%d" RESET "] ║ Bateaux [" VERT "%d" RESET "/" VERT "%d" RESET "] ║                     ║ Tir [" VERT "%d" RESET "]  ║\n", jeu.mancheCpt, parametre.manche, jeu.toucheCpt, jeu.bateauCpt, jeu.essaiCpt);
     puts("╚══════════════╩══════════════╩═════════════════════╩══════════╝");
     puts("");
 
@@ -108,7 +108,7 @@ void afficheur(int modeDeJeux, struct parametre parametre, struct jeu jeu){
     if (jeu.gagner == true) {
       puts(MAGENTA "╔══════════════════════════════════════════════════════════════╗");
       puts("║                                                              ║");
-      printf("║ " BLANC "The playerX win the round ! Score = x/x | Time = Xmn         " MAGENTA "║\n");
+      printf("║ " BLANC "Le joueur X a gagné la manche ! Score = x/x | Temps = Xmn         " MAGENTA "║\n");
       puts("║                                                              ║");
       puts("╚══════════════════════════════════════════════════════════════╝" RESET);
       puts("");
@@ -184,7 +184,7 @@ void afficheur(int modeDeJeux, struct parametre parametre, struct jeu jeu){
     puts("");
 
     puts("╔══════════════╦════════════╦═══════════════════════╦══════════╗");
-    printf("║ Manche [" VERT "%d" RESET "/" VERT "%d" RESET "] ║ Bateau [" VERT "%d" RESET "/" VERT "%d" RESET "] ║                       ║ Tir [" VERT "%d" RESET "] ║\n", jeu.mancheCpt, parametre.manche, jeu.toucheCpt, jeu.bateauCpt, jeu.essaiCpt);
+    printf("║ Manches [" VERT "%d" RESET "/" VERT "%d" RESET "] ║ Bateaux [" VERT "%d" RESET "/" VERT "%d" RESET "] ║                       ║ Tir [" VERT "%d" RESET "] ║\n", jeu.mancheCpt, parametre.manche, jeu.toucheCpt, jeu.bateauCpt, jeu.essaiCpt);
     puts("╚══════════════╩════════════╩═══════════════════════╩══════════╝");
     puts("");
 
@@ -210,38 +210,53 @@ void afficheur(int modeDeJeux, struct parametre parametre, struct jeu jeu){
 
 
 void toucheMs(struct jeu jeu){
-  switch(jeu.toucheMsg){
+  switch (jeu.toucheMsg) {
     case 1:
-      puts(VERT "╔══════════════════════════════════════════════════════════════╗");
-      puts("║ " BLANC "Touché ! Vous avez atteint votre cible. " VERT "                     ║");
-      puts("╚══════════════════════════════════════════════════════════════╝" RESET);
-      puts("");
+      if (jeu.touchePrf == true) {
+        puts(VERT "╔══════════════════════════════════════════════════════════════╗");
+        puts("║ " BLANC "Touché ! Vous avez atteint votre cible. " VERT "                     ║");
+        puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+        puts("");
 
-      printf("Appuyez sur une touche pour continuer .. ");
-      getchar();
-      getchar();
+        printf("Appuyez sur une touche pour continuer .. ");
 
-      system("clear");
+      } else {
+        puts(ROUGE "╔══════════════════════════════════════════════════════════════╗");
+        puts("║ " BLANC "Attention ! Votre adversaire a touché un de vos bateaux. " ROUGE "    ║");
+        puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+        puts("");
+
+        printf("En attente de votre adersaire pour continuer .. ");                                                                                          // Ce getchar() est pour avoir ici le caractère entré
+
+      }
+      
 
       jeu.toucheMsg = 0;
       break;
     case 2:
-      puts(ROUGE "╔══════════════════════════════════════════════════════════════╗");
-      puts("║ " BLANC "Raté ! Vous n'avez pas atteint votre cible. " ROUGE "                 ║");
-      puts("╚══════════════════════════════════════════════════════════════╝" RESET);
-      puts("");
+      if (jeu.touchePrf == true) {
+        puts(ROUGE "╔══════════════════════════════════════════════════════════════╗");
+        puts("║ " BLANC "Raté ! Vous n'avez pas atteint votre cible. " ROUGE "                 ║");
+        puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+        puts("");
 
-      printf("Appuyez sur une touche pour continuer .. ");
-      getchar();
-      getchar();
+        printf("Appuyez sur une touche pour continuer .. ");
 
-      system("clear");
+      } else {
+        puts(VERT "╔══════════════════════════════════════════════════════════════╗");
+        puts("║ " BLANC "Échappée Belle ! Votre adversaire n'a pas atteint sa cible. " VERT "  ║");
+        puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+        puts("");
+
+        printf("En attente de votre adersaire pour continuer .. ");
+
+      }
 
       jeu.toucheMsg = 0;
       break;
     case 3:
       puts(ROUGE "╔══════════════════════════════════════════════════════════════╗");
-      puts("║ " BLANC "Erreur, vous ne pouvez pas tirer au même coordonnées " ROUGE "                 ║");
+      puts("║ " BLANC "Erreur, vous ne pouvez pas tirer aux mêmes coordonnées " ROUGE "                 ║");
       puts("╚══════════════════════════════════════════════════════════════╝" RESET);
       puts("");
 
