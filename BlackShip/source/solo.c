@@ -14,8 +14,6 @@ void solo () {
   struct parametre parametre;
   struct jeu jeu;
 
-  int mode = 1;
-
 
   parametre.dimension = modeDeSelectionMap();
   parametre.manche =  modeDeSelectionManche();
@@ -32,19 +30,21 @@ void solo () {
 
     do{
       toucheMs(jeu);
-      afficheur(mode, parametre, jeu);
+      afficheur(seul, parametre, jeu);
       commande(&jeu);
-      calculateur(mode, &jeu);
-      afficheur(mode, parametre, jeu);
+      calculateur(seul, &jeu);
+      afficheur(seul, parametre, jeu);
 
     }while(jeu.gagner != true);
     
     jeu.mancheCpt++;
 
-    afficheur(1, parametre, jeu);
+    afficheur(seul, parametre, jeu);
     sleep(2);
 
   }while(jeu.mancheCpt != parametre.manche);
+
   jeu.gagner = false;
-  afficheur(1, parametre, jeu);
+  
+  afficheur(seul, parametre, jeu);
 }
