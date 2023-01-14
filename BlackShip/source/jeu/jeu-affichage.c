@@ -116,7 +116,7 @@ void afficheur(int modeDeJeux, struct parametre parametre, struct jeu jeu){
     
 
     puts("╔═════════╦════════════════╦════════════════╦══════════════════╗");
-    printf("║  Score  ║ " JAUNE "Joueur 1" RESET " [" VERT "1" RESET "/" VERT "%d" RESET "] ║ " BLEU "Joueur 2" RESET " [" VERT "0" RESET "/" VERT "%d" RESET "] ║                  ║\n", parametre.manche, parametre.manche);
+    printf("║  Score  ║ " JAUNE "Joueur 1" RESET " [" VERT "1" RESET "/" VERT "%d" RESET "] ║ " BLEU "Joueur 2" RESET " [" VERT "0" RESET "/" VERT "%d" RESET "] ║ tour=%d          ║\n", parametre.manche, parametre.manche,jeu.tour);
     puts("╚═════════╩════════════════╩════════════════╩══════════════════╝");
     puts("");
 

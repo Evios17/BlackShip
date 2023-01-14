@@ -10,7 +10,8 @@ struct parametre{
   int manche;
 };
 
-struct jeu{
+struct jeu {
+  int tableauTmp[9][9];
   int tableau1[9][9];
   int tableau2[9][9];
   int axeX;

@@ -115,99 +115,120 @@ void client () {
     }
     printf(VERT"Connexion avec le serveur effectuée, génération des bateaux...\n"RESET);
 
-    int inutile; // pour les send et recv après les getchar
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+    
+    
 
     struct parametre parametre;
     struct jeu jeu;
 
     char TAMPON[20];
+    int inutile; // pour les send et recv après les getchar
     int tmp;
 
-    recv(socketClient, TAMPON, sizeof(TAMPON), 0);
+
+
+    /* RECEPTION DES PARAMÈTRES DU JEU AU CLIENT */
+    recv(socketClient, TAMPON, sizeof(TAMPON), 0);      // recv 1
     sscanf(TAMPON, "%d %d", &parametre.dimension, &parametre.manche);
 
     
 
     jeu.mancheCpt = 0;
 
-    int joueur1;
-    int joueur2;
-
-    //int essaiCpt;
-
-    int toucheCpt1;
-    int toucheCpt2;
-
-    int tableau1[9][9];
-    int tableau2[9][9];
-
     do{
+        jeu.tour = false;
+
         jeu.toucheCpt = 0;
         jeu.essaiCpt = 0;
         jeu.gagner = 0;
         jeu.toucheMsg = 0;
 
-        recv(socketClient, &jeu.bateauCpt, sizeof(jeu.bateauCpt), 0);
-        recv(socketClient, tableau2, sizeof(tableau2), 0);
-        recv(socketClient, tableau1, sizeof(tableau1), 0);
+        jeu.essaiCpt = 0;
+        jeu.toucheCpt = 0;
+
+        recv(socketClient, &jeu.bateauCpt, sizeof(jeu.bateauCpt), 0);       // recv2
+        recv(socketClient, jeu.tableau2, sizeof(jeu.tableau2), 0);                  // recv3
+        recv(socketClient, jeu.tableau1, sizeof(jeu.tableau1), 0);                  // recv4
 
         do{
-            
-            recv(socketClient, &jeu.tour, sizeof(jeu.tour), 0);
-            
+            recv(socketClient, TAMPON, sizeof(TAMPON), 0);
+            sscanf(TAMPON, "%d",&jeu.tour);
+
+            //recv(socketClient, &jeu.tour, sizeof(&jeu.tour), 0);
+
+            //recv(socketClient, &inutile, sizeof(inutile), 0);                       // DEBUG
+            //if ( inutile == 5 ) {                                                   // DEBUG
+            //    printf("\nBon debug reçu. (%d)\n",inutile);                         // DEBUG
+            //} else {                                                                // DEBUG
+            //      printf("\nMauvais debur reçu (%d)\n",inutile);                    // DEBUG
+            //}                                                                       // DEBUG
+            //fflush(stdout);                                                         // DEBUG
+            //sleep(5);                                                               // DEBUG
+
+
+            // Inversion de la variable jeu.tour
             if (jeu.tour == true) {
                 jeu.tour = false;
-            } else {
+            } else if (jeu.tour == false) {
                 jeu.tour = true;
             }
-            
-            
+
+
             if (jeu.tour == false) { 
                 /* TOUR DU SERVEUR */
-                memcpy(jeu.tableau1, tableau1, sizeof(jeu.tableau1));
-                memcpy(jeu.tableau2, tableau2, sizeof(jeu.tableau2));
-            
 
                 jeu.touchePrf = false;
-                //toucheMs(jeu);
+                
+                
                 afficheur(multi, parametre, jeu);
 
-                recv(socketClient, TAMPON, sizeof(TAMPON), 0);
+                recv(socketClient, TAMPON, sizeof(TAMPON), 0);      // recv 6
                 sscanf(TAMPON, "%d %d %d %d", &jeu.axeX, &jeu.axeY, &tmp, &jeu.toucheMsg);
-                
-                tableau2[jeu.axeX][jeu.axeY] = tmp;
+                jeu.tableau2[jeu.axeY][jeu.axeX] = tmp;
 
                 afficheur(multi, parametre, jeu);
-                toucheMs(jeu);
-                recv(socketClient, &inutile, sizeof(inutile), 0);
-                send(socketClient, &inutile, sizeof(inutile), 0);
-                
-            } else { 
-                /* TOUR DU CLIENT */
-                memcpy(jeu.tableau1, tableau1, sizeof(jeu.tableau1));
-                memcpy(jeu.tableau2, tableau2, sizeof(jeu.tableau2));
 
+                toucheMs(jeu);
+                recv(socketClient, &inutile, sizeof(inutile), 0);   // recv 7
+                send(socketClient, &inutile, sizeof(inutile), 0);   // send 8
+                
+            } else {
+                /* TOUR DU CLIENT */
 
                 jeu.touchePrf = true;
-                //toucheMs(jeu);
+
+
                 afficheur(multi, parametre, jeu);
 
                 commande(&jeu);
 
-                sprintf(TAMPON, "%d %d %d %d", jeu.axeX, jeu.axeY, jeu.toucheCpt, jeu.essaiCpt);
-                send(socketClient, TAMPON, sizeof(TAMPON), 0);
-
-                recv(socketClient, TAMPON, sizeof(TAMPON), 0);
-                sscanf(TAMPON, "%d %d %d %d %d %d", &jeu.axeX, &jeu.axeY, &tmp, &jeu.toucheCpt, &jeu.toucheMsg, &jeu.essaiCpt);
-
-                tableau1[jeu.axeX][jeu.axeY] = tmp;
-
+                sprintf(TAMPON, "%d %d", jeu.axeX, jeu.axeY);
+                send(socketClient, TAMPON, sizeof(TAMPON), 0);          //send9
+                
+                recv(socketClient, TAMPON, sizeof(TAMPON), 0);          //recv 10
+                sscanf(TAMPON, "%d %d", &tmp, &jeu.toucheMsg);
+                jeu.tableau1[jeu.axeY][jeu.axeX] = tmp;
+                
                 afficheur(multi, parametre, jeu);
+                
                 toucheMs(jeu);
                 getchar();
                 getchar();
-                send(socketClient, &inutile, sizeof(&inutile), 0);
-                recv(socketClient, &inutile, sizeof(&inutile), 0);
+                send(socketClient, &inutile, sizeof(&inutile), 0);      // send 11
+                recv(socketClient, &inutile, sizeof(&inutile), 0);      // recv 12
             }
             
 
@@ -221,24 +242,4 @@ void client () {
     }while(jeu.mancheCpt != parametre.manche);
     jeu.gagner = false;
     afficheur(multi, parametre, jeu);
-
-
-
-
-    /*char msg[50];
-
-    recv(socketClient, msg, sizeof(msg), 0);
-
-    printf("%s\n",msg);
-
-    int number[5][5];
-    number[5][2] = 9;
-    char BUFFER[50];
-
-    int a, b;
-
-    recv(socketClient, BUFFER, sizeof(BUFFER), 0);
-    sscanf(BUFFER,"%d %d",&a,&b);
-
-    printf("%d\n",number[a][b]);*/
 }
