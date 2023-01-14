@@ -28,11 +28,15 @@ void serveur () {
     parametre.dimension = modeDeSelectionMap();
     parametre.manche =  modeDeSelectionManche();
 
-    system("clear");
-    entete();
 
-    printf("Voici l'adresse IP de votre serveur : " JAUNE);
-    ip();
+    char ip[20];
+    if ( (ipcmd(ip)) == false ) {
+        printf("Voici l'adresse IP de votre serveur : "JAUNE"%s"RESET"\n",ip);
+    } else {
+        printf(ROUGE"Impossible d'afficher votre IP\n"RESET);
+    }
+
+    //ip();
     puts("" RESET);
 
 
@@ -225,12 +229,22 @@ void serveur () {
 
 }
 
-void ip () {
-    char ip[20];
-    FILE *ipcmd = popen("echo $(hostname -I | awk '{print $1}')", "r");
-    
-    fscanf(ipcmd, "%s", ip);
-    pclose(ipcmd);
+int ipcmd (char ip[20]) {
+    int error = false;
 
-    printf("%s",ip);
+    if ((system("hostname -I")) != 0) {
+        error = true;
+    }
+
+    if ( error == false ) {
+        FILE *ipcmd = popen("echo $(hostname -I | awk '{print $1}')", "r");
+        
+        fscanf(ipcmd, "%s", ip);
+        pclose(ipcmd);
+    }
+    
+    system("clear");
+    entete();
+
+    return error;
  }

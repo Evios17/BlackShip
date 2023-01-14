@@ -40,7 +40,7 @@ void client();
 void serveur();
 void debug();
 
-void ip();
+int ipcmd(char ip[20]);
 
 void entete();
 
