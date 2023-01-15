@@ -96,25 +96,6 @@ void afficheur(int modeDeJeux, struct parametre parametre, struct jeu jeu){
     puts("");
 
   } else {
-    if (jeu.mancheCpt == parametre.manche) {
-      puts(MAGENTA "╔══════════════════════════════════════════════════════════════╗");
-      puts("║                                                              ║");
-      printf("║ " BLANC "The playerX win the game ! Score = x/x | Time = Xmn          " MAGENTA "║\n");
-      puts("║                                                              ║");
-      puts("╚══════════════════════════════════════════════════════════════╝" RESET);
-      puts("");
-    }
-
-    if (jeu.gagner == true) {
-      puts(MAGENTA "╔══════════════════════════════════════════════════════════════╗");
-      puts("║                                                              ║");
-      printf("║ " BLANC "Le joueur X a gagné la manche ! Score = x/x | Temps = Xmn         " MAGENTA "║\n");
-      puts("║                                                              ║");
-      puts("╚══════════════════════════════════════════════════════════════╝" RESET);
-      puts("");
-    }
-    
-
     puts("╔═════════╦════════════════╦════════════════╦══════════════════╗");
     printf("║  Score  ║ " JAUNE "Joueur 1" RESET " [" VERT "1" RESET "/" VERT "%d" RESET "] ║ " BLEU "Joueur 2" RESET " [" VERT "0" RESET "/" VERT "%d" RESET "] ║ tour=%d          ║\n", parametre.manche, parametre.manche,jeu.tour);
     puts("╚═════════╩════════════════╩════════════════╩══════════════════╝");
@@ -188,11 +169,21 @@ void afficheur(int modeDeJeux, struct parametre parametre, struct jeu jeu){
     puts("╚══════════════╩════════════╩═══════════════════════╩══════════╝");
     puts("");
 
-    if (jeu.tour == true) {
-      puts("C'est votre tour, à vous de jouer.");
+    if (jeu.mancheCpt == parametre.manche) {
+      puts(MAGENTA "╔══════════════════════════════════════════════════════════════╗");
+      puts("║                                                              ║");
+      printf("║ " BLANC "The playerX win the game ! Score = x/x | Time = Xmn          " MAGENTA "║\n");
+      puts("║                                                              ║");
+      puts("╚══════════════════════════════════════════════════════════════╝" RESET);
       puts("");
-    } else {
-      puts("C'est le tour de votre adversaire, veuillez patienter.");
+    }
+
+    if (jeu.gagner == true) {
+      puts(MAGENTA "╔══════════════════════════════════════════════════════════════╗");
+      puts("║                                                              ║");
+      printf("║ " BLANC "Le joueur X a gagné la manche ! Score = x/x | Temps = Xmn         " MAGENTA "║\n");
+      puts("║                                                              ║");
+      puts("╚══════════════════════════════════════════════════════════════╝" RESET);
       puts("");
     }
   }
@@ -203,6 +194,18 @@ void afficheur(int modeDeJeux, struct parametre parametre, struct jeu jeu){
     puts("║"BLANC"                Merci d'avoir joué à BlackShip                " CYAN "║");
     puts("║                                                              ║");
     puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+    puts("");
+  }
+}
+
+
+
+void tourMs(struct jeu jeu){
+  if (jeu.tour == true) {
+    puts("C'est votre tour, à vous de jouer.");
+    puts("");
+  } else {
+    puts("C'est le tour de votre adversaire, veuillez patienter.");
     puts("");
   }
 }
@@ -261,10 +264,6 @@ void toucheMs(struct jeu jeu){
       puts("");
 
       printf("Appuyez sur une touche pour continuer .. ");
-      getchar();
-      getchar();
-
-      system("clear");
 
       jeu.toucheMsg = 0;
       break;

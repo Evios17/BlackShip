@@ -44,18 +44,19 @@ void calculateur(int modeDeJeux, struct jeu *jeu) {
     if (jeu->gagner != true) {
       if (jeu->tableau1[jeu->axeY][jeu->axeX] == 0) {
         jeu->tableau1[jeu->axeY][jeu->axeX] = 1;
+
         jeu->toucheMsg = 2;
+
         jeu->essaiCpt++;
 
-      } else if (jeu->tableau1[jeu->axeY][jeu->axeX] == 1) {
-        jeu->toucheMsg = 3;
-
-      } else if(jeu->tableau1[jeu->axeY][jeu->axeX] == 2) {
+      } else if (jeu->tableau1[jeu->axeY][jeu->axeX] == 1 || jeu->tableau1[jeu->axeY][jeu->axeX] == 2) {
         jeu->toucheMsg = 3;
 
       } else if (jeu->tableau1[jeu->axeY][jeu->axeX] == 3) {
         jeu->tableau1[jeu->axeY][jeu->axeX] = 2;
+
         jeu->toucheMsg = 1;
+
         jeu->toucheCpt++;
         jeu->essaiCpt++;
       }
@@ -69,7 +70,7 @@ void calculateur(int modeDeJeux, struct jeu *jeu) {
     }
   } else {
     if (jeu->gagner != true) {
-      if (jeu->tableauTmp[jeu->axeY][jeu->axeX] == 0) {
+      if (jeu->tableauTmp[jeu->axeY][jeu->axeX] == 0) { // Tir effectué, pas de bateau
         jeu->tableauTmp[jeu->axeY][jeu->axeX] = 1;
 
         jeu->toucheMsg = 2;
@@ -77,21 +78,21 @@ void calculateur(int modeDeJeux, struct jeu *jeu) {
         jeu->essaiCpt++;
 
         jeu->send = true;
-        jeu->tourTog = true;
+        //jeu->tourTog = false;
+        
+        if (jeu->tour == true) {
+            jeu->tour = false;
+        } else {
+            jeu->tour = true;
+        }
 
-      } else if (jeu->tableauTmp[jeu->axeY][jeu->axeX] == 1) {
+      } else if (jeu->tableauTmp[jeu->axeY][jeu->axeX] == 1 || jeu->tableauTmp[jeu->axeY][jeu->axeX] == 2) { // Tir sur une case qui a déjà été touché
         jeu->toucheMsg = 3;
 
         jeu->send = false;
-        jeu->tourTog = false;
+        //jeu->tourTog = true;
 
-      } else if(jeu->tableauTmp[jeu->axeY][jeu->axeX] == 2) {
-        jeu->toucheMsg = 3;
-
-        jeu->send = false;
-        jeu->tourTog = false;
-
-      } else if (jeu->tableauTmp[jeu->axeY][jeu->axeX] == 3) {
+      } else if (jeu->tableauTmp[jeu->axeY][jeu->axeX] == 3) { // Tir effectué, bateau touché
         jeu->tableauTmp[jeu->axeY][jeu->axeX] = 2;
 
         jeu->toucheMsg = 1;
@@ -100,16 +101,7 @@ void calculateur(int modeDeJeux, struct jeu *jeu) {
         jeu->essaiCpt++;
 
         jeu->send = true;
-        jeu->tourTog = false;
-      }
-
-
-      if (jeu->tourTog == true) {
-          if (jeu->tour == true) {
-              jeu->tour = false;
-          } else if (jeu->tourTog == false) {
-              jeu->tour = true;
-          }
+        //jeu->tourTog = false;
       }
       
       

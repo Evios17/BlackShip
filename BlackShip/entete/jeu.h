@@ -20,7 +20,6 @@ struct jeu {
   int gagner;
 
   int tour;
-  int tourTog;
   int toucheMsg;
   int touchePrf;
   int mancheCpt;
@@ -51,6 +50,7 @@ int modeDeSelectionManche();
 void commande(struct jeu *jeu);
 
 void afficheur(int modeDeJeux, struct parametre parametre, struct jeu jeu);
+void tourMs(struct jeu jeu);
 void toucheMs(struct jeu jeu);
 
 void initialisationTableau(struct parametre parametre, struct jeu *jeu);

@@ -20,7 +20,6 @@
 #define snd 1
 #define rcv 0
 
-
 void netdeb (int a, int b) {
     if (a == snd) {
         printf("\nSEND %d",b);
@@ -40,6 +39,7 @@ void netdeb (int a, int b) {
         sleep(2);
     }
 }
+
 
 void serveur () {
 
@@ -62,7 +62,6 @@ void serveur () {
         printf(ROUGE"Impossible d'afficher votre IP\n"RESET);
     }
 
-    //ip();
     puts("" RESET);
 
 
@@ -153,6 +152,7 @@ void serveur () {
         send(socketClient, jeu.tableau1, sizeof(jeu.tableau1), 0);                                  // send 3 : Envoie du tableau du serveur
         send(socketClient, jeu.tableau2, sizeof(jeu.tableau2), 0);                                  // send 4 : Envoie du tableau du client
         
+        
         do {
 
             //sprintf(TAMPON, "%d", jeu.tour);
@@ -161,7 +161,7 @@ void serveur () {
 
             /* PRE-ENVOI TOUR DEBUG :
 
-            printf("\n------\n");
+            printf("\n------\n");                                   // DEBUG
 
             inutile = 10;                                           // DEBUG
             send(socketClient, &inutile, sizeof(&inutile), 0);      // DEBUG
@@ -171,12 +171,12 @@ void serveur () {
             send(socketClient, &inutile, sizeof(&inutile), 0);      // DEBUG
 
             */
-           
-            netdeb(snd, 5);     // DEBUG
-            send(socketClient, &jeu.tour, sizeof(&jeu.tour), 0);                                     // send 5 : Envoie du tampon contenant la variable de tour
-            printf("\nTOUR=%d\n",jeu.tour);                         // DEBUG
 
-            sleep(5);                                               // DEBUG
+            //netdeb(snd, 5);     // DEBUG
+            send(socketClient, &jeu.tour, sizeof(&jeu.tour), 0);                                     // send 5 : Envoie du tampon contenant la variable de tour
+            //printf("\nTOUR=%d\n",jeu.tour);                         // DEBUG
+
+            //sleep(5);                                               // DEBUG
             
             inutile = 0;
 
@@ -190,35 +190,44 @@ void serveur () {
 
                 memcpy(jeu.tableauTmp, jeu.tableau1, sizeof(jeu.tableauTmp));
 
-                afficheur(multi, parametre, jeu);                                                   // Affiche les tableaux
+                do {
+                    afficheur(multi, parametre, jeu);                                                   // Affiche les tableaux
+                    tourMs(jeu);
 
-                commande(&jeu);                                                                     // Entrée des coordonnées d'attaque
+                    commande(&jeu);                                                                     // Entrée des coordonnées d'attaque
+                    
+                    calculateur(multi, &jeu);                                                           // Comparaison des coordonées reçues et changements de variable
+
+                    if (jeu.send != true) {
+                        toucheMs(jeu);                                                                      // Message qui affiche le résultat du tir
+                        getchar();                                                                          // Mange le précédent retour chariot
+                        getchar();                                                                          // Attente de la pression d'une touche
+                    }
+                    
+                } while (jeu.send != true);
                 
-                calculateur(multi, &jeu);                                                           // Comparaison des coordonées reçues et changements de variable
 
                 memcpy(jeu.tableau1, jeu.tableauTmp, sizeof(jeu.tableau1));                         // Copie du tableau du serveur dans le tableau tampon
 
                 essaiCpt1 = jeu.essaiCpt;
                 toucheCpt1 = jeu.toucheCpt;
 
-                if (jeu.send == true) {                                                             // Test pour savoir si le serveur a touché un bateau
-                    int tmp = jeu.tableau1[jeu.axeY][jeu.axeX];
-                    
-                    sprintf(TAMPON, "%d %d %d %d",jeu.axeX, jeu.axeY, tmp, jeu.toucheMsg);          // X=axeX Y=axeY V=tableau[axeY][axeX] ; Insertion des coordonnées et du message de touche dans le tampon
-                    netdeb(snd, 6);    // DEBUG
-                    send(socketClient, TAMPON, sizeof(TAMPON), 0);                                  // send 6 : Envoie du tempon contenant les coordonées et du message de touche
-                }
+                int tmp = jeu.tableau1[jeu.axeY][jeu.axeX];
+                
+                sprintf(TAMPON, "%d %d %d %d %d",jeu.axeX, jeu.axeY, tmp, jeu.toucheMsg, jeu.gagner);          // X=axeX Y=axeY V=tableau[axeY][axeX] ; Insertion des coordonnées et du message de touche dans le tampon
+                //netdeb(snd, 6);    // DEBUG
+                send(socketClient, TAMPON, sizeof(TAMPON), 0);                                  // send 6 : Envoie du tempon contenant les coordonées et du message de touche
                 
                 afficheur(multi, parametre, jeu);                                                   // Affiche les tableaux
+                
                 toucheMs(jeu);                                                                      // Message qui affiche le résultat du tir
                 getchar();                                                                          // Mange le précédent retour chariot
                 getchar();                                                                          // Attente de la pression d'une touche
-                netdeb(snd, 7);             // DEBUG
+                
+                //netdeb(snd, 7);             // DEBUG
                 send(socketClient, &inutile, sizeof(&inutile), 0);                                  // send 7 : Accusé reception pour mettre en pause le code du côté serveur et client
-                printf("\nINUTILE 0=%d\n", inutile);  // DEBUG
-                netdeb(rcv, 8);             // DEBUG
+                //netdeb(rcv, 8);             // DEBUG
                 recv(socketClient, &inutile, sizeof(&inutile), 0);                                  // recv 8 : Accusé reception pour mettre en pause le code du côté serveur et client
-                printf("\nINUTILE 0=%d\n", inutile);  // DEBUG
 
             } else {
                 /* TOUR DU CLIENT */
@@ -231,15 +240,23 @@ void serveur () {
                 memcpy(jeu.tableauTmp, jeu.tableau2, sizeof(jeu.tableauTmp));
 
                 afficheur(multi, parametre, jeu);                                                   // Affiche les tableaux
+                tourMs(jeu);
 
                 jeu.essaiCpt = essaiCpt2;
                 jeu.toucheCpt = toucheCpt2;
 
-                netdeb(rcv, 9);        // DEBUG
-                recv(socketClient, TAMPON, sizeof(TAMPON), 0);                                      // Reçeption des coordonées de la part du client
-                sscanf(TAMPON, "%d %d", &jeu.axeX, &jeu.axeY);                                      // Extraction des coordonées du tampon
+                do{
+                    //netdeb(rcv, 9);        // DEBUG
+                    recv(socketClient, TAMPON, sizeof(TAMPON), 0);                                      // Reçeption des coordonées de la part du client
+                    sscanf(TAMPON, "%d %d", &jeu.axeX, &jeu.axeY);                                      // Extraction des coordonées du tampon
 
-                calculateur(multi, &jeu);
+                    calculateur(multi, &jeu);
+
+                    sprintf(TAMPON, "%d %d", jeu.send, jeu.toucheMsg);
+                    send(socketClient, TAMPON, sizeof(TAMPON), 0);
+
+                } while (jeu.send != true);
+                
                 
                 memcpy(jeu.tableau2, jeu.tableauTmp, sizeof(jeu.tableau2));                         // Copie du tableau temporaire vers le tableau du client
 
@@ -251,18 +268,18 @@ void serveur () {
 
                 int tmp = jeu.tableauTmp[jeu.axeY][jeu.axeX];
 
-                sprintf(TAMPON, "%d %d", tmp, jeu.toucheMsg);         // X=axeX Y=axeY V=tableau[axeY][axeX]
-                netdeb(snd, 10);        // DEBUG
+                sprintf(TAMPON, "%d %d %d", tmp, jeu.toucheMsg, jeu.gagner);         // X=axeX Y=axeY V=tableau[axeY][axeX]
+                //netdeb(snd, 10);        // DEBUG
                 send(socketClient, TAMPON, sizeof(TAMPON), 0);                                      // send 10 : Envoie du tampon contenu le résultat de l'attaque
 
                 afficheur(multi, parametre, jeu);                                                   // Affiche les tableaux
                 
                 if (jeu.toucheMsg == 1 || jeu.toucheMsg == 2) {                                     // Test de condition
                     toucheMs(jeu);
-                    netdeb(rcv, 11);        // DEBUG
-                    recv(socketClient, &inutile, sizeof(inutile), 0);                               // recv 11 : Accusé reception pour mettre en pause le code du côté serveur et client
-                    netdeb(snd, 12);        // DEBUG
-                    send(socketClient, &inutile, sizeof(inutile), 0);                               // send 12 : Accusé reception pour mettre en pause le code du côté serveur et client
+                    //netdeb(rcv, 11);        // DEBUG
+                    recv(socketClient, &inutile, sizeof(&inutile), 0);                               // recv 11 : Accusé reception pour mettre en pause le code du côté serveur et client
+                    //netdeb(snd, 12);        // DEBUG
+                    send(socketClient, &inutile, sizeof(&inutile), 0);                               // send 12 : Accusé reception pour mettre en pause le code du côté serveur et client
 
                 }
             }
@@ -272,7 +289,6 @@ void serveur () {
         jeu.mancheCpt++;                                                                            // Incrémente la manche
 
         afficheur(multi, parametre, jeu);
-        sleep(2);
 
     }while(jeu.mancheCpt != parametre.manche);
 
