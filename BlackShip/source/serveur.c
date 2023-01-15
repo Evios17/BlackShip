@@ -15,6 +15,32 @@
 #include "jeu.h"
 #include "couleur.h"
 
+
+/* DEBUG SEND ET RECV */
+#define snd 1
+#define rcv 0
+
+
+void netdeb (int a, int b) {
+    if (a == snd) {
+        printf("\nSEND %d",b);
+        if ( b == 5 ) {
+            printf(", NOUVEAU TOUR\n");
+        } else {
+            printf("\n");
+        }
+        sleep(2);
+    } else if (a == rcv) {
+        printf("\nRECV %d", b);
+        if ( b == 5 ) {
+            printf(", NOUVEAU TOUR\n");
+        } else {
+            printf("\n");
+        }
+        sleep(2);
+    }
+}
+
 void serveur () {
 
     
@@ -128,12 +154,32 @@ void serveur () {
         send(socketClient, jeu.tableau2, sizeof(jeu.tableau2), 0);                                  // send 4 : Envoie du tableau du client
         
         do {
+
+            //sprintf(TAMPON, "%d", jeu.tour);
+            //end(socketClient, TAMPON, sizeof(TAMPON), 0);                                          // send 5 : Envoie du tampon contenant la variable de tour
             
-            sprintf(TAMPON, "%d", jeu.tour);
-            send(socketClient, TAMPON, sizeof(TAMPON), 0);                                          // send 5 : Envoie du tampon contenant la variable de tour
+
+            /* PRE-ENVOI TOUR DEBUG :
+
+            printf("\n------\n");
+
+            inutile = 10;                                           // DEBUG
+            send(socketClient, &inutile, sizeof(&inutile), 0);      // DEBUG
+            inutile = 20;                                           // DEBUG
+            send(socketClient, &inutile, sizeof(&inutile), 0);      // DEBUG
+            inutile = 30;                                           // DEBUG
+            send(socketClient, &inutile, sizeof(&inutile), 0);      // DEBUG
+
+            */
+           
+            netdeb(snd, 5);     // DEBUG
+            send(socketClient, &jeu.tour, sizeof(&jeu.tour), 0);                                     // send 5 : Envoie du tampon contenant la variable de tour
+            printf("\nTOUR=%d\n",jeu.tour);                         // DEBUG
+
+            sleep(5);                                               // DEBUG
             
-            //send(socketClient, &jeu.tour, sizeof(&jeu.tour), 0);
-            
+            inutile = 0;
+
             if (jeu.tour == true) {                                                                 // Test pour savoir c'est le tour à qui
                 /* TOUR DU SERVEUR */
 
@@ -158,7 +204,8 @@ void serveur () {
                 if (jeu.send == true) {                                                             // Test pour savoir si le serveur a touché un bateau
                     int tmp = jeu.tableau1[jeu.axeY][jeu.axeX];
                     
-                    sprintf(TAMPON, "%d %d %d %d",jeu.axeX, jeu.axeY, tmp, jeu.toucheMsg);       // X=axeX Y=axeY V=tableau[axeY][axeX] ; Insertion des coordonnées et du message de touche dans le tampon
+                    sprintf(TAMPON, "%d %d %d %d",jeu.axeX, jeu.axeY, tmp, jeu.toucheMsg);          // X=axeX Y=axeY V=tableau[axeY][axeX] ; Insertion des coordonnées et du message de touche dans le tampon
+                    netdeb(snd, 6);    // DEBUG
                     send(socketClient, TAMPON, sizeof(TAMPON), 0);                                  // send 6 : Envoie du tempon contenant les coordonées et du message de touche
                 }
                 
@@ -166,10 +213,12 @@ void serveur () {
                 toucheMs(jeu);                                                                      // Message qui affiche le résultat du tir
                 getchar();                                                                          // Mange le précédent retour chariot
                 getchar();                                                                          // Attente de la pression d'une touche
+                netdeb(snd, 7);             // DEBUG
                 send(socketClient, &inutile, sizeof(&inutile), 0);                                  // send 7 : Accusé reception pour mettre en pause le code du côté serveur et client
+                printf("\nINUTILE 0=%d\n", inutile);  // DEBUG
+                netdeb(rcv, 8);             // DEBUG
                 recv(socketClient, &inutile, sizeof(&inutile), 0);                                  // recv 8 : Accusé reception pour mettre en pause le code du côté serveur et client
-                //printf("\nINUTILE RECV = %d\n", inutile);                               // DEBUG
-                //printf("Je dois reçevoir \"69\"\n");                                    // DEBUG
+                printf("\nINUTILE 0=%d\n", inutile);  // DEBUG
 
             } else {
                 /* TOUR DU CLIENT */
@@ -186,6 +235,7 @@ void serveur () {
                 jeu.essaiCpt = essaiCpt2;
                 jeu.toucheCpt = toucheCpt2;
 
+                netdeb(rcv, 9);        // DEBUG
                 recv(socketClient, TAMPON, sizeof(TAMPON), 0);                                      // Reçeption des coordonées de la part du client
                 sscanf(TAMPON, "%d %d", &jeu.axeX, &jeu.axeY);                                      // Extraction des coordonées du tampon
 
@@ -202,13 +252,16 @@ void serveur () {
                 int tmp = jeu.tableauTmp[jeu.axeY][jeu.axeX];
 
                 sprintf(TAMPON, "%d %d", tmp, jeu.toucheMsg);         // X=axeX Y=axeY V=tableau[axeY][axeX]
+                netdeb(snd, 10);        // DEBUG
                 send(socketClient, TAMPON, sizeof(TAMPON), 0);                                      // send 10 : Envoie du tampon contenu le résultat de l'attaque
 
                 afficheur(multi, parametre, jeu);                                                   // Affiche les tableaux
                 
                 if (jeu.toucheMsg == 1 || jeu.toucheMsg == 2) {                                     // Test de condition
                     toucheMs(jeu);
+                    netdeb(rcv, 11);        // DEBUG
                     recv(socketClient, &inutile, sizeof(inutile), 0);                               // recv 11 : Accusé reception pour mettre en pause le code du côté serveur et client
+                    netdeb(snd, 12);        // DEBUG
                     send(socketClient, &inutile, sizeof(inutile), 0);                               // send 12 : Accusé reception pour mettre en pause le code du côté serveur et client
 
                 }

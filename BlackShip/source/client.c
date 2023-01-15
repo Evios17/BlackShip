@@ -17,6 +17,11 @@
 #include "jeu.h"
 #include "couleur.h"
 
+/* DEBUG SEND ET RECV */
+#define snd 1
+#define rcv 0
+
+
 void client () {
     /*int dimension, manche;                                                                                // Initialisation des variables de paramètre
     int tableau1[9][9], tableau2[9][9], bateau[9][9], tir[9][9], axeX, axeY;                                // Initialisation des variables de tableau
@@ -149,7 +154,7 @@ void client () {
     jeu.mancheCpt = 0;
 
     do{
-        jeu.tour = false;
+        jeu.tour = 56;
 
         jeu.toucheCpt = 0;
         jeu.essaiCpt = 0;
@@ -163,22 +168,39 @@ void client () {
         recv(socketClient, jeu.tableau2, sizeof(jeu.tableau2), 0);                  // recv3
         recv(socketClient, jeu.tableau1, sizeof(jeu.tableau1), 0);                  // recv4
 
+        int deb = 0;                                                    // DEBUG
+        
         do{
-            recv(socketClient, TAMPON, sizeof(TAMPON), 0);
-            sscanf(TAMPON, "%d",&jeu.tour);
 
-            //recv(socketClient, &jeu.tour, sizeof(&jeu.tour), 0);
+            /*  DEBUG PRE-ENVOI TOUR :
+            
+            if (deb == 0) {                                             // DEBUG
+                deb = 1;                                                // DEBUG
+                printf("\nJe passe deb à 1\n");                         // DEBUG
+            } else {                                                    // DEBUG
+                recv(socketClient, &inutile, sizeof(&inutile), 0);      // DEBUG
+                printf("\nJe reçois inutile = %d\n",inutile);           // DEBUG
+            }
+            
+            printf("\n------\n");
 
-            //recv(socketClient, &inutile, sizeof(inutile), 0);                       // DEBUG
-            //if ( inutile == 5 ) {                                                   // DEBUG
-            //    printf("\nBon debug reçu. (%d)\n",inutile);                         // DEBUG
-            //} else {                                                                // DEBUG
-            //      printf("\nMauvais debur reçu (%d)\n",inutile);                    // DEBUG
-            //}                                                                       // DEBUG
-            //fflush(stdout);                                                         // DEBUG
-            //sleep(5);                                                               // DEBUG
+            recv(socketClient, &inutile, sizeof(&inutile), 0);          // DEBUG
+            printf("\nINUTILE 10=%d\n",inutile);                        // DEBUG
+            recv(socketClient, &inutile, sizeof(&inutile), 0);          // DEBUG
+            printf("\nINUTILE 20=%d\n",inutile);                        // DEBUG
+            recv(socketClient, &inutile, sizeof(&inutile), 0);          // DEBUG
+            printf("\nINUTILE 30=%d\n",inutile);                        // DEBUG
+            
+            */
 
+            netdeb(rcv, 5);      // DEBUG
+            recv(socketClient, &jeu.tour, sizeof(&jeu.tour), 0);
+            printf("\nTOUR=%d\n",jeu.tour);                             // DEBUG
 
+            sleep(5);                                                   // DEBUG
+            
+            inutile = 0;
+            
             // Inversion de la variable jeu.tour
             if (jeu.tour == true) {
                 jeu.tour = false;
@@ -195,6 +217,7 @@ void client () {
                 
                 afficheur(multi, parametre, jeu);
 
+                netdeb(rcv, 6);        // DEBUG
                 recv(socketClient, TAMPON, sizeof(TAMPON), 0);      // recv 6
                 sscanf(TAMPON, "%d %d %d %d", &jeu.axeX, &jeu.axeY, &tmp, &jeu.toucheMsg);
                 jeu.tableau2[jeu.axeY][jeu.axeX] = tmp;
@@ -202,9 +225,12 @@ void client () {
                 afficheur(multi, parametre, jeu);
 
                 toucheMs(jeu);
-                recv(socketClient, &inutile, sizeof(inutile), 0);   // recv 7
-                send(socketClient, &inutile, sizeof(inutile), 0);   // send 8
-                
+                netdeb(rcv, 7);        // DEBUG
+                recv(socketClient, &inutile, sizeof(&inutile), 0);   // recv 7
+                printf("\nINUTILE 0=%d\n", inutile);  // DEBUG
+                netdeb(snd, 8);        // DEBUG
+                send(socketClient, &inutile, sizeof(&inutile), 0);   // send 8
+
             } else {
                 /* TOUR DU CLIENT */
 
@@ -216,8 +242,10 @@ void client () {
                 commande(&jeu);
 
                 sprintf(TAMPON, "%d %d", jeu.axeX, jeu.axeY);
+                netdeb(snd, 9);        // DEBUG
                 send(socketClient, TAMPON, sizeof(TAMPON), 0);          //send9
                 
+                netdeb(rcv, 10);        // DEBUG
                 recv(socketClient, TAMPON, sizeof(TAMPON), 0);          //recv 10
                 sscanf(TAMPON, "%d %d", &tmp, &jeu.toucheMsg);
                 jeu.tableau1[jeu.axeY][jeu.axeX] = tmp;
@@ -227,7 +255,9 @@ void client () {
                 toucheMs(jeu);
                 getchar();
                 getchar();
+                netdeb(snd, 11);        // DEBUG
                 send(socketClient, &inutile, sizeof(&inutile), 0);      // send 11
+                netdeb(rcv, 12);        // DEBUG
                 recv(socketClient, &inutile, sizeof(&inutile), 0);      // recv 12
             }
             

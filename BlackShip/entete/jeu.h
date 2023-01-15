@@ -55,3 +55,5 @@ void toucheMs(struct jeu jeu);
 
 void initialisationTableau(struct parametre parametre, struct jeu *jeu);
 void calculateur(int modeDeJeux, struct jeu *jeu);
+
+void netdeb(int a, int b);
