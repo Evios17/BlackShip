@@ -104,10 +104,22 @@ void calculateur(int modeDeJeux, struct jeu *jeu) {
         //jeu->tourTog = false;
       }
       
-      
       if (jeu->toucheCpt == jeu->bateauCpt) {
         jeu->gagner = true;
 
+        jeu->mancheCpt++;
+
+        if (jeu->tour == true) {
+          jeu->gagnant = true;
+
+          jeu->joueurScr1++;
+
+        } else {
+          jeu->gagnant = false;
+
+          jeu->joueurScr2++;
+        }
+        
       }
     } else {
       jeu->gagner = false;

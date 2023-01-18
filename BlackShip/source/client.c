@@ -153,6 +153,9 @@ void client () {
 
     jeu.mancheCpt = 0;
 
+    jeu.joueurScr1 = 0;
+    jeu.joueurScr2 = 0;
+
     do{
         jeu.tour = 56;
 
@@ -222,7 +225,7 @@ void client () {
 
                 //netdeb(rcv, 6);        // DEBUG
                 recv(socketClient, TAMPON, sizeof(TAMPON), 0);      // recv 6
-                sscanf(TAMPON, "%d %d %d %d %d", &jeu.axeX, &jeu.axeY, &tmp, &jeu.toucheMsg, &jeu.gagner);
+                sscanf(TAMPON, "%d %d %d %d %d %d %d %d %d", &jeu.axeX, &jeu.axeY, &tmp, &jeu.toucheMsg, &jeu.joueurScr1, &jeu.joueurScr2, &jeu.gagner, &jeu.gagnant, &jeu.mancheCpt);
                 jeu.tableau2[jeu.axeY][jeu.axeX] = tmp;
 
                 afficheur(multi, parametre, jeu);
@@ -267,7 +270,7 @@ void client () {
 
                 //netdeb(rcv, 10);        // DEBUG
                 recv(socketClient, TAMPON, sizeof(TAMPON), 0);          //recv 10
-                sscanf(TAMPON, "%d %d %d %d %d", &tmp, &jeu.toucheMsg, &jeu.toucheCpt, &jeu.essaiCpt, &jeu.gagner);
+                sscanf(TAMPON, "%d %d %d %d %d %d %d %d %d", &tmp, &jeu.toucheMsg, &jeu.toucheCpt, &jeu.essaiCpt, &jeu.joueurScr1, &jeu.joueurScr2, &jeu.gagner, &jeu.gagnant, &jeu.mancheCpt);
                 jeu.tableau1[jeu.axeY][jeu.axeX] = tmp;
                 
                 afficheur(multi, parametre, jeu);
@@ -283,8 +286,6 @@ void client () {
             }
 
         }while(jeu.gagner != true);
-        
-        jeu.mancheCpt++;
 
         afficheur(multi, parametre, jeu);
 
@@ -293,4 +294,5 @@ void client () {
     jeu.gagner = false;
     
     afficheur(multi, parametre, jeu);
+    fin(jeu, parametre);
 }

@@ -169,9 +169,9 @@ void afficheur(int modeDeJeux, struct parametre parametre, struct jeu jeu){
     }
     
     if (jeu.touchePrf == true) {
-      printf("║  Score  ║ " BLEU "Joueur 1" RESET " [" VERT "X" RESET "/" VERT "%d" RESET "] ║ " JAUNE "Joueur 2" RESET " [" VERT "X" RESET "/" VERT "%d" RESET "] ║                  ", parametre.manche, parametre.manche,jeu.tour);
+      printf("║  Score  ║ " BLEU "Joueur 1" RESET " [" VERT "%d" RESET "/" VERT "%d" RESET "] ║ " JAUNE "Joueur 2" RESET " [" VERT "%d" RESET "/" VERT "%d" RESET "] ║                  ", jeu.joueurScr1, parametre.manche, jeu.joueurScr2, parametre.manche,jeu.tour);
     } else {
-      printf("║  Score  ║ " JAUNE "Joueur 1" RESET " [" VERT "X" RESET "/" VERT "%d" RESET "] ║ " BLEU "Joueur 2" RESET " [" VERT "X" RESET "/" VERT "%d" RESET "] ║                  ", parametre.manche, parametre.manche,jeu.tour);
+      printf("║  Score  ║ " JAUNE "Joueur 1" RESET " [" VERT "%d" RESET "/" VERT "%d" RESET "] ║ " BLEU "Joueur 2" RESET " [" VERT "%d" RESET "/" VERT "%d" RESET "] ║                  ", jeu.joueurScr1, parametre.manche, jeu.joueurScr2, parametre.manche,jeu.tour);
     }
 
     if ( jeu.bateauCpt >= 10 ) {
@@ -287,25 +287,45 @@ void afficheur(int modeDeJeux, struct parametre parametre, struct jeu jeu){
       puts("╚═══════════════╩═══════════════╩═════════════════════╩══════════╝");
     }
     puts("");
-        
 
-    if (jeu.mancheCpt == parametre.manche) {
-      puts("╔══════════════════════════════════════════════════════════════╗");
-      puts("║                                                              ║");
-    printf("║ playerX a ramporté le jeu ! Score = x/x ║\n");
-      puts("║                                                              ║");
-      puts("╚══════════════════════════════════════════════════════════════╝" RESET);
-      puts("");
-    }
 
     if (jeu.gagner == true) {
       puts("╔══════════════════════════════════════════════════════════════╗");
       puts("║                                                              ║");
-    printf("║ Le joueur X a gagné la manche ! Score = x/x | Temps = Xmn ║\n");
+      
+      if (jeu.gagnant == true) {
+    printf("║          Joueur1 a gagné la manche ! Score = %d/%d             ║\n", jeu.joueurScr1, parametre.manche);
+      } else {
+    printf("║          Joueur2 a gagné la manche ! Score = %d/%d             ║\n", jeu.joueurScr2, parametre.manche);
+      }
+      
       puts("║                                                              ║");
       puts("╚══════════════════════════════════════════════════════════════╝" RESET);
       puts("");
     }
+  }
+}
+
+
+
+void fin(struct jeu jeu, struct parametre parametre) {
+  if (jeu.mancheCpt == parametre.manche) {
+    puts("╔══════════════════════════════════════════════════════════════╗");
+    puts("║                                                              ║");
+    
+    if (jeu.joueurScr1 > jeu.joueurScr2) {
+      printf("║ Joueur1 a ramporté le jeu ! Score = %d/%d                      ║\n", jeu.joueurScr1, parametre.manche);
+    
+    } else if (jeu.joueurScr1 < jeu.joueurScr2) {
+      printf("║ Joueur2 a ramporté le jeu ! Score = %d/%d                      ║\n", jeu.joueurScr2, parametre.manche);
+    
+    } else{
+      printf("║ Les joueurs joueur1 et joueur2 sont ex aequo.                ║\n");
+    }
+
+    puts("║                                                              ║");
+    puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+    puts("");
   }
 
   if (jeu.mancheCpt == parametre.manche) {
@@ -341,7 +361,9 @@ void toucheMs(int modeDeJeux, struct jeu jeu){
           puts("╚══════════════════════════════════════════════════════════════╝" RESET);
           puts("");
 
-          printf("Appuyez sur une touche pour continuer .. ");
+          puts("Appuyez sur une touche pour continuer .. ");
+          puts("");
+
         } else {
           if (jeu.touchePrf == true) {
             puts( VERT "╔══════════════════════════════════════════════════════════════╗");
@@ -349,7 +371,8 @@ void toucheMs(int modeDeJeux, struct jeu jeu){
             puts("╚══════════════════════════════════════════════════════════════╝" RESET);
             puts("");
 
-            printf("Appuyez sur une touche pour continuer .. ");
+            puts("Appuyez sur une touche pour continuer .. ");
+            puts("");
 
           } else {
             puts( ROUGE "╔══════════════════════════════════════════════════════════════╗");
@@ -357,7 +380,8 @@ void toucheMs(int modeDeJeux, struct jeu jeu){
             puts("╚══════════════════════════════════════════════════════════════╝" RESET);
             puts("");
 
-            printf("En attente de votre adversaire pour continuer .. ");                                                                                          // Ce getchar() est pour avoir ici le caractère entré
+            puts("En attente de votre adversaire pour continuer .. ");
+            puts("");
 
           }
         }
@@ -373,7 +397,9 @@ void toucheMs(int modeDeJeux, struct jeu jeu){
           puts("╚══════════════════════════════════════════════════════════════╝" RESET);
           puts("");
 
-          printf("Appuyez sur une touche pour continuer .. ");
+          puts("Appuyez sur une touche pour continuer .. ");
+          puts("");
+
         } else {
           if (jeu.touchePrf == true) {
             puts( ROUGE "╔══════════════════════════════════════════════════════════════╗");
@@ -381,7 +407,8 @@ void toucheMs(int modeDeJeux, struct jeu jeu){
             puts("╚══════════════════════════════════════════════════════════════╝" RESET);
             puts("");
 
-            printf("Appuyez sur une touche pour continuer .. ");
+            puts("Appuyez sur une touche pour continuer .. ");
+            puts("");
 
           } else {
             puts( VERT "╔══════════════════════════════════════════════════════════════╗");
@@ -389,7 +416,8 @@ void toucheMs(int modeDeJeux, struct jeu jeu){
             puts("╚══════════════════════════════════════════════════════════════╝" RESET);
             puts("");
 
-            printf("En attente de votre adversaire pour continuer .. ");
+            puts("En attente de votre adversaire pour continuer .. ");
+            puts("");
 
           }
         }

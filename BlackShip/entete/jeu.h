@@ -18,6 +18,7 @@ struct jeu {
   int axeY;
 
   int gagner;
+  int gagnant;
 
   int tour;
   int toucheMsg;
@@ -27,6 +28,11 @@ struct jeu {
   int essaiCpt;
   int toucheCpt;
   int bateauCpt;
+
+  char joueurPsd1;
+  char joueurPsd2;
+  int joueurScr1;
+  int joueurScr2;
 
   int send;
 };
@@ -52,6 +58,7 @@ void commande(struct jeu *jeu);
 void afficheur(int modeDeJeux, struct parametre parametre, struct jeu jeu);
 void tourMs(struct jeu jeu);
 void toucheMs(int modeDeJeux, struct jeu jeu);
+void fin(struct jeu, struct parametre);
 
 void initialisationTableau(struct parametre parametre, struct jeu *jeu);
 void calculateur(int modeDeJeux, struct jeu *jeu);

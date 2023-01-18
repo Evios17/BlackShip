@@ -121,6 +121,9 @@ void serveur () {
     
     jeu.mancheCpt = 0;
 
+    jeu.joueurScr1 = 0;
+    jeu.joueurScr2 = 0;
+
     int essaiCpt1;
     int toucheCpt1;
     
@@ -214,7 +217,7 @@ void serveur () {
 
                 int tmp = jeu.tableau1[jeu.axeY][jeu.axeX];
                 
-                sprintf(TAMPON, "%d %d %d %d %d",jeu.axeX, jeu.axeY, tmp, jeu.toucheMsg, jeu.gagner);          // X=axeX Y=axeY V=tableau[axeY][axeX] ; Insertion des coordonnées et du message de touche dans le tampon
+                sprintf(TAMPON, "%d %d %d %d %d %d %d %d %d",jeu.axeX, jeu.axeY, tmp, jeu.toucheMsg, jeu.joueurScr1, jeu.joueurScr2, jeu.gagner, jeu.gagnant, jeu.mancheCpt);          // X=axeX Y=axeY V=tableau[axeY][axeX] ; Insertion des coordonnées et du message de touche dans le tampon
                 //netdeb(snd, 6);    // DEBUG
                 send(socketClient, TAMPON, sizeof(TAMPON), 0);                                  // send 6 : Envoie du tempon contenant les coordonées et du message de touche
                 
@@ -268,7 +271,7 @@ void serveur () {
 
                 int tmp = jeu.tableauTmp[jeu.axeY][jeu.axeX];
 
-                sprintf(TAMPON, "%d %d %d %d %d", tmp, jeu.toucheMsg, toucheCpt2, essaiCpt2, jeu.gagner);         // X=axeX Y=axeY V=tableau[axeY][axeX]
+                sprintf(TAMPON, "%d %d %d %d %d %d %d %d %d", tmp, jeu.toucheMsg, toucheCpt2, essaiCpt2, jeu.joueurScr1, jeu.joueurScr2, jeu.gagner, jeu.gagnant, jeu.mancheCpt);         // X=axeX Y=axeY V=tableau[axeY][axeX]
                 //netdeb(snd, 10);        // DEBUG
                 send(socketClient, TAMPON, sizeof(TAMPON), 0);                                      // send 10 : Envoie du tampon contenu le résultat de l'attaque
 
@@ -285,8 +288,6 @@ void serveur () {
             }
 
         } while (jeu.gagner != true);
-        
-        jeu.mancheCpt++;                                                                            // Incrémente la manche
 
         afficheur(multi, parametre, jeu);
 
@@ -295,7 +296,7 @@ void serveur () {
     jeu.gagner = false;
 
     afficheur(multi, parametre, jeu);
-
+    fin(jeu, parametre);
 }
 
 int ipcmd (char ip[20]) {
