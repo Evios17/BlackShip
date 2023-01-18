@@ -58,7 +58,7 @@ void commande(struct jeu *jeu);
 void afficheur(int modeDeJeux, struct parametre parametre, struct jeu jeu);
 void tourMs(struct jeu jeu);
 void toucheMs(int modeDeJeux, struct jeu jeu);
-void fin(struct jeu, struct parametre);
+void fin(struct jeu jeu, struct parametre parametre);
 
 void initialisationTableau(struct parametre parametre, struct jeu *jeu);
 void calculateur(int modeDeJeux, struct jeu *jeu);
