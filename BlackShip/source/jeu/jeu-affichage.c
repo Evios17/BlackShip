@@ -20,7 +20,7 @@ void entete () {
   puts("╠══════════════════════════════════════════════════════════════╣");
   puts("║ " GRIS "Description :" RESET "                                                ║");
   puts("║                                                              ║");
-  puts("║ " GRIS " - Bienvenue dans Blackship, un bataille navale solo et" RESET "      ║\n║    " GRIS "multijoueur jouable en ligne de commande" RESET "                  ║");
+  puts("║ " GRIS " - Bienvenue dans Blackship, une bataille navale solo et" RESET "     ║\n║    " GRIS "multijoueur jouable en ligne de commande" RESET "                  ║");
   puts("║ " GRIS "                " RESET "                                             ║");
   puts("║ " GRIS " - Ce jeu a été crée en C, dans le cadre d'un projet   " RESET "      ║\n║ " GRIS "   d'étude universitaire" RESET "                                     ║");
   puts("╚══════════════════════════════════════════════════════════════╝");
@@ -34,30 +34,32 @@ void afficheur(int modeDeJeux, struct parametre parametre, struct jeu jeu){
   system("clear");
 
   if (modeDeJeux == true) {
-    if (jeu.mancheCpt == parametre.manche) {
-      puts(CYAN "╔══════════════════════════════════════════════════════════════╗");
-      puts("║                                                              ║");
-      puts("║" BLANC "                Vous avez remporté la partie !                " CYAN "║");
-      puts("║                                                              ║");
-      puts("╚══════════════════════════════════════════════════════════════╝" RESET);
-      puts("");
-    }
-
-    if (jeu.gagner == true) {
-      puts(MAGENTA "╔══════════════════════════════════════════════════════════════╗");
-      puts("║                                                              ║");
-      puts("║" BLANC "                Vous avez remporté la manche !                " MAGENTA "║");
-      puts("║                                                              ║");
-      puts("╚══════════════════════════════════════════════════════════════╝" RESET);
-      puts("");
-    }
     
-
+    /*
     puts("╔══════════════════════════════════════════════════════════════╗");
-    puts("║                     " CYAN "Partie en mode solo" RESET "                      ║");
+    puts("║                          " NVERT "BlackShip" RESET "                           ║");
     puts("╚══════════════════════════════════════════════════════════════╝");
     puts("");
+    */
 
+    if ( jeu.bateauCpt >= 10 ) {
+      puts("╔══════════════════════════════════════════════════════════════════╗");
+    } else {
+      puts("╔════════════════════════════════════════════════════════════════╗");
+    }
+    
+    printf("║                            " NVERT "BlackShip" RESET "                         "); 
+    
+    
+    if ( jeu.bateauCpt >= 10 ) {
+      printf("    ║\n");
+      puts("╚══════════════════════════════════════════════════════════════════╝");
+    } else {
+      printf("  ║\n");
+      puts("╚════════════════════════════════════════════════════════════════╝");
+    }
+    
+    puts("");
 
     for (axeX = 0; axeX <= parametre.dimension; axeX++){
         printf(NBLEU "%d  " RESET, axeX);
@@ -68,7 +70,7 @@ void afficheur(int modeDeJeux, struct parametre parametre, struct jeu jeu){
       printf(NBLEU  "%d  " RESET, axeY + 1);
       
       for (axeX = 0; axeX < parametre.dimension; axeX++){
-        switch(jeu.tableau1[axeX][axeY]){
+        switch(jeu.tableauTmp[axeX][axeY]){
           case 0 :
               printf("~  ");
               break;
@@ -90,15 +92,95 @@ void afficheur(int modeDeJeux, struct parametre parametre, struct jeu jeu){
     }
     puts("");
 
-    puts("╔══════════════╦══════════════╦═════════════════════╦══════════╗");
+    /*
+    puts("╔═══════════════╦══════════════╦═════════════════════╦══════════╗");
     printf("║ Manches [" VERT "%d" RESET "/" VERT "%d" RESET "] ║ Bateaux [" VERT "%d" RESET "/" VERT "%d" RESET "] ║                     ║ Tir [" VERT "%d" RESET "]  ║\n", jeu.mancheCpt, parametre.manche, jeu.toucheCpt, jeu.bateauCpt, jeu.essaiCpt);
-    puts("╚══════════════╩══════════════╩═════════════════════╩══════════╝");
+    puts("╚═══════════════╩══════════════╩═════════════════════╩══════════╝");
     puts("");
+    */
+
+    if ( jeu.bateauCpt >= 10 ) {
+      puts("╔═══════════════╦═════════════════╦═════════════════════╦══════════╗");
+    } else {
+      puts("╔═══════════════╦═══════════════╦═════════════════════╦══════════╗");
+    }
+
+    printf("║ Manches [" VERT "%d" RESET "/" VERT "%d" RESET "] ║ Bateaux [" VERT,jeu.mancheCpt, parametre.manche);
+    if ( jeu.bateauCpt >= 10 ) {
+      if ( jeu.toucheCpt < 10 ) {
+        printf("0%d" RESET "/" VERT "%d" RESET "] ║", jeu.toucheCpt, jeu.bateauCpt);
+      } else {
+        printf("%d" RESET "/" VERT "%d" RESET "] ║", jeu.toucheCpt, jeu.bateauCpt);
+      }
+    } else {
+      printf("%d" RESET "/" VERT "%d" RESET "] ║", jeu.toucheCpt, jeu.bateauCpt);
+    }
+
+
+    
+    printf("                     ║ Tir [" VERT);
+    if ( jeu.essaiCpt < 10) {
+      printf("0%d", jeu.essaiCpt);
+    } else {
+      printf("%d", jeu.essaiCpt);
+    }
+    printf(RESET "] ║\n");
+    
+    if ( jeu.bateauCpt >= 10 ) {
+      puts("╚═══════════════╩═════════════════╩═════════════════════╩══════════╝");
+    } else {
+      puts("╚═══════════════╩═══════════════╩═════════════════════╩══════════╝");
+    }
+    puts("");
+        
+
+    if (jeu.mancheCpt == parametre.manche) {
+      puts(CYAN "╔══════════════════════════════════════════════════════════════╗");
+      puts("║                                                              ║");
+      puts("║" BLANC "                Vous avez remporté la partie !                " CYAN "║");
+      puts("║                                                              ║");
+      puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+      puts("");
+    }
+
+    if (jeu.gagner == true) {
+      puts(MAGENTA "╔══════════════════════════════════════════════════════════════╗");
+      puts("║                                                              ║");
+      puts("║" BLANC "                Vous avez remporté la manche !                " MAGENTA "║");
+      puts("║                                                              ║");
+      puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+      puts("");
+    }
 
   } else {
+    
+    /*
     puts("╔═════════╦════════════════╦════════════════╦══════════════════╗");
-    printf("║  Score  ║ " JAUNE "Joueur 1" RESET " [" VERT "1" RESET "/" VERT "%d" RESET "] ║ " BLEU "Joueur 2" RESET " [" VERT "0" RESET "/" VERT "%d" RESET "] ║ tour=%d          ║\n", parametre.manche, parametre.manche,jeu.tour);
+    printf("║  Score  ║ " JAUNE "Joueur 1" RESET " [" VERT "1" RESET "/" VERT "%d" RESET "] ║ " BLEU "Joueur 2" RESET " [" VERT "0" RESET "/" VERT "%d" RESET "] ║                  ║\n", parametre.manche, parametre.manche,jeu.tour);
     puts("╚═════════╩════════════════╩════════════════╩══════════════════╝");
+    puts("");
+    */
+
+    if ( jeu.bateauCpt >= 10 ) {
+      puts("╔═════════╦════════════════╦════════════════╦═══════════════════════╗");
+      
+    } else {
+      puts("╔═════════╦════════════════╦════════════════╦═════════════════════╗");
+    }
+    
+    if (jeu.touchePrf == true) {
+      printf("║  Score  ║ " BLEU "Joueur 1" RESET " [" VERT "X" RESET "/" VERT "%d" RESET "] ║ " JAUNE "Joueur 2" RESET " [" VERT "X" RESET "/" VERT "%d" RESET "] ║                  ", parametre.manche, parametre.manche,jeu.tour);
+    } else {
+      printf("║  Score  ║ " JAUNE "Joueur 1" RESET " [" VERT "X" RESET "/" VERT "%d" RESET "] ║ " BLEU "Joueur 2" RESET " [" VERT "X" RESET "/" VERT "%d" RESET "] ║                  ", parametre.manche, parametre.manche,jeu.tour);
+    }
+
+    if ( jeu.bateauCpt >= 10 ) {
+      printf("     ║\n");
+      puts("╚═════════╩════════════════╩════════════════╩═══════════════════════╝");
+    } else {
+      printf("   ║\n");
+      puts("╚═════════╩════════════════╩════════════════╩═════════════════════╝");
+    }
     puts("");
 
     for (axeX = 0; axeX <= parametre.dimension; axeX++){
@@ -164,24 +246,62 @@ void afficheur(int modeDeJeux, struct parametre parametre, struct jeu jeu){
     }
     puts("");
 
+
+    /*
     puts("╔══════════════╦════════════╦═══════════════════════╦══════════╗");
     printf("║ Manches [" VERT "%d" RESET "/" VERT "%d" RESET "] ║ Bateaux [" VERT "%d" RESET "/" VERT "%d" RESET "] ║                       ║ Tir [" VERT "%d" RESET "] ║\n", jeu.mancheCpt, parametre.manche, jeu.toucheCpt, jeu.bateauCpt, jeu.essaiCpt);
     puts("╚══════════════╩════════════╩═══════════════════════╩══════════╝");
     puts("");
+    */
+
+    if ( jeu.bateauCpt >= 10 ) {
+      puts("╔═══════════════╦═════════════════╦═════════════════════╦══════════╗");
+    } else {
+      puts("╔═══════════════╦═══════════════╦═════════════════════╦══════════╗");
+    }
+
+    printf("║ Manches [" VERT "%d" RESET "/" VERT "%d" RESET "] ║ Bateaux [" VERT,jeu.mancheCpt, parametre.manche);
+    if ( jeu.bateauCpt >= 10 ) {
+      if ( jeu.toucheCpt < 10 ) {
+        printf("0%d" RESET "/" VERT "%d" RESET "] ║", jeu.toucheCpt, jeu.bateauCpt);
+      } else {
+        printf("%d" RESET "/" VERT "%d" RESET "] ║", jeu.toucheCpt, jeu.bateauCpt);
+      }
+    } else {
+      printf("%d" RESET "/" VERT "%d" RESET "] ║", jeu.toucheCpt, jeu.bateauCpt);
+    }
+
+
+    
+    printf("                     ║ Tir [" VERT);
+    if ( jeu.essaiCpt < 10) {
+      printf("0%d", jeu.essaiCpt);
+    } else {
+      printf("%d", jeu.essaiCpt);
+    }
+    printf(RESET "] ║\n");
+    
+    if ( jeu.bateauCpt >= 10 ) {
+      puts("╚═══════════════╩═════════════════╩═════════════════════╩══════════╝");
+    } else {
+      puts("╚═══════════════╩═══════════════╩═════════════════════╩══════════╝");
+    }
+    puts("");
+        
 
     if (jeu.mancheCpt == parametre.manche) {
-      puts(MAGENTA "╔══════════════════════════════════════════════════════════════╗");
+      puts("╔══════════════════════════════════════════════════════════════╗");
       puts("║                                                              ║");
-      printf("║ " BLANC "The playerX win the game ! Score = x/x | Time = Xmn          " MAGENTA "║\n");
+    printf("║ playerX a ramporté le jeu ! Score = x/x ║\n");
       puts("║                                                              ║");
       puts("╚══════════════════════════════════════════════════════════════╝" RESET);
       puts("");
     }
 
     if (jeu.gagner == true) {
-      puts(MAGENTA "╔══════════════════════════════════════════════════════════════╗");
+      puts("╔══════════════════════════════════════════════════════════════╗");
       puts("║                                                              ║");
-      printf("║ " BLANC "Le joueur X a gagné la manche ! Score = x/x | Temps = Xmn         " MAGENTA "║\n");
+    printf("║ Le joueur X a gagné la manche ! Score = x/x | Temps = Xmn ║\n");
       puts("║                                                              ║");
       puts("╚══════════════════════════════════════════════════════════════╝" RESET);
       puts("");
@@ -212,62 +332,82 @@ void tourMs(struct jeu jeu){
 
 
 
-void toucheMs(struct jeu jeu){
+void toucheMs(int modeDeJeux, struct jeu jeu){
   switch (jeu.toucheMsg) {
-    case 1:
-      if (jeu.touchePrf == true) {
-        puts(VERT "╔══════════════════════════════════════════════════════════════╗");
-        puts("║ " BLANC "Touché ! Vous avez atteint votre cible. " VERT "                     ║");
+      case 1:
+        if (modeDeJeux == true) {
+          puts( VERT "╔══════════════════════════════════════════════════════════════╗");
+          puts("║           Touché ! Vous avez atteint votre cible.            ║");
+          puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+          puts("");
+
+          printf("Appuyez sur une touche pour continuer .. ");
+        } else {
+          if (jeu.touchePrf == true) {
+            puts( VERT "╔══════════════════════════════════════════════════════════════╗");
+            puts("║           Touché ! Vous avez atteint votre cible.            ║");
+            puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+            puts("");
+
+            printf("Appuyez sur une touche pour continuer .. ");
+
+          } else {
+            puts( ROUGE "╔══════════════════════════════════════════════════════════════╗");
+            puts("║   Attention ! Votre adversaire a touché un de vos bateaux.   ║");
+            puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+            puts("");
+
+            printf("En attente de votre adversaire pour continuer .. ");                                                                                          // Ce getchar() est pour avoir ici le caractère entré
+
+          }
+        }
+        
+        
+
+        jeu.toucheMsg = 0;
+        break;
+      case 2:
+        if (modeDeJeux == true) {
+          puts( ROUGE "╔══════════════════════════════════════════════════════════════╗");
+          puts("║         Raté ! Vous n'avez pas atteint votre cible.          ║");
+          puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+          puts("");
+
+          printf("Appuyez sur une touche pour continuer .. ");
+        } else {
+          if (jeu.touchePrf == true) {
+            puts( ROUGE "╔══════════════════════════════════════════════════════════════╗");
+            puts("║         Raté ! Vous n'avez pas atteint votre cible.          ║");
+            puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+            puts("");
+
+            printf("Appuyez sur une touche pour continuer .. ");
+
+          } else {
+            puts( VERT "╔══════════════════════════════════════════════════════════════╗");
+            puts("║ Échappée Belle ! Votre adversaire n'a pas atteint sa cible.  ║");
+            puts("╚══════════════════════════════════════════════════════════════╝" RESET);
+            puts("");
+
+            printf("En attente de votre adversaire pour continuer .. ");
+
+          }
+        }
+        
+
+        jeu.toucheMsg = 0;
+        break;
+      case 3:
+        puts( ROUGE "╔══════════════════════════════════════════════════════════════╗");
+        puts("║    Erreur, vous ne pouvez pas tirer aux mêmes coordonnées    ║");
         puts("╚══════════════════════════════════════════════════════════════╝" RESET);
         puts("");
 
         printf("Appuyez sur une touche pour continuer .. ");
 
-      } else {
-        puts(ROUGE "╔══════════════════════════════════════════════════════════════╗");
-        puts("║ " BLANC "Attention ! Votre adversaire a touché un de vos bateaux. " ROUGE "    ║");
-        puts("╚══════════════════════════════════════════════════════════════╝" RESET);
-        puts("");
-
-        printf("En attente de votre adersaire pour continuer .. ");                                                                                          // Ce getchar() est pour avoir ici le caractère entré
-
-      }
-      
-
-      jeu.toucheMsg = 0;
-      break;
-    case 2:
-      if (jeu.touchePrf == true) {
-        puts(ROUGE "╔══════════════════════════════════════════════════════════════╗");
-        puts("║ " BLANC "Raté ! Vous n'avez pas atteint votre cible. " ROUGE "                 ║");
-        puts("╚══════════════════════════════════════════════════════════════╝" RESET);
-        puts("");
-
-        printf("Appuyez sur une touche pour continuer .. ");
-
-      } else {
-        puts(VERT "╔══════════════════════════════════════════════════════════════╗");
-        puts("║ " BLANC "Échappée Belle ! Votre adversaire n'a pas atteint sa cible. " VERT "  ║");
-        puts("╚══════════════════════════════════════════════════════════════╝" RESET);
-        puts("");
-
-        printf("En attente de votre adersaire pour continuer .. ");
-
-      }
-
-      jeu.toucheMsg = 0;
-      break;
-    case 3:
-      puts(ROUGE "╔══════════════════════════════════════════════════════════════╗");
-      puts("║ " BLANC "Erreur, vous ne pouvez pas tirer aux mêmes coordonnées " ROUGE "                 ║");
-      puts("╚══════════════════════════════════════════════════════════════╝" RESET);
-      puts("");
-
-      printf("Appuyez sur une touche pour continuer .. ");
-
-      jeu.toucheMsg = 0;
-      break;
-    default:
-      break;
-  }
+        jeu.toucheMsg = 0;
+        break;
+      default:
+        break;
+    }
 }

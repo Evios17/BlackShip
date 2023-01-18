@@ -155,6 +155,7 @@ int modeDeSelectionManche() {
   return condition;
 }
 
+
 void commande(struct jeu *jeu) {
 
   puts("Entrez la ligne de tir : ");

@@ -194,12 +194,12 @@ void serveur () {
                     afficheur(multi, parametre, jeu);                                                   // Affiche les tableaux
                     tourMs(jeu);
 
-                    commande(&jeu);                                                                     // Entrée des coordonnées d'attaque
-                    
+                   commande(&jeu);                                                                     // Entrée des coordonnées d'attaque
+
                     calculateur(multi, &jeu);                                                           // Comparaison des coordonées reçues et changements de variable
 
                     if (jeu.send != true) {
-                        toucheMs(jeu);                                                                      // Message qui affiche le résultat du tir
+                        toucheMs(multi, jeu);                                                                      // Message qui affiche le résultat du tir
                         getchar();                                                                          // Mange le précédent retour chariot
                         getchar();                                                                          // Attente de la pression d'une touche
                     }
@@ -220,7 +220,7 @@ void serveur () {
                 
                 afficheur(multi, parametre, jeu);                                                   // Affiche les tableaux
                 
-                toucheMs(jeu);                                                                      // Message qui affiche le résultat du tir
+                toucheMs(multi, jeu);                                                                      // Message qui affiche le résultat du tir
                 getchar();                                                                          // Mange le précédent retour chariot
                 getchar();                                                                          // Attente de la pression d'une touche
                 
@@ -268,14 +268,14 @@ void serveur () {
 
                 int tmp = jeu.tableauTmp[jeu.axeY][jeu.axeX];
 
-                sprintf(TAMPON, "%d %d %d", tmp, jeu.toucheMsg, jeu.gagner);         // X=axeX Y=axeY V=tableau[axeY][axeX]
+                sprintf(TAMPON, "%d %d %d %d %d", tmp, jeu.toucheMsg, toucheCpt2, essaiCpt2, jeu.gagner);         // X=axeX Y=axeY V=tableau[axeY][axeX]
                 //netdeb(snd, 10);        // DEBUG
                 send(socketClient, TAMPON, sizeof(TAMPON), 0);                                      // send 10 : Envoie du tampon contenu le résultat de l'attaque
 
                 afficheur(multi, parametre, jeu);                                                   // Affiche les tableaux
                 
                 if (jeu.toucheMsg == 1 || jeu.toucheMsg == 2) {                                     // Test de condition
-                    toucheMs(jeu);
+                    toucheMs(multi, jeu);
                     //netdeb(rcv, 11);        // DEBUG
                     recv(socketClient, &inutile, sizeof(&inutile), 0);                               // recv 11 : Accusé reception pour mettre en pause le code du côté serveur et client
                     //netdeb(snd, 12);        // DEBUG

@@ -42,18 +42,18 @@ void calculateur(int modeDeJeux, struct jeu *jeu) {
 
   if (modeDeJeux == true) {
     if (jeu->gagner != true) {
-      if (jeu->tableau1[jeu->axeY][jeu->axeX] == 0) {
-        jeu->tableau1[jeu->axeY][jeu->axeX] = 1;
+      if (jeu->tableauTmp[jeu->axeY][jeu->axeX] == 0) {
+        jeu->tableauTmp[jeu->axeY][jeu->axeX] = 1;
 
         jeu->toucheMsg = 2;
 
         jeu->essaiCpt++;
 
-      } else if (jeu->tableau1[jeu->axeY][jeu->axeX] == 1 || jeu->tableau1[jeu->axeY][jeu->axeX] == 2) {
+      } else if (jeu->tableauTmp[jeu->axeY][jeu->axeX] == 1 || jeu->tableauTmp[jeu->axeY][jeu->axeX] == 2) {
         jeu->toucheMsg = 3;
 
-      } else if (jeu->tableau1[jeu->axeY][jeu->axeX] == 3) {
-        jeu->tableau1[jeu->axeY][jeu->axeX] = 2;
+      } else if (jeu->tableauTmp[jeu->axeY][jeu->axeX] == 3) {
+        jeu->tableauTmp[jeu->axeY][jeu->axeX] = 2;
 
         jeu->toucheMsg = 1;
 

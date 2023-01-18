@@ -227,7 +227,7 @@ void client () {
 
                 afficheur(multi, parametre, jeu);
 
-                toucheMs(jeu);
+                toucheMs(multi, jeu);
                 //netdeb(rcv, 7);        // DEBUG
                 recv(socketClient, &inutile, sizeof(&inutile), 0);   // recv 7
                 //netdeb(snd, 8);        // DEBUG
@@ -253,7 +253,7 @@ void client () {
                     sscanf(TAMPON, "%d %d", &jeu.send, &jeu.toucheMsg);
 
                     if (jeu.send != true) {
-                        toucheMs(jeu);                                                                      // Message qui affiche le résultat du tir
+                        toucheMs(multi, jeu);                                                                      // Message qui affiche le résultat du tir
                         getchar();                                                                          // Mange le précédent retour chariot
                         getchar();                                                                          // Attente de la pression d'une touche
                     }  
@@ -267,12 +267,12 @@ void client () {
 
                 //netdeb(rcv, 10);        // DEBUG
                 recv(socketClient, TAMPON, sizeof(TAMPON), 0);          //recv 10
-                sscanf(TAMPON, "%d %d %d", &tmp, &jeu.toucheMsg, &jeu.gagner);
+                sscanf(TAMPON, "%d %d %d %d %d", &tmp, &jeu.toucheMsg, &jeu.toucheCpt, &jeu.essaiCpt, &jeu.gagner);
                 jeu.tableau1[jeu.axeY][jeu.axeX] = tmp;
                 
                 afficheur(multi, parametre, jeu);
                 
-                toucheMs(jeu);
+                toucheMs(multi, jeu);
                 getchar();
                 getchar();
 

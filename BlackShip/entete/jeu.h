@@ -51,9 +51,11 @@ void commande(struct jeu *jeu);
 
 void afficheur(int modeDeJeux, struct parametre parametre, struct jeu jeu);
 void tourMs(struct jeu jeu);
-void toucheMs(struct jeu jeu);
+void toucheMs(int modeDeJeux, struct jeu jeu);
 
 void initialisationTableau(struct parametre parametre, struct jeu *jeu);
 void calculateur(int modeDeJeux, struct jeu *jeu);
+
+// Debug
 
 void netdeb(int a, int b);

@@ -29,11 +29,17 @@ void solo () {
     initialisationTableau(parametre, &jeu);
 
     do{
-      toucheMs(jeu);
       afficheur(seul, parametre, jeu);
+
       commande(&jeu);
+
       calculateur(seul, &jeu);
+
       afficheur(seul, parametre, jeu);
+
+      toucheMs(seul, jeu);
+      getchar();
+      getchar();
 
     }while(jeu.gagner != true);
     

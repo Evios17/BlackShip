@@ -26,8 +26,12 @@ int main (int argc, char const *argv[]) {
         exit(EXIT_FAILURE);
     }
     else {
-        while ((opt = getopt (argc, argv, ":schv")) != -1) {
+        while ((opt = getopt (argc, argv, ":oschv")) != -1) {
             switch (opt) {
+                case 'o' :                                                                                            // -s : active le mode "serveur"
+                    solo();
+                    arg = true;
+                    break;
                 case 's' :                                                                                            // -s : active le mode "serveur"
                     serveur();
                     arg = true;
@@ -38,19 +42,23 @@ int main (int argc, char const *argv[]) {
                     break;
                 case 'h' :                                                                                            // -h : affiche l'aide
                     puts("Utilisation :");
+                    puts("-o\t -- Active le mode solo");
                     puts("-s\t -- Active le mode serveur");
                     puts("-c\t -- Active le mode client");
+                    puts("-v\t -- Affiche la version du programme");
                     exit(EXIT_SUCCESS);
                     break;
                 case 'v':                                                                                            // -v : affiche la version
-                    puts("Blackship, SAE105. Fait par Antoine, Lukas et Cylian");
+                    puts("Blackship v1.0, SAE105 | Fait par Antoine, Lukas et Cylian");
                     exit(EXIT_SUCCESS);
                     break;
                 default :                                                                                            // Affiche l'aide quand l'utilisateur entre un argument non-existant
                     puts(ROUGE"Syntaxe incorrecte"RESET);
                     puts("Utilisation :");
+                    puts("-o\t -- Active le mode solo");
                     puts("-s\t -- Active le mode serveur");
                     puts("-c\t -- Active le mode client");
+                    puts("-v\t -- Affiche la version du programme");
                     exit(EXIT_FAILURE);
             }
         }
