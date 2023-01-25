@@ -62,7 +62,3 @@ void fin(struct jeu jeu, struct parametre parametre);
 
 void initialisationTableau(struct parametre parametre, struct jeu *jeu);
 void calculateur(int modeDeJeux, struct jeu *jeu);
-
-// Debug
-
-void netdeb(int a, int b);

@@ -82,7 +82,7 @@ int main (int argc, char const *argv[]) {
     if (condition1 == 1) {                                                                   // Mode solo
         solo();
 
-    } else if (condition1 == 2) {                                                            // Mode multi
+    } else /*if (condition1 == 2)*/ {                                                            // Mode multi
        condition2 = modeDeSelectionReseau();
 
        if(condition2 == true){
@@ -90,9 +90,9 @@ int main (int argc, char const *argv[]) {
         } else {
             serveur();
         }
-    } else { /*DEBUG MENU*/
+    } /*else { //DEBUG MENU
         debug();
-    }
+    }*/
 
 
     return EXIT_SUCCESS;

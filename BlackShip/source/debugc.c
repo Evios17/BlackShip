@@ -17,34 +17,5 @@
 #include "couleur.h"
 
 void debug () {
-/*    struct parametre parametre;
-    struct jeu jeu;
-
-    parametre.dimension = modeDeSelectionMap();
-    parametre.manche =  modeDeSelectionManche();
-    int axeX, axeY;
-    jeu.bateauCpt = initialisationTableau(parametre, &jeu);
-
-
-    //printf("je suis passe par la");
-
-
-    for (axeX = 0; axeX <= parametre.dimension; axeX++){
-      printf(NJAUNE "%d  " RESET, axeX);
-    }
-    puts("");
-
-    for (axeY = 0; axeY < parametre.dimension; axeY++){
-        printf(NJAUNE  "%d  " RESET, axeY + 1);
-        
-        for (axeX = 0; axeX < parametre.dimension; axeX++){
-            printf("%d  ", jeu.tableau[axeX][axeY]);
-        }
-        puts("");
-    }
-    puts("");
-
-    commande(&jeu);
-    
-    //printf("Fin de la fonction debug()\n");*/
+    printf("Vous n'êtes pas censé être ici...");
 }
