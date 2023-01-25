@@ -23,5 +23,9 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 .vscode
+
 Blackship/executables
 Blackship/librairies
+
+executables
+librairies
