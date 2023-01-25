@@ -15,13 +15,12 @@
 #include "jeu.h"
 #include "couleur.h"
 
+
 void serveur () {
 
-    char TAMPON[20];
+    
     struct parametre parametre;
     struct jeu jeu;
-
-    int mode = 2;
 
 
     system("clear");
@@ -30,15 +29,18 @@ void serveur () {
     parametre.dimension = modeDeSelectionMap();
     parametre.manche =  modeDeSelectionManche();
 
-    system("clear");
-    entete();
 
-    printf("Voici l'adresse IP de votre serveur : " JAUNE);
-    ip();
+    char ip[20];
+    if ( (ipcmd(ip)) == false ) {
+        printf("Voici l'adresse IP de votre serveur : "JAUNE"%s"RESET"\n",ip);
+    } else {
+        printf(ROUGE"Impossible d'afficher votre IP\n"RESET);
+    }
+
     puts("" RESET);
 
 
-    puts("Veuillez patienter .. connexion en cours...");
+    puts("En attente d'une connection entrente...");
     puts("");
 
 
@@ -61,152 +63,203 @@ void serveur () {
     socklen_t csize = sizeof(addrClient);                                                                   // Définition de la taille des paramètres pour le socket du client
     socketClient = accept(socketServer, (struct sockaddr *)&addrClient, &csize);                            // Attente de connexion auprès du client
 
-    puts(VERT "Connexion effectuée" RESET);
+    puts(VERT "Client connecté, génération des bateaux..." RESET);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    char TAMPON[20];
+    int inutile; // pour  les send et recv après les getchar
+    
+
 
 
     /* ENVOIE DES PARAMÈTRES DU JEU AU CLIENT */
     sprintf(TAMPON, "%d %d", parametre.dimension, parametre.manche);
-    send(socketClient, TAMPON, sizeof(TAMPON), 0);
-    
+    send(socketClient, TAMPON, sizeof(TAMPON), 0);                                                  // send 1 : Envoie du tampon contenant les paramètres du jeu
     
     
     
     jeu.mancheCpt = 0;
 
-    int joueur1;
-    int joueur2;
+    jeu.joueurScr1 = 0;
+    jeu.joueurScr2 = 0;
 
-    int toucheCpt1;
     int essaiCpt1;
-
+    int toucheCpt1;
+    
+    int essaiCpt2;
     int toucheCpt2;
-    //int essaiCpt2;
-    //int bateauCpt2;
-
-    int tableau1[9][9];
-    int tableau2[9][9];
 
     do {
         jeu.tour = true;
+
         jeu.toucheCpt = 0;
         jeu.essaiCpt = 0;
         jeu.gagner = 0;
         jeu.toucheMsg = 0;
 
-        toucheCpt1 = 0;
         essaiCpt1 = 0;
+        toucheCpt1 = 0;
 
+        essaiCpt2 = 0;
         toucheCpt2 = 0;
 
-        initialisationTableau(parametre, &jeu);
-        memcpy(tableau1, jeu.tableau1, sizeof(tableau1));
-        sleep(2);
-        initialisationTableau(parametre, &jeu);
-        memcpy(tableau2, jeu.tableau1, sizeof(tableau2));
+        initialisationTableau(parametre, &jeu);                                                     // Initialisation du premier tableau
+        memcpy(jeu.tableau1, jeu.tableauTmp, sizeof(jeu.tableau1));                                 // Copie du tableau généré dans le tableau 1 (serveur)
+        sleep(2);                                                                                   // Attente de 2 secondes pour laisse le srand() changer de valeur
+        initialisationTableau(parametre, &jeu);                                                     // Initialisation du deuxième tableau
+        memcpy(jeu.tableau2, jeu.tableauTmp, sizeof(jeu.tableau2));                                 // Copie du tableau généré dans le tableau 2 (client)
 
         /* ENVOIE DES PARAMÈTRES DU JEU AU CLIENT */
-        send(socketClient, &jeu.bateauCpt, sizeof(jeu.bateauCpt), 0);
-        send(socketClient, tableau1, sizeof(tableau1), 0);
-        send(socketClient, tableau2, sizeof(tableau2), 0);
+        send(socketClient, &jeu.bateauCpt, sizeof(jeu.bateauCpt), 0);                               // send 2 : Envoie du nombre de bateaux 
+        send(socketClient, jeu.tableau1, sizeof(jeu.tableau1), 0);                                  // send 3 : Envoie du tableau du serveur
+        send(socketClient, jeu.tableau2, sizeof(jeu.tableau2), 0);                                  // send 4 : Envoie du tableau du client
+        
         
         do {
-            send(socketClient, &jeu.tour, sizeof(jeu.tour), 0);
+            send(socketClient, &jeu.tour, sizeof(&jeu.tour), 0);                                     // send 5 : Envoie du tampon contenant la variable de tour
             
-            if (jeu.tour == true) { //Condition : à qui le tour ?
-                jeu.toucheCpt = toucheCpt1;
+            inutile = 0;
+
+            if (jeu.tour == true) {                                                                 // Test pour savoir c'est le tour à qui
+                /* TOUR DU SERVEUR */
+
+                jeu.touchePrf = true;                                                               // Définie le profil de message affiché (ici "serveur")
+
                 jeu.essaiCpt = essaiCpt1;
+                jeu.toucheCpt = toucheCpt1;
 
-                memcpy(jeu.tableau1, tableau1, sizeof(jeu.tableau1));
-                memcpy(jeu.tableau2, tableau2, sizeof(jeu.tableau2));
-                
-                
-                toucheMs(jeu); // reste
-                afficheur(mode, parametre, jeu); // reste
-                commande(&jeu); // à modifier
-                
-                calculateur(mode, &jeu); // a retirer
+                memcpy(jeu.tableauTmp, jeu.tableau1, sizeof(jeu.tableauTmp));
 
-                toucheCpt1 = jeu.toucheCpt;
+                do {
+                    afficheur(multi, parametre, jeu);                                                   // Affiche les tableaux
+                    tourMs(jeu);
+
+                   commande(&jeu);                                                                     // Entrée des coordonnées d'attaque
+
+                    calculateur(multi, &jeu);                                                           // Comparaison des coordonées reçues et changements de variable
+
+                    if (jeu.send != true) {
+                        toucheMs(multi, jeu);                                                                      // Message qui affiche le résultat du tir
+                        getchar();                                                                          // Mange le précédent retour chariot
+                        getchar();                                                                          // Attente de la pression d'une touche
+                    }
+                    
+                } while (jeu.send != true);
+                
+
+                memcpy(jeu.tableau1, jeu.tableauTmp, sizeof(jeu.tableau1));                         // Copie du tableau du serveur dans le tableau tampon
+
                 essaiCpt1 = jeu.essaiCpt;
+                toucheCpt1 = jeu.toucheCpt;
 
-                memcpy(tableau1, jeu.tableau1, sizeof(tableau1));
-
-                if (jeu.send == true) {
-                    sprintf(TAMPON, "%d %d %d %d",jeu.axeX,jeu.axeY,tableau1[jeu.axeX][jeu.axeY],jeu.essaiCpt);
-                    send(socketClient, TAMPON, sizeof(TAMPON), 0);
-                    // X=axeX Y=axeY V=tableau[axeY][axeX]
-                }
+                int tmp = jeu.tableau1[jeu.axeY][jeu.axeX];
                 
-                afficheur(mode, parametre, jeu); // reste
+                sprintf(TAMPON, "%d %d %d %d %d %d %d %d %d",jeu.axeX, jeu.axeY, tmp, jeu.toucheMsg, jeu.joueurScr1, jeu.joueurScr2, jeu.gagner, jeu.gagnant, jeu.mancheCpt);          // X=axeX Y=axeY V=tableau[axeY][axeX] ; Insertion des coordonnées et du message de touche dans le tampon
+                send(socketClient, TAMPON, sizeof(TAMPON), 0);                                  // send 6 : Envoie du tempon contenant les coordonées et du message de touche
+                
+                afficheur(multi, parametre, jeu);                                                   // Affiche les tableaux
+                
+                toucheMs(multi, jeu);                                                                      // Message qui affiche le résultat du tir
+                getchar();                                                                          // Mange le précédent retour chariot
+                getchar();                                                                          // Attente de la pression d'une touche
+                
+                send(socketClient, &inutile, sizeof(&inutile), 0);                                  // send 7 : Accusé reception pour mettre en pause le code du côté serveur et client
+                recv(socketClient, &inutile, sizeof(&inutile), 0);                                  // recv 8 : Accusé reception pour mettre en pause le code du côté serveur et client
+
             } else {
+                /* TOUR DU CLIENT */
+
+                jeu.touchePrf = false;                                                              // Définie le profil de message affiché (ici "client")
+
+                jeu.essaiCpt = essaiCpt1;
+                jeu.toucheCpt = toucheCpt1;
+
+                memcpy(jeu.tableauTmp, jeu.tableau2, sizeof(jeu.tableauTmp));
+
+                afficheur(multi, parametre, jeu);                                                   // Affiche les tableaux
+                tourMs(jeu);
+
+                jeu.essaiCpt = essaiCpt2;
                 jeu.toucheCpt = toucheCpt2;
 
-                memcpy(jeu.tableau1, tableau1, sizeof(jeu.tableau1));
-                memcpy(jeu.tableau2, tableau2, sizeof(jeu.tableau2));
-                
-                
-                toucheMs(jeu); // reste
-                afficheur(mode, parametre, jeu); // reste
-                // condition
-                recv(socketClient, TAMPON, sizeof(TAMPON), 0);
-                sscanf(TAMPON, "%d %d", jeu.axeX, jeu.axeY);
+                do{
+                    recv(socketClient, TAMPON, sizeof(TAMPON), 0);                                      // Reçeption des coordonées de la part du client
+                    sscanf(TAMPON, "%d %d", &jeu.axeX, &jeu.axeY);                                      // Extraction des coordonées du tampon
 
-                commande(&jeu);
+                    calculateur(multi, &jeu);
 
-                memcpy(jeu.tableau1, tableau2, sizeof(jeu.tableau1));
-                
-                calculateur(mode, &jeu);
-
-                if (jeu.send == true) {
-                    sprintf(TAMPON, "%d %d %d",jeu.axeX,jeu.axeY,tableau2[jeu.axeX][jeu.axeY]);
+                    sprintf(TAMPON, "%d %d", jeu.send, jeu.toucheMsg);
                     send(socketClient, TAMPON, sizeof(TAMPON), 0);
-                    // X=axeX Y=axeY V=tableau[axeY][axeX]
-                }
 
+                } while (jeu.send != true);
+                
+                
+                memcpy(jeu.tableau2, jeu.tableauTmp, sizeof(jeu.tableau2));                         // Copie du tableau temporaire vers le tableau du client
+
+                essaiCpt2 = jeu.essaiCpt;
                 toucheCpt2 = jeu.toucheCpt;
+                
+                jeu.essaiCpt = essaiCpt1;
+                jeu.toucheCpt = toucheCpt1;
 
-                memcpy(tableau2, jeu.tableau1, sizeof(tableau2));
-                memcpy(jeu.tableau2, jeu.tableau1, sizeof(jeu.tableau2));
-                memcpy(jeu.tableau1, tableau1, sizeof(jeu.tableau1));
+                int tmp = jeu.tableauTmp[jeu.axeY][jeu.axeX];
 
-                afficheur(mode, parametre, jeu); // reste
+                sprintf(TAMPON, "%d %d %d %d %d %d %d %d %d", tmp, jeu.toucheMsg, toucheCpt2, essaiCpt2, jeu.joueurScr1, jeu.joueurScr2, jeu.gagner, jeu.gagnant, jeu.mancheCpt);         // X=axeX Y=axeY V=tableau[axeY][axeX]
+                send(socketClient, TAMPON, sizeof(TAMPON), 0);                                      // send 10 : Envoie du tampon contenu le résultat de l'attaque
+
+                afficheur(multi, parametre, jeu);                                                   // Affiche les tableaux
+                
+                if (jeu.toucheMsg == 1 || jeu.toucheMsg == 2) {                                     // Test de condition
+                    toucheMs(multi, jeu);
+                    recv(socketClient, &inutile, sizeof(&inutile), 0);                               // recv 11 : Accusé reception pour mettre en pause le code du côté serveur et client
+                    send(socketClient, &inutile, sizeof(&inutile), 0);                               // send 12 : Accusé reception pour mettre en pause le code du côté serveur et client
+                }
             }
 
         } while (jeu.gagner != true);
-        
-        jeu.mancheCpt++;
 
-        afficheur(2, parametre, jeu);
-        sleep(2);
+        afficheur(multi, parametre, jeu);
 
     }while(jeu.mancheCpt != parametre.manche);
+
     jeu.gagner = false;
-    afficheur(2, parametre, jeu);
 
-    /*char msg[50] = "j'aime les chenilles";
-
-    send(socketClient, msg, sizeof(msg), 0);
-
-    puts("Message envoyé.");
-
-    int number[5][5];
-
-    int a = 5, b = 2;
-    char BUFFER[50];
-
-    sprintf(BUFFER,"%d %d",a,b);
-    send(socketClient, BUFFER, sizeof(BUFFER), 0);*/
-
-
-
+    afficheur(multi, parametre, jeu);
+    fin(jeu, parametre);
 }
 
-void ip () {
-    char ip[20];
-    FILE *ipcmd = popen("echo $(hostname -I | awk '{print $1}')", "r");
-    
-    fscanf(ipcmd, "%s", ip);
-    pclose(ipcmd);
+int ipcmd (char ip[20]) {
+    int error = false;
 
-    printf("%s",ip);
+    if ((system("hostname -I")) != 0) {
+        error = true;
+    }
+
+    if ( error == false ) {
+        FILE *ipcmd = popen("echo $(hostname -I | awk '{print $1}')", "r");
+        
+        fscanf(ipcmd, "%s", ip);
+        pclose(ipcmd);
+    }
+    
+    system("clear");
+    entete();
+
+    return error;
  }
