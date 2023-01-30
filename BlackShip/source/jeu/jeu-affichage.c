@@ -235,7 +235,7 @@ void afficheur(int modeDeJeux, struct parametre parametre, struct jeu jeu){
               printf(NVERT "×  " RESET);
               break;
           case 3 :
-              printf("0  ");
+              printf("~  ");
               break;
           default:
               printf("~  ");
